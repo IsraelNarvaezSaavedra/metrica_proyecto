@@ -4,17 +4,8 @@
  */
 package interfaz;
 
+import bdd.DAOPersona;
 import entidades.Persona;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Scanner;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,7 +20,7 @@ public class Registrarse extends javax.swing.JFrame {
     public Registrarse() {
         initComponents();
     }
-
+    DAOPersona persona;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -262,25 +253,7 @@ public class Registrarse extends javax.swing.JFrame {
         if (!nuevoEmailUs.getText().contains(".") || !nuevoEmailUs.getText().contains("@")) {
             Persona.UsuarioVacio("el correo debe ser valido", "Error");
         }
-                
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection conn = conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "BDgame", "BDgame");
-            Statement stmt = stmt = conn.createStatement();
-            String sql2 = "INSERT INTO persona (nombre, apellido, tlf, correo, ciudad_nombre, localidad, calle, ncasa, usuario, passwd) "
-                    + "VALUES ('" + 
-                    
-                    
-                    +.getText() + "', '" + nuevoApellidosUs.getText() + "', '" + nuevoTlfUs.getText() + "', '"
-                    + nuevoEmailUs.getText() + "', '" + nuevaCiudadUs.getText() + "', '" + nuevaLocalidadUs.getText() + "', '"
-                    + nuevaCalleUs.getText() + "', '" + nuevaCasaUs.getText() + "', '" + nuevoUs.getText() + "', '" + nuevaContraseñaUs.getText() + "')";
-            stmt.executeUpdate(sql2);
-            System.out.println("Usuario insertado correctamente en Oracle.");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error al insertar usuario.");
-        }
+         persona.registrarPersona(nuevoNombreUs.getText(), nuevoApellidosUs.getText(), nuevoTlfUs.getText(), nuevoEmailUs.getText(), nuevaLocalidadUs.getText(), nuevaCiudadUs.getText(), nuevaCalleUs.getText(), nuevaCasaUs.getText(), nuevoUs.getText(), nuevaContraseñaUs.getText());
     }//GEN-LAST:event_botonRegistarseActionPerformed
 
     private void nuevoTlfUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoTlfUsActionPerformed
