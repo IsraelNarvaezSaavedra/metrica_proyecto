@@ -5,26 +5,38 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DAOProducto {
-    
-    public Productos buscarProducto(String elegido) {
+
+    public List buscarProducto(String elegido) {
         Productos producto = null;
         Connection conn = null;
+        List<Productos> buscados = new <Productos>ArrayList();
         try {
             conn = ConexionBD.conectarBD();
-            PreparedStatement pst = conn.prepareStatement("select * from producto where nombre like upper(%?%)");
-            pst.setString(1, elegido);
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM producto WHERE UPPER(nombre) LIKE ?");
+            pst.setString(1, "%" + elegido.toUpperCase() + "%");
             ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                producto = new Productos(producto, rs.getString("password"), rs.getString("nombre"));
+
+            while (rs.next()) {
+                producto = new Productos(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getDouble("precio\n")
+                );
+                buscados.add(producto);
             }
+
         } catch (SQLException e) {
-            System.err.println("buscarPorLogin: " + e.getMessage());
+            System.err.println("buscarProducto: " + e.getMessage());
         } finally {
             ConexionBD.desconectarBD(conn);
         }
-        return producto;
+        return buscados;
     }
     
+    
+
 }
