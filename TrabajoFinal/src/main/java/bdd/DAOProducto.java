@@ -11,10 +11,10 @@ import java.util.List;
 
 public class DAOProducto {
 
-    public List catalogoProducto() {
+    public static List catalogoProducto() {
         Productos producto = null;
         Connection conn = null;
-        List<Productos> buscados = new <Productos>ArrayList();
+        List<Productos> buscados = new ArrayList();
         try {
             conn = ConexionBD.conectarBD();
             PreparedStatement pst = conn.prepareStatement("SELECT producto.id, producto.nombre, categoria_nombre, producto.precio, stock.cantidad FROM producto left join stock\n"
@@ -26,7 +26,8 @@ public class DAOProducto {
                         rs.getInt("id"),
                         rs.getString("nombre"),
                         (Categoria) rs.getObject("categoria"),
-                        rs.getDouble("precio\n")
+                        rs.getDouble("precio"),
+                        rs.getInt("stock\n")
                 );
                 buscados.add(producto);
             }
@@ -39,7 +40,7 @@ public class DAOProducto {
         return buscados;
     }
 
-    public List buscarProducto(String elegido) {
+    public static List buscarProducto(String elegido) {
         Productos producto = null;
         Connection conn = null;
         List<Productos> buscados = new <Productos>ArrayList();
@@ -54,7 +55,8 @@ public class DAOProducto {
                         rs.getInt("id"),
                         rs.getString("nombre"),
                         (Categoria) rs.getObject("categoria"),
-                        rs.getDouble("precio\n")
+                        rs.getDouble("precio"),
+                        rs.getInt("stock\n")
                 );
                 buscados.add(producto);
             }
@@ -67,7 +69,7 @@ public class DAOProducto {
         return buscados;
     }
 
-    public void insertarProducto(String nombre, Categoria categoria, double precio) {
+    public static void insertarProducto(String nombre, Categoria categoria, double precio) {
         Connection conn = null;
 
         if (!catalogoProducto().contains(nombre)) {
@@ -90,7 +92,7 @@ public class DAOProducto {
         }
     }
 
-    public void borrarProductoPorId(int id) {
+    public static void borrarProductoPorId(int id) {
         Connection conn = null;
         try {
             String sql2 = "DELETE FROM producto "
@@ -108,7 +110,7 @@ public class DAOProducto {
         }
     }
 
-    public void modificarProducto(String nombre, Categoria categoria, double precio) {
+    public static void modificarProducto(String nombre, Categoria categoria, double precio) {
         Connection conn = null;
         try {
             String sql2 = "UPDATE producto\n"
@@ -131,7 +133,7 @@ public class DAOProducto {
         }
     }
 
-    public void modificarStock(String nombre, int cantidad) {
+    public static void modificarStock(String nombre, int cantidad) {
         Connection conn = null;
         try {
             String sql2 = "UPDATE stock\n"
@@ -152,5 +154,4 @@ public class DAOProducto {
             ConexionBD.desconectarBD(conn);
         }
     }
-
 }

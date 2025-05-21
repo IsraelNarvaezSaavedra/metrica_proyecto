@@ -9,8 +9,9 @@ public class Productos {
     protected String nombre;
     protected double precio;
     protected Categoria categoria;
+    protected int stock;
 
-    public Productos(int id, String nombre, Categoria categoria, double precio) {
+    public Productos(int id, String nombre, Categoria categoria, double precio, int stock) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
@@ -19,6 +20,15 @@ public class Productos {
         } else {
             throw new IllegalArgumentException("El precio no puede ser negativo");
         }
+        this.stock = stock;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public int getId() {
