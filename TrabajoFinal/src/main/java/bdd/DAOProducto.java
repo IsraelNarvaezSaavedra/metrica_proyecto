@@ -12,36 +12,60 @@ import java.util.List;
 public class DAOProducto {
 
     public static List<Productos> catalogoProducto() {
-        Productos producto = null;
-        Connection conn = null;
-        List<Productos> buscados = new ArrayList();
-        try {
-            conn = ConexionBD.conectarBD();
-            System.out.println("Conectado a: " + conn.getMetaData().getURL());
-            PreparedStatement pst = conn.prepareStatement("SELECT producto.id, producto.nombre, categoria_nombre, producto.precio, stock.cantidad FROM producto left join stock\n"
-                    + "on stock.producto_id=producto.id");
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
+    Connection conn = null;
+    List<Productos> buscados = new ArrayList<>();
+    
+    try {
+        conn = ConexionBD.conectarBD();
+        System.out.println("Conectado a: " + conn.getMetaData().getURL());
 
-                producto = new Productos(
-                        rs.getInt("id"),
-                        rs.getString("nombre"),
-                        (Categoria) rs.getObject("categoria"),
-                        rs.getDouble("precio"),
-                        rs.getInt("cantidad\n")
-                );
-                buscados.add(producto);
-                
+        // ✅ Se agregó el JOIN a categoria y el alias correcto para el nombre
+        String sql = "SELECT producto.id, producto.nombre, categoria.nombre AS categoria_nombre, " +
+                     "producto.precio, stock.cantidad " +
+                     "FROM producto " +
+                     "LEFT JOIN categoria ON producto.categoria_nombre = categoria.nombre " +
+                     "LEFT JOIN stock ON stock.producto_id = producto.id";
+
+        PreparedStatement pst = conn.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String nombre = rs.getString("nombre");
+
+            // ✅ Se cambió 'categoria' por 'categoria_nombre'
+            String categoriaStr = rs.getString("categoria_nombre");
+
+            Categoria categoria = null;
+            if (categoriaStr != null) {
+                try {
+                    categoria = Categoria.valueOf(categoriaStr.toUpperCase()); // Convierte String a Enum
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Categoría inválida: " + categoriaStr);
+                }
             }
-            System.out.println("Tamaño del catálogo: " + buscados.size());
-        } catch (SQLException e) {
-            System.err.println("No se ha podido llenar el catalogo " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            ConexionBD.desconectarBD(conn);
+
+            double precio = rs.getDouble("precio");
+
+            // ✅ Se usa el nombre correcto de la columna 'cantidad'
+            int stock = rs.getInt("cantidad");
+
+            Productos producto = new Productos(id, nombre, categoria, precio, stock);
+            buscados.add(producto);
         }
-        return buscados;
+
+        System.out.println("Tamaño del catálogo: " + buscados.size());
+
+    } catch (SQLException e) {
+        System.err.println("No se ha podido llenar el catálogo: " + e.getMessage());
+        e.printStackTrace();
+    } finally {
+        ConexionBD.desconectarBD(conn);
     }
+
+    return buscados;
+}
+
 
     public static List buscarProducto(String elegido) {
         Productos producto = null;
