@@ -17,7 +17,8 @@ public class DAOProducto {
         List<Productos> buscados = new <Productos>ArrayList();
         try {
             conn = ConexionBD.conectarBD();
-            PreparedStatement pst = conn.prepareStatement("SELECT * FROM producto");
+            PreparedStatement pst = conn.prepareStatement("SELECT producto.id, producto.nombre, categoria_nombre, producto.precio, stock.cantidad FROM producto left join stock\n"
+                    + "on stock.producto_id=producto.id");
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -45,7 +46,7 @@ public class DAOProducto {
         try {
             conn = ConexionBD.conectarBD();
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM producto WHERE UPPER(nombre) LIKE ?");
-            pst.setString(1, "%" + elegido.toUpperCase() + "%");
+            pst.setString(1, "'%" + elegido.toUpperCase() + "%'");
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -86,8 +87,7 @@ public class DAOProducto {
         }
 
     }
-    
-    
+
     public void borrarProductoPorId(int id) {
         Connection conn = null;
         try {
@@ -104,7 +104,51 @@ public class DAOProducto {
         } finally {
             ConexionBD.desconectarBD(conn);
         }
+    }
 
+    public void modificarProducto(String nombre, Categoria categoria, double precio) {
+        Connection conn = null;
+        try {
+            String sql2 = "UPDATE producto\n"
+                    + "SET \n"
+                    + "nombre = ?,\n"
+                    + "categoria_nombre = ?,\n"
+                    + "precio = ?";
+            conn = ConexionBD.conectarBD();
+            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+
+                pstmt.setString(1, nombre);
+                pstmt.setObject(2, categoria);
+                pstmt.setDouble(3, precio);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error al modificar el producto.");
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+    }
+
+    public void modificarStock(String nombre, int cantidad) {
+        Connection conn = null;
+        try {
+            String sql2 = "UPDATE stock\n"
+                    + "SET \n"
+                    + "producto_id = (select * from producto\n"
+                    + "where upper(nombre) like '%?%'),\n"
+                    + "cantidad = ?";
+            conn = ConexionBD.conectarBD();
+            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+
+                pstmt.setString(1, nombre);
+                pstmt.setInt(2, cantidad);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error al modificar el stock.");
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
     }
 
 }
