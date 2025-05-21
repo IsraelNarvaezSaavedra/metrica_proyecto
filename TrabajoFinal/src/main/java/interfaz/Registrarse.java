@@ -1,23 +1,38 @@
+
 package interfaz;
 
+import bdd.DAOCiudad;
 import bdd.DAOPersona;
 import entidades.Persona;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author usuarioDAW
  */
+
 public class Registrarse extends javax.swing.JFrame {
 
-    
     /**
      * Creates new form Registrarse
      */
     public Registrarse() {
         initComponents();
+        cargarCiudadesEnComboBox();
     }
-    DAOPersona persona;
+
+    private void cargarCiudadesEnComboBox() {
+        DAOCiudad dao = new DAOCiudad();
+        List<String> listaCiudades = dao.obtenerCiudades();
+
+        for (String ciudad : listaCiudades) {
+            nuevaCiudadUs.addItem(ciudad);
+        }
+    }
+
+    DAOPersona daoPersona = new DAOPersona();
+    Persona persona;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,8 +56,6 @@ public class Registrarse extends javax.swing.JFrame {
         nuevaCalleUs = new javax.swing.JTextField();
         nuevaCasaUs = new javax.swing.JTextField();
         nuevoUs = new javax.swing.JTextField();
-        nuevaCiudadUs = new javax.swing.JTextField();
-        nuevaContraseñaUs = new javax.swing.JTextField();
         nuevoTlfUs = new javax.swing.JTextField();
         nuevoEmailUs = new javax.swing.JTextField();
         nuevaLocalidadUs = new javax.swing.JTextField();
@@ -51,6 +64,8 @@ public class Registrarse extends javax.swing.JFrame {
         nuevoNombreUs = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         nuevoApellidosUs = new javax.swing.JTextField();
+        nuevaContraseñaUs = new javax.swing.JPasswordField();
+        nuevaCiudadUs = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,10 +107,6 @@ public class Registrarse extends javax.swing.JFrame {
             }
         });
 
-        nuevaCiudadUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        nuevaContraseñaUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
         nuevoTlfUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         nuevoTlfUs.setMaximumSize(new java.awt.Dimension(9, 2147483647));
         nuevoTlfUs.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +137,12 @@ public class Registrarse extends javax.swing.JFrame {
 
         nuevoApellidosUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        nuevaCiudadUs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevaCiudadUsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -144,8 +161,7 @@ public class Registrarse extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
-                        .addComponent(nuevoApellidosUs, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                        .addGap(156, 156, 156))
+                        .addComponent(nuevoApellidosUs, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -159,16 +175,17 @@ public class Registrarse extends javax.swing.JFrame {
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nuevaContraseñaUs)
                             .addComponent(nuevoUs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nuevoTlfUs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(nuevoEmailUs)
                             .addComponent(nuevaLocalidadUs)
-                            .addComponent(nuevaCiudadUs)
                             .addComponent(nuevaCalleUs)
                             .addComponent(nuevaCasaUs, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                            .addComponent(nuevoNombreUs))
-                        .addContainerGap(156, Short.MAX_VALUE))))
+                            .addComponent(nuevoNombreUs)
+                            .addComponent(nuevaContraseñaUs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nuevaCiudadUs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(158, 158, 158))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,16 +193,18 @@ public class Registrarse extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(nuevoUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(nuevoUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(nuevaContraseñaUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(2, 2, 2)
+                        .addComponent(nuevaContraseñaUs, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(nuevoTlfUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -198,13 +217,13 @@ public class Registrarse extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                             .addComponent(nuevaLocalidadUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(9, 9, 9)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nuevaCiudadUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addGap(21, 21, 21)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(nuevaCiudadUs, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
                         .addComponent(jLabel9))
-                    .addComponent(nuevaCalleUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                    .addComponent(nuevaCalleUs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(nuevaCasaUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,61 +260,70 @@ public class Registrarse extends javax.swing.JFrame {
 
     private void botonRegistarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistarseActionPerformed
 
-        if (nuevoNombreUs.getText().isEmpty() || nuevoApellidosUs.getText().isEmpty() || nuevoEmailUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaCiudadUs.getText().isEmpty()
-                || nuevaLocalidadUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaCasaUs.getText().isEmpty() || nuevoUs.getText().isEmpty() || nuevaContraseñaUs.getText().isEmpty()) {
+        if (nuevoNombreUs.getText().isEmpty() || nuevoApellidosUs.getText().isEmpty() || nuevoEmailUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaLocalidadUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaCasaUs.getText().isEmpty() || nuevoUs.getText().isEmpty() || nuevaContraseñaUs.getText().isEmpty()) {
             Persona.UsuarioVacio("No se puede dejar algún campo vacio", "Error");
         }
-        if (nuevoTlfUs.getText().length() != 9) {
-            Persona.UsuarioVacio("No se puede poner un numero de longitud mayor o menor a nueve", "Error");
+
+        if (!persona.esTelefonoValido(nuevoTlfUs.getText())) {
+            Persona.UsuarioVacio("Debes introducir un telefono valido (9 digitos numericos)", "Error");
         }
-        if (!nuevoEmailUs.getText().contains(".") || !nuevoEmailUs.getText().contains("@")) {
+
+        if (!persona.esEmailValido(nuevoEmailUs.getText())) {
             Persona.UsuarioVacio("el correo debe ser valido", "Error");
         }
-        
-        persona.registrarPersona(nuevoNombreUs.getText(), nuevoApellidosUs.getText(), nuevoTlfUs.getText(), nuevoEmailUs.getText(), nuevaLocalidadUs.getText(), nuevaCiudadUs.getText(), nuevaCalleUs.getText(), nuevaCasaUs.getText(), nuevoUs.getText(), nuevaContraseñaUs.getText());
+
+        if (daoPersona.existePersona(nuevoEmailUs.getText().trim(), nuevoUs.getText().trim())) {
+            Persona.UsuarioVacio("El correo o el nombre de usuario ya existen", "Error");
+        } else {
+            daoPersona.registrarPersona(nuevoNombreUs.getText(), nuevoApellidosUs.getText(), nuevoTlfUs.getText(), nuevoEmailUs.getText(), nuevaLocalidadUs.getText(), (String) nuevaCiudadUs.getSelectedItem(), nuevaCalleUs.getText(), nuevaCasaUs.getText(), nuevoUs.getText(), nuevaContraseñaUs.getText());
+        }
     }//GEN-LAST:event_botonRegistarseActionPerformed
 
     private void nuevoTlfUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoTlfUsActionPerformed
-        if (nuevoTlfUs.getText().length() == 9) {
-            JOptionPane.showMessageDialog(null, "Debe escribir exactamente 9 caracteres");
-        }
+
+        JOptionPane.showMessageDialog(null, "Debe escribir exactamente 9 caracteres");
+
     }//GEN-LAST:event_nuevoTlfUsActionPerformed
+
+    private void nuevaCiudadUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaCiudadUsActionPerformed
+
+    }//GEN-LAST:event_nuevaCiudadUsActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Registrarse().setVisible(true);
-            }
-        });
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new Registrarse().setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonRegistarse;
@@ -313,8 +341,8 @@ public class Registrarse extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nuevaCalleUs;
     private javax.swing.JTextField nuevaCasaUs;
-    private javax.swing.JTextField nuevaCiudadUs;
-    private javax.swing.JTextField nuevaContraseñaUs;
+    private javax.swing.JComboBox<String> nuevaCiudadUs;
+    private javax.swing.JPasswordField nuevaContraseñaUs;
     private javax.swing.JTextField nuevaLocalidadUs;
     private javax.swing.JTextField nuevoApellidosUs;
     private javax.swing.JTextField nuevoEmailUs;
