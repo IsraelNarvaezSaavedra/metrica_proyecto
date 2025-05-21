@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOProducto {
-    
-    public List todosLosProducto(String elegido) {
+
+    public List catalogoProducto(String elegido) {
         Productos producto = null;
         Connection conn = null;
         List<Productos> buscados = new <Productos>ArrayList();
@@ -23,7 +23,7 @@ public class DAOProducto {
             while (rs.next()) {
                 producto = new Productos(
                         rs.getInt("id"),
-                        rs.getString("nombre"), 
+                        rs.getString("nombre"),
                         (Categoria) rs.getObject("categoria"),
                         rs.getDouble("precio\n")
                 );
@@ -31,13 +31,13 @@ public class DAOProducto {
             }
 
         } catch (SQLException e) {
-            System.err.println("No se han podido recoger todos los productos " + e.getMessage());
+            System.err.println("No se ha podido llenar el catalogo " + e.getMessage());
         } finally {
             ConexionBD.desconectarBD(conn);
         }
         return buscados;
     }
-    
+
     public List buscarProducto(String elegido) {
         Productos producto = null;
         Connection conn = null;
@@ -51,7 +51,7 @@ public class DAOProducto {
             while (rs.next()) {
                 producto = new Productos(
                         rs.getInt("id"),
-                        rs.getString("nombre"), 
+                        rs.getString("nombre"),
                         (Categoria) rs.getObject("categoria"),
                         rs.getDouble("precio\n")
                 );
@@ -65,23 +65,46 @@ public class DAOProducto {
         }
         return buscados;
     }
-    
+
     public void insertarProducto(String elegido, Categoria categoria, double precio) {
         Connection conn = null;
         try {
+            String sql2 = "INSERT INTO producto (nombre, categoria_nombre, precio "
+                    + "VALUES (?, ?, ?)";
             conn = ConexionBD.conectarBD();
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO producto (nombre, categoria_nombre, precio)\n" +
-"VALUES (?, ?, ?);");
-            pst.setString(1, elegido);
-            pst.setObject(2, categoria);
-            pst.setDouble(3, precio);
-            ResultSet rs = pst.executeQuery();
-            
-        } catch (SQLException e) {
-            System.err.println("buscarProducto: " + e.getMessage());
+            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+
+                pstmt.setString(1, elegido);
+                pstmt.setObject(2, categoria);
+                pstmt.setDouble(3, precio);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error al insertar el producto.");
         } finally {
             ConexionBD.desconectarBD(conn);
         }
+
+    }
+    
+    
+    public void borrarProductoPorId(int id) {
+        Connection conn = null;
+        try {
+            String sql2 = "DELETE FROM producto "
+                    + "WHERE id=?";
+            conn = ConexionBD.conectarBD();
+            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+
+                pstmt.setInt(1, id);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error al borrar el producto.");
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+
     }
 
 }
