@@ -23,19 +23,35 @@ protected Login login;
     public Main() {
         initComponents();
         panel.setLayout(new GridLayout(0, 7, 8, 8));
+        cargarProducto();
     }
     
     protected void cargarProducto(){
         panel.removeAll();
-        List<Productos> catalogo = DAOProducto.catalogoProducto();
+        DAOProducto dao = new DAOProducto();
+        List<Productos> catalogo = dao.catalogoProducto();
         
        for(Productos llenar : catalogo){
            JPanel producto = new JPanel();
-           producto.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-           producto.setPreferredSize(new Dimension(60, 75));
+           producto.setLayout(new BoxLayout(producto, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
+           producto.setPreferredSize(new Dimension(60, 75)); //Tamanio del panel
            JLabel nombreProducto = new JLabel(llenar.getNombre() +" "+ llenar.getPrecio());   
            JLabel stock = new JLabel(String.valueOf(llenar.getStock()));
+           JButton verMas = new JButton();
+           verMas.addActionListener(e -> {
+           Producto productoEspecifico = new Producto();
+           this.setVisible(false);
+           productoEspecifico.setVisible(true);
+           });
+           JButton carrito = new JButton();
+           producto.add(nombreProducto);
+           producto.add(stock);
+           producto.add(verMas);
+           producto.add(carrito);
+           panel.add(producto);
        }
+       panel.revalidate();
+       panel.repaint();
     }
 
     /**

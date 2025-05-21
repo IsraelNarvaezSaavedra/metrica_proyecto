@@ -11,29 +11,32 @@ import java.util.List;
 
 public class DAOProducto {
 
-    public static List catalogoProducto() {
+    public static List<Productos> catalogoProducto() {
         Productos producto = null;
         Connection conn = null;
         List<Productos> buscados = new ArrayList();
         try {
             conn = ConexionBD.conectarBD();
+            System.out.println("Conectado a: " + conn.getMetaData().getURL());
             PreparedStatement pst = conn.prepareStatement("SELECT producto.id, producto.nombre, categoria_nombre, producto.precio, stock.cantidad FROM producto left join stock\n"
                     + "on stock.producto_id=producto.id");
             ResultSet rs = pst.executeQuery();
-
             while (rs.next()) {
+
                 producto = new Productos(
                         rs.getInt("id"),
                         rs.getString("nombre"),
                         (Categoria) rs.getObject("categoria"),
                         rs.getDouble("precio"),
-                        rs.getInt("stock\n")
+                        rs.getInt("cantidad\n")
                 );
                 buscados.add(producto);
+                
             }
-
+            System.out.println("Tamaño del catálogo: " + buscados.size());
         } catch (SQLException e) {
             System.err.println("No se ha podido llenar el catalogo " + e.getMessage());
+            e.printStackTrace();
         } finally {
             ConexionBD.desconectarBD(conn);
         }
