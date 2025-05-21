@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DAOProducto {
 
-    public List catalogoProducto(String elegido) {
+    public List catalogoProducto() {
         Productos producto = null;
         Connection conn = null;
         List<Productos> buscados = new <Productos>ArrayList();
@@ -67,25 +67,27 @@ public class DAOProducto {
         return buscados;
     }
 
-    public void insertarProducto(String elegido, Categoria categoria, double precio) {
+    public void insertarProducto(String nombre, Categoria categoria, double precio) {
         Connection conn = null;
-        try {
-            String sql2 = "INSERT INTO producto (nombre, categoria_nombre, precio "
-                    + "VALUES (?, ?, ?)";
-            conn = ConexionBD.conectarBD();
-            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
-                pstmt.setString(1, elegido);
-                pstmt.setObject(2, categoria);
-                pstmt.setDouble(3, precio);
+        if (!catalogoProducto().contains(nombre)) {
+            try {
+                String sql2 = "INSERT INTO producto (nombre, categoria_nombre, precio "
+                        + "VALUES (?, ?, ?)";
+                conn = ConexionBD.conectarBD();
+                try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
+                    pstmt.setString(1, nombre);
+                    pstmt.setObject(2, categoria);
+                    pstmt.setDouble(3, precio);
+
+                }
+            } catch (Exception e) {
+                System.out.println("Error al insertar el producto.");
+            } finally {
+                ConexionBD.desconectarBD(conn);
             }
-        } catch (Exception e) {
-            System.out.println("Error al insertar el producto.");
-        } finally {
-            ConexionBD.desconectarBD(conn);
         }
-
     }
 
     public void borrarProductoPorId(int id) {
