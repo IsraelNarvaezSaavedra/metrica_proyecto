@@ -268,15 +268,11 @@ public class Registrarse extends javax.swing.JFrame {
             Connection conn = conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "BDgame", "BDgame");
             Statement stmt = stmt = conn.createStatement();
             String sql2 = "INSERT INTO persona (nombre, apellido, tlf, correo, ciudad_nombre, localidad, calle, ncasa, usuario, passwd) "
-                    + "VALUES ('" + 
-                    
-                    
-                    +.getText() + "', '" + nuevoApellidosUs.getText() + "', '" + nuevoTlfUs.getText() + "', '"
+                    + "VALUES ('" +
+                     nuevoNombreUs.getText() + "', '" + nuevoApellidosUs.getText() + "', '" + nuevoTlfUs.getText() + "', '"
                     + nuevoEmailUs.getText() + "', '" + nuevaCiudadUs.getText() + "', '" + nuevaLocalidadUs.getText() + "', '"
                     + nuevaCalleUs.getText() + "', '" + nuevaCasaUs.getText() + "', '" + nuevoUs.getText() + "', '" + nuevaContraseñaUs.getText() + "')";
             stmt.executeUpdate(sql2);
-            System.out.println("Usuario insertado correctamente en Oracle.");
-
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error al insertar usuario.");
