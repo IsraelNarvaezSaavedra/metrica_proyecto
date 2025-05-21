@@ -10,7 +10,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOProducto {
+    
+    public List todosLosProducto(String elegido) {
+        Productos producto = null;
+        Connection conn = null;
+        List<Productos> buscados = new <Productos>ArrayList();
+        try {
+            conn = ConexionBD.conectarBD();
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM producto");
+            ResultSet rs = pst.executeQuery();
 
+            while (rs.next()) {
+                producto = new Productos(
+                        rs.getInt("id"),
+                        rs.getString("nombre"), 
+                        (Categoria) rs.getObject("categoria"),
+                        rs.getDouble("precio\n")
+                );
+                buscados.add(producto);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("No se han podido recoger todos los productos " + e.getMessage());
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+        return buscados;
+    }
+    
     public List buscarProducto(String elegido) {
         Productos producto = null;
         Connection conn = null;
