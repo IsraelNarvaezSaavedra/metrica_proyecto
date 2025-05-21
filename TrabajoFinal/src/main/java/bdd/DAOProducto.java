@@ -1,5 +1,6 @@
 package bdd;
 
+import entidades.Categoria;
 import entidades.Productos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +24,8 @@ public class DAOProducto {
             while (rs.next()) {
                 producto = new Productos(
                         rs.getInt("id"),
-                        rs.getString("nombre"),
+                        rs.getString("nombre"), 
+                        (Categoria) rs.getObject("categoria"),
                         rs.getDouble("precio\n")
                 );
                 buscados.add(producto);
@@ -37,6 +39,22 @@ public class DAOProducto {
         return buscados;
     }
     
-    
+    public void insertarProducto(String elegido, Categoria categoria, double precio) {
+        Connection conn = null;
+        try {
+            conn = ConexionBD.conectarBD();
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO producto (nombre, categoria_nombre, precio)\n" +
+"VALUES (?, ?, ?);");
+            pst.setString(1, elegido);
+            pst.setObject(2, categoria);
+            pst.setDouble(3, precio);
+            ResultSet rs = pst.executeQuery();
+            
+        } catch (SQLException e) {
+            System.err.println("buscarProducto: " + e.getMessage());
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+    }
 
 }

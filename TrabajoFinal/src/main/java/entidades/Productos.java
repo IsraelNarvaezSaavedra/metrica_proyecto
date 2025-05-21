@@ -5,13 +5,15 @@ package entidades;
  * @author usuarioDAW
  */
 public class Productos {
-    int id;
-    String nombre;
-    double precio;
+    protected int id;
+    protected String nombre;
+    protected double precio;
+    protected Categoria categoria;
 
-    public Productos(int id, String nombre, double precio) {
+    public Productos(int id, String nombre, Categoria categoria, double precio) {
         this.id = id;
         this.nombre = nombre;
+        this.categoria = categoria;
         if (this.precio > 0){
             this.precio = precio;
         } else {
