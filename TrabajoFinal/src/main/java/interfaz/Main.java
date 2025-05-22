@@ -6,6 +6,8 @@ package interfaz;
 
 import entidades.Productos;
 import bdd.DAOProducto;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
@@ -22,7 +24,7 @@ protected Login login;
      */
     public Main() {
         initComponents();
-        panel.setLayout(new GridLayout(0, 7, 8, 8));
+        panel.setLayout(new GridLayout(0, 5, 15, 15));
         cargarProducto();
     }
     
@@ -31,23 +33,58 @@ protected Login login;
         List<Productos> catalogo = DAOProducto.catalogoProducto();
         
        for(Productos llenar : catalogo){
+           
+           /*JPanel con su personalizacion donde se introduciran los siguientes 
+           botones y etiquetas*/
            JPanel producto = new JPanel();
+           producto.setBackground(Color.gray);
            producto.setLayout(new BoxLayout(producto, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
-           producto.setPreferredSize(new Dimension(60, 75)); //Tamanio del panel
-           JLabel nombreProducto = new JLabel(llenar.getNombre() +" "+ llenar.getPrecio());   
-           JLabel stock = new JLabel(String.valueOf(llenar.getStock()));
+           producto.setPreferredSize(new Dimension(80, 130)); //Tamanio del panel
+           
+           //Etiqueta nombreProducto y su personalizacion
+           JLabel nombreProducto = new JLabel(llenar.getNombre());
+           nombreProducto.setForeground(Color.WHITE);
+           nombreProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+           nombreProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+           
+           //Etiqueta precioProducto y su personalizacion
+           JLabel precioProducto = new JLabel(String.valueOf(llenar.getPrecio())+"€");
+           precioProducto.setForeground(Color.white);
+           precioProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+           precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+           
+           //Etiqueta stock y su personalizacion
+           JLabel stock = new JLabel("Stock "+String.valueOf(llenar.getStock()));
+           stock.setForeground(Color.white);
+           stock.setAlignmentX(Component.CENTER_ALIGNMENT);
+           precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+           
+           //Boton verMas y lo que hace
            JButton verMas = new JButton();
+           verMas.setText("   Ver mas   ");
            verMas.addActionListener(e -> {
            Producto productoEspecifico = new Producto();
            this.setVisible(false);
            productoEspecifico.setVisible(true);
            });
+           
+           //Boton carrito y lo que hace
            JButton carrito = new JButton();
+           carrito.setText("Añadir al carrito");
+           carrito.addActionListener(e -> {
+           Producto carritoCompra = new Producto();
+           this.setVisible(false);
+           carrito.setVisible(true);
+           });
+           
+           //Añadir los productos al jpanel
            producto.add(nombreProducto);
+           producto.add(precioProducto);
            producto.add(stock);
            producto.add(verMas);
            producto.add(carrito);
            panel.add(producto);
+           
        }
        panel.revalidate();
        panel.repaint();
