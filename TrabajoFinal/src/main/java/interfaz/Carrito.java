@@ -150,6 +150,7 @@ public class Carrito extends javax.swing.JFrame {
     }//GEN-LAST:event_botonComprarActionPerformed
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        factura.vaciarFactura();
         Main ventanaMain = new Main(cliente, factura);
         this.setVisible(false);
         ventanaMain.setVisible(true);

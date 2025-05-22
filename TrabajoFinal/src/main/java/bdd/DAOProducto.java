@@ -181,6 +181,10 @@ public class DAOProducto {
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
                 pstmt.setInt(1, id);
+                int filasActualizadas = pstmt.executeUpdate(); 
+                if (filasActualizadas == 0) {
+                    System.out.println("No se redujo stock: producto_id " + id + " puede no tener stock disponible.");
+                }
 
             }
         } catch (Exception e) {
