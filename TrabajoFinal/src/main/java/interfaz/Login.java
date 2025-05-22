@@ -6,7 +6,10 @@ package interfaz;
 
 import bdd.DAOPersona;
 import entidades.Cliente;
+import entidades.Factura;
 import entidades.Persona;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -166,7 +169,8 @@ public class Login extends javax.swing.JFrame {
             if (main == null || !main.isDisplayable()) {
                 this.dispose();
                 cliente.setNombreUsuario(nombreUs.getText());
-                main = new Main(cliente, null);
+                Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
+                main = new Main(cliente, nuevaFactura);
                 main.setVisible(true);
             } else {
                 main.toFront();
