@@ -18,7 +18,7 @@ public class DAOProducto {
         try {
             conn = ConexionBD.conectarBD();
             System.out.println("Conectado a: " + conn.getMetaData().getURL());
-            PreparedStatement pst = conn.prepareStatement("SELECT producto.id, producto.nombre, categoria_nombre, producto.precio, stock.cantidad FROM producto left join stock\n"
+            PreparedStatement pst = conn.prepareStatement("SELECT id, nombre, categoria_nombre, precio, cantidad FROM producto left join stock\n"
                     + "on stock.producto_id=producto.id");
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -26,7 +26,7 @@ public class DAOProducto {
                 producto = new Productos(
                         rs.getInt("id"),
                         rs.getString("nombre"),
-                        (Categoria) rs.getObject("categoria"),
+                        Categoria.valueOf(rs.getString("categoria_nombre")),
                         rs.getDouble("precio"),
                         rs.getInt("cantidad")
                 );
@@ -59,7 +59,7 @@ public class DAOProducto {
                         rs.getString("nombre"),
                         (Categoria) rs.getObject("categoria"),
                         rs.getDouble("precio"),
-                        rs.getInt("stock\n")
+                        rs.getInt("stock")
                 );
                 buscados.add(producto);
             }

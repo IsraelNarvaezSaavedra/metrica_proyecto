@@ -15,7 +15,7 @@ public class Productos {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
-        if (this.precio > 0){
+        if (precio > 0.00){
             this.precio = precio;
         } else {
             throw new IllegalArgumentException("El precio no puede ser negativo");

@@ -28,8 +28,7 @@ protected Login login;
     
     protected void cargarProducto(){
         panel.removeAll();
-        DAOProducto dao = new DAOProducto();
-        List<Productos> catalogo = dao.catalogoProducto();
+        List<Productos> catalogo = DAOProducto.catalogoProducto();
         
        for(Productos llenar : catalogo){
            JPanel producto = new JPanel();
