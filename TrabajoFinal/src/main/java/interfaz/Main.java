@@ -73,7 +73,7 @@ public class Main extends javax.swing.JFrame {
             //Boton verMas, lo que hace y su personalizacion
             JButton verMas = new JButton();
             verMas.addActionListener(e -> {
-                Producto productoEspecifico = new Producto(llenar);
+                Producto productoEspecifico = new Producto(llenar, cliente);
                 this.setVisible(false);
                 productoEspecifico.setVisible(true);
             });
@@ -245,7 +245,7 @@ public class Main extends javax.swing.JFrame {
                 //Boton verMas, lo que hace y su personalizacion
                 JButton verMas = new JButton();
                 verMas.addActionListener(e -> {
-                    Producto productoEspecifico = new Producto(llenar);
+                    Producto productoEspecifico = new Producto(llenar, cliente);
                     this.setVisible(false);
                     productoEspecifico.setVisible(true);
                 });
