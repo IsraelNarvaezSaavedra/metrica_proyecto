@@ -33,19 +33,27 @@ public class Producto extends javax.swing.JFrame {
         JLabel nombre = new JLabel(producto.getNombre());
         nombre.setAlignmentX(Component.RIGHT_ALIGNMENT);
         nombre.setAlignmentY(Component.CENTER_ALIGNMENT);
-        nombre.setFont(nombre.getFont().deriveFont(30f)); 
+        nombre.setFont(nombre.getFont().deriveFont(40f)); 
         expositor.add(nombre);
         
         //JLabel con el categoria del producto y su personalizacion
         JLabel categoria = new JLabel(producto.getCategoria().toString());
         categoria.setAlignmentX(Component.RIGHT_ALIGNMENT);
         categoria.setAlignmentY(Component.CENTER_ALIGNMENT);
+        nombre.setFont(nombre.getFont().deriveFont(20f));
         expositor.add(categoria);
         
         //JLabel con el precio del producto y su personalizacion
         JLabel precio = new JLabel(String.valueOf(producto.getPrecio())+ "€");
         precio.setAlignmentX(Component.RIGHT_ALIGNMENT);
         precio.setAlignmentY(Component.CENTER_ALIGNMENT);
+        nombre.setFont(nombre.getFont().deriveFont(35f));
+        expositor.add(precio);
+        
+        JLabel valoracion = new JLabel(String.valueOf(producto.getPrecio())+ "€");
+        precio.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        precio.setAlignmentY(Component.CENTER_ALIGNMENT);
+        nombre.setFont(nombre.getFont().deriveFont(35f));
         expositor.add(precio);
         
         
@@ -132,7 +140,7 @@ public class Producto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
-        Main ventanaMain = new Main(cliente);
+        Main ventanaMain = new Main(cliente, null);
            this.setVisible(false);
            ventanaMain.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed

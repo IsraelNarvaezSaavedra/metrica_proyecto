@@ -91,7 +91,7 @@ public class DAOProducto {
 
         if (!catalogoProducto().contains(nombre)) {
             try {
-                String sql2 = "INSERT INTO producto (nombre, categoria_nombre, precio "
+                String sql2 = "INSERT INTO producto (nombre, categoria_nombre, precio)"
                         + "VALUES (?, ?, ?)";
                 conn = ConexionBD.conectarBD();
                 try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
