@@ -6,11 +6,11 @@ package interfaz;
 
 import entidades.Productos;
 import bdd.DAOProducto;
+import entidades.Cliente;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.util.List;
 import javax.swing.*;
 
@@ -21,11 +21,12 @@ import javax.swing.*;
 public class Main extends javax.swing.JFrame {
 
     protected Login login;
-
+    protected Cliente cliente;
     /**
      * Creates new form Main
      */
-    public Main() {
+    public Main(Cliente cliente) {
+        this.cliente = cliente;
         initComponents();
         panel.setLayout(new GridLayout(0, 5, 15, 15));
         cargarProducto();
@@ -299,11 +300,6 @@ public class Main extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
