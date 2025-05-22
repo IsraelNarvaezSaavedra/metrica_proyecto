@@ -24,6 +24,14 @@ public class Productos {
 
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
     public int getStock() {
         return stock;
     }

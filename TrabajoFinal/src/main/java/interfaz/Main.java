@@ -7,10 +7,13 @@ package interfaz;
 import entidades.Productos;
 import bdd.DAOProducto;
 import entidades.Cliente;
+import entidades.Factura;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
@@ -19,9 +22,10 @@ import javax.swing.*;
  * @author usuarioDAW
  */
 public class Main extends javax.swing.JFrame {
-
     protected Login login;
     protected Cliente cliente;
+    protected Factura miFactura;
+    protected Productos productoCarrito;
     /**
      * Creates new form Main
      */
@@ -29,6 +33,7 @@ public class Main extends javax.swing.JFrame {
         this.cliente = cliente;
         initComponents();
         panel.setLayout(new GridLayout(0, 5, 15, 15));
+        miFactura = new Factura(new ArrayList<>(), LocalDate.now());
         cargarProducto();
     }
 
@@ -66,7 +71,7 @@ public class Main extends javax.swing.JFrame {
             //Boton verMas, lo que hace y su personalizacion
             JButton verMas = new JButton();
             verMas.addActionListener(e -> {
-                Producto productoEspecifico = new Producto();
+                Producto productoEspecifico = new Producto(llenar);
                 this.setVisible(false);
                 productoEspecifico.setVisible(true);
             });
@@ -77,9 +82,8 @@ public class Main extends javax.swing.JFrame {
             //Boton carrito y lo que hace
             JButton carrito = new JButton();
             carrito.addActionListener(e -> {
-                Producto carritoCompra = new Producto();
-                this.setVisible(false);
-                carritoCompra.setVisible(true);
+                productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
+                miFactura.llenarFactura(productoCarrito);
             });
             carrito.setText("Añadir al carrito");
             carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -188,7 +192,7 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println("se ha pulsado el boton de buscar");
+
         String buscar = jTextField1.getText();
         if (buscar.isEmpty()) {
             cargarProducto();
@@ -218,7 +222,6 @@ public class Main extends javax.swing.JFrame {
                 precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
 
                 //Etiqueta stock y su personalizacion
-                System.out.println("Producto cargado: " + llenar.getNombre() + " | Stock: " + llenar.getStock());
                 JLabel stock = new JLabel("Stock " + String.valueOf(llenar.getStock()));
                 stock.setForeground(Color.white);
                 stock.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -227,20 +230,21 @@ public class Main extends javax.swing.JFrame {
                 //Boton verMas, lo que hace y su personalizacion
                 JButton verMas = new JButton();
                 verMas.addActionListener(e -> {
-                    Producto productoEspecifico = new Producto();
+                    Producto productoEspecifico = new Producto(llenar);
                     this.setVisible(false);
                     productoEspecifico.setVisible(true);
                 });
                 verMas.setText("   Ver mas   ");
                 verMas.setAlignmentX(Component.CENTER_ALIGNMENT);
                 verMas.setAlignmentY(Component.CENTER_ALIGNMENT);
-
+                
+                 
                 //Boton carrito y lo que hace
                 JButton carrito = new JButton();
-                carrito.addActionListener(e -> {
-                    Producto carritoCompra = new Producto();
-                    this.setVisible(false);
-                    carritoCompra.setVisible(true);
+                carrito.addActionListener(e -> { 
+                    productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
+                    miFactura.llenarFactura(productoCarrito);
+                    System.out.println("se ha llenado factura");
                 });
                 carrito.setText("Añadir al carrito");
                 carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -301,7 +305,7 @@ public class Main extends javax.swing.JFrame {
 
         /* Create and display the form */
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCarrito;
     private javax.swing.JButton jButton1;

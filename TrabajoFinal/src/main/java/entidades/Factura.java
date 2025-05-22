@@ -16,7 +16,7 @@ public class Factura {
     protected List<Productos> factura;
     protected LocalDate fecha;
 
-    public Factura() {
+    public Factura(List<Productos> factura, LocalDate fecha) {
         this.factura = new ArrayList();
         this.fecha = LocalDate.now();
     }

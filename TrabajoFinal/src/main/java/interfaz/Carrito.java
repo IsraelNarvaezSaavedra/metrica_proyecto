@@ -7,6 +7,8 @@ package interfaz;
 import entidades.Cliente;
 import entidades.Factura;
 import entidades.Productos;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
@@ -15,7 +17,7 @@ import javax.swing.JLabel;
  * @author Minino
  */
 public class Carrito extends javax.swing.JFrame {
-    Factura factura = new Factura();
+    Factura factura = new Factura(new ArrayList<>(), LocalDate.now());
     /**
      * Creates new form Carrito
      */
