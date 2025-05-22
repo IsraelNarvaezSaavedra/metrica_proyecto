@@ -21,6 +21,8 @@ public class Productos {
             throw new IllegalArgumentException("El precio no puede ser negativo");
         }
         this.stock = stock;
+        System.out.println("Constructor recibido -> stock: " + stock);
+
     }
 
     public int getStock() {

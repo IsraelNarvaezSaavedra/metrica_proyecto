@@ -54,28 +54,33 @@ protected Login login;
            precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
            
            //Etiqueta stock y su personalizacion
+           System.out.println("Producto cargado: " + llenar.getNombre() + " | Stock: " + llenar.getStock());
            JLabel stock = new JLabel("Stock "+String.valueOf(llenar.getStock()));
            stock.setForeground(Color.white);
            stock.setAlignmentX(Component.CENTER_ALIGNMENT);
            precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
            
-           //Boton verMas y lo que hace
+           //Boton verMas, lo que hace y su personalizacion
            JButton verMas = new JButton();
-           verMas.setText("   Ver mas   ");
            verMas.addActionListener(e -> {
            Producto productoEspecifico = new Producto();
            this.setVisible(false);
            productoEspecifico.setVisible(true);
            });
+           verMas.setText("   Ver mas   ");
+           verMas.setAlignmentX(Component.CENTER_ALIGNMENT);
+           verMas.setAlignmentY(Component.CENTER_ALIGNMENT);
            
            //Boton carrito y lo que hace
            JButton carrito = new JButton();
-           carrito.setText("Añadir al carrito");
            carrito.addActionListener(e -> {
            Producto carritoCompra = new Producto();
            this.setVisible(false);
-           carrito.setVisible(true);
+           carritoCompra.setVisible(true);
            });
+           carrito.setText("Añadir al carrito");
+           carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
+           carrito.setAlignmentY(Component.CENTER_ALIGNMENT);
            
            //Añadir los productos al jpanel
            producto.add(nombreProducto);

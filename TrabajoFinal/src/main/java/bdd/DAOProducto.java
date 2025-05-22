@@ -5,6 +5,7 @@ import entidades.Productos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,17 @@ public class DAOProducto {
         try {
             conn = ConexionBD.conectarBD();
             System.out.println("Conectado a: " + conn.getMetaData().getURL());
-            PreparedStatement pst = conn.prepareStatement("SELECT id, nombre, categoria_nombre, precio, cantidad FROM producto left join stock\n"
-                    + "on stock.producto_id=producto.id");
+            PreparedStatement pst = conn.prepareStatement("SELECT p.id, p.nombre, p.categoria_nombre, p.precio, s.cantidad\n" +
+"FROM producto p\n" +
+"JOIN stock s ON s.producto_id = p.id\n" +
+"\n" +
+"UNION\n" +
+"\n" +
+"SELECT p.id, p.nombre, p.categoria_nombre, p.precio, NULL AS cantidad\n" +
+"FROM producto p\n" +
+"WHERE NOT EXISTS (\n" +
+"    SELECT 1 FROM stock s WHERE s.producto_id = p.id\n" +
+")");
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
 
@@ -28,10 +38,11 @@ public class DAOProducto {
                         rs.getString("nombre"),
                         Categoria.valueOf(rs.getString("categoria_nombre")),
                         rs.getDouble("precio"),
-                        rs.getInt("cantidad")
+                        rs.getInt(5)
                 );
                 buscados.add(producto);
-                
+                System.out.println("Producto: " + rs.getString("nombre") + " | Stock: " + rs.getInt("cantidad"));
+
             }
             System.out.println("Tamaño del catálogo: " + buscados.size());
         } catch (SQLException e) {
