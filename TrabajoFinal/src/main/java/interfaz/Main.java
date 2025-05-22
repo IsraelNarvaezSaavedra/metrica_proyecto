@@ -25,15 +25,15 @@ public class Main extends javax.swing.JFrame {
 
     protected Login login;
     protected Cliente cliente;
-    protected Factura miFactura;
+    protected static Factura miFactura;
     protected Productos productoCarrito;
 
     /**
      * Creates new form Main
      */
-    public Main(Cliente cliente, Factura miFactura) {
+    public Main(Cliente cliente, Factura factura) {
         this.cliente = cliente;
-        this.miFactura = miFactura;
+        Main.miFactura = factura;
         initComponents();
         panel.setLayout(new GridLayout(0, 5, 15, 15));
         cargarProducto();
@@ -84,8 +84,21 @@ public class Main extends javax.swing.JFrame {
             //Boton carrito y lo que hace
             JButton carrito = new JButton();
             carrito.addActionListener(e -> {
-                productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
-                miFactura.llenarFactura(productoCarrito);
+
+                if (Main.miFactura != null) {
+                    
+                    System.out.println("Factura en botón con hash: " + Main.miFactura.hashCode());
+                    
+                    productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
+                    Main.miFactura.llenarFactura(productoCarrito);
+                    
+                    System.out.println("Producto añadido al carrito");
+                    
+                } else {
+                    System.err.println("Error: miFactura es null.");
+                    JOptionPane.showMessageDialog(null, "No se puede añadir al carrito porque la factura no está inicializada.");
+                }
+
             });
             carrito.setText("Añadir al carrito");
             carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -243,9 +256,21 @@ public class Main extends javax.swing.JFrame {
                 //Boton carrito y lo que hace
                 JButton carrito = new JButton();
                 carrito.addActionListener(e -> {
-                    productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
-                    miFactura.llenarFactura(productoCarrito);
-                    System.out.println("se ha llenado factura");
+                    
+                    if (Main.miFactura != null) {
+                        
+                        System.out.println("Factura en botón con hash: " + Main.miFactura.hashCode());
+                        
+                        productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
+                        Main.miFactura.llenarFactura(productoCarrito);
+                        
+                        System.out.println("Producto añadido al carrito");
+                        
+                    } else {
+                        System.err.println("Error: miFactura es null.");
+                        JOptionPane.showMessageDialog(null, "No se puede añadir al carrito porque la factura no está inicializada.");
+                    }
+
                 });
                 carrito.setText("Añadir al carrito");
                 carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -279,14 +304,19 @@ public class Main extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        Cliente cliente = new Cliente(0, null, null, null, null, null, null, null, null, null, null);
+        Factura facturaInicial = new Factura(new ArrayList<>(), LocalDate.now());
 
-        Cliente cliente = new Cliente(0, null, null, null, null, null, null, null, null, null, null); // Si tienes datos, pásalos
-        Factura miFactura = new Factura(new ArrayList<>(), LocalDate.now());
+        Main.miFactura = facturaInicial;
+
+        System.out.println("Factura creada en main con hash: " + Main.miFactura.hashCode());
 
         java.awt.EventQueue.invokeLater(() -> {
-            new Main(cliente, miFactura).setVisible(true);
+            Main ventana = new Main(cliente, facturaInicial);
+            ventana.setVisible(true);
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCarrito;
