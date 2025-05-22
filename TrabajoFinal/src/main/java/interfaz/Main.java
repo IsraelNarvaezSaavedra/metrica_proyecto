@@ -269,7 +269,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
-        Carrito jCarrito = new Carrito();
+        Carrito jCarrito = new Carrito(cliente);
         this.setVisible(false);
         jCarrito.setVisible(true);
     }//GEN-LAST:event_botonCarritoActionPerformed

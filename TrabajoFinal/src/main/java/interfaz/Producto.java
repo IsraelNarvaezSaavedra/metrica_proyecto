@@ -4,6 +4,7 @@
  */
 package interfaz;
 
+import entidades.Cliente;
 import entidades.Productos;
 import java.awt.Component;
 import javax.swing.*;
@@ -14,6 +15,7 @@ import javax.swing.*;
  */
 public class Producto extends javax.swing.JFrame {
     protected Productos producto;
+    Cliente cliente;
     /**
      * Creates new form Producto
      */
@@ -130,13 +132,13 @@ public class Producto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
-        Main ventanaMain = new Main();
+        Main ventanaMain = new Main(cliente);
            this.setVisible(false);
            ventanaMain.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
 
     private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
-        Carrito jCarrito = new Carrito();
+        Carrito jCarrito = new Carrito(cliente);
         this.setVisible(false);
         jCarrito.setVisible(true);
     }//GEN-LAST:event_botonCarritoActionPerformed

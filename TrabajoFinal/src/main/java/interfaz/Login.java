@@ -165,8 +165,8 @@ public class Login extends javax.swing.JFrame {
         if (daoPersona.existeCuentaPersona(contraseñaUs.getText(), nombreUs.getText())) {
             if (main == null || !main.isDisplayable()) {
                 this.dispose();
-                cliente.setNo
-                main = new Main();
+                cliente.setNombreUsuario(nombreUs.getText());
+                main = new Main(cliente);
                 main.setVisible(true);
             } else {
                 main.toFront();

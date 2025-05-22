@@ -17,11 +17,12 @@ import javax.swing.JLabel;
  * @author Minino
  */
 public class Carrito extends javax.swing.JFrame {
-    Factura factura = new Factura(new ArrayList<>(), LocalDate.now());
+    protected Factura factura = new Factura(new ArrayList<>(), LocalDate.now());
+    protected Cliente cliente;
     /**
      * Creates new form Carrito
      */
-    public Carrito() {
+    public Carrito(Cliente cliente) {
         initComponents();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         cargarDatosCarrito();
@@ -142,11 +143,7 @@ public class Carrito extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Carrito().setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
