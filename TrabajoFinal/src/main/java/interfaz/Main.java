@@ -18,7 +18,9 @@ import javax.swing.*;
  * @author usuarioDAW
  */
 public class Main extends javax.swing.JFrame {
-protected Login login;
+
+    protected Login login;
+
     /**
      * Creates new form Main
      */
@@ -27,72 +29,71 @@ protected Login login;
         panel.setLayout(new GridLayout(0, 5, 15, 15));
         cargarProducto();
     }
-    
-    protected void cargarProducto(){
+
+    protected void cargarProducto() {
         panel.removeAll();
         List<Productos> catalogo = DAOProducto.catalogoProducto();
-        
-       for(Productos llenar : catalogo){
-           
-           /*JPanel con su personalizacion donde se introduciran los siguientes 
+
+        for (Productos llenar : catalogo) {
+
+            /*JPanel con su personalizacion donde se introduciran los siguientes 
            botones y etiquetas*/
-           JPanel producto = new JPanel();
-           producto.setBackground(Color.gray);
-           producto.setLayout(new BoxLayout(producto, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
-           producto.setPreferredSize(new Dimension(80, 130)); //Tamanio del panel
-           
-           //Etiqueta nombreProducto y su personalizacion
-           JLabel nombreProducto = new JLabel(llenar.getNombre());
-           nombreProducto.setForeground(Color.WHITE);
-           nombreProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
-           nombreProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
-           
-           //Etiqueta precioProducto y su personalizacion
-           JLabel precioProducto = new JLabel(String.valueOf(llenar.getPrecio())+"€");
-           precioProducto.setForeground(Color.white);
-           precioProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
-           precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
-           
-           //Etiqueta stock y su personalizacion
-           System.out.println("Producto cargado: " + llenar.getNombre() + " | Stock: " + llenar.getStock());
-           JLabel stock = new JLabel("Stock "+String.valueOf(llenar.getStock()));
-           stock.setForeground(Color.white);
-           stock.setAlignmentX(Component.CENTER_ALIGNMENT);
-           precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
-           
-           //Boton verMas, lo que hace y su personalizacion
-           JButton verMas = new JButton();
-           verMas.addActionListener(e -> {
-           Producto productoEspecifico = new Producto();
-           this.setVisible(false);
-           productoEspecifico.setVisible(true);
-           });
-           verMas.setText("   Ver mas   ");
-           verMas.setAlignmentX(Component.CENTER_ALIGNMENT);
-           verMas.setAlignmentY(Component.CENTER_ALIGNMENT);
-           
-           //Boton carrito y lo que hace
-           JButton carrito = new JButton();
-           carrito.addActionListener(e -> {
-           Producto carritoCompra = new Producto();
-           this.setVisible(false);
-           carritoCompra.setVisible(true);
-           });
-           carrito.setText("Añadir al carrito");
-           carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
-           carrito.setAlignmentY(Component.CENTER_ALIGNMENT);
-           
-           //Añadir los productos al jpanel
-           producto.add(nombreProducto);
-           producto.add(precioProducto);
-           producto.add(stock);
-           producto.add(verMas);
-           producto.add(carrito);
-           panel.add(producto);
-           
-       }
-       panel.revalidate();
-       panel.repaint();
+            JPanel producto = new JPanel();
+            producto.setBackground(Color.gray);
+            producto.setLayout(new BoxLayout(producto, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
+            producto.setPreferredSize(new Dimension(80, 130)); //Tamanio del panel
+
+            //Etiqueta nombreProducto y su personalizacion
+            JLabel nombreProducto = new JLabel(llenar.getNombre());
+            nombreProducto.setForeground(Color.WHITE);
+            nombreProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+            nombreProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Etiqueta precioProducto y su personalizacion
+            JLabel precioProducto = new JLabel(String.valueOf(llenar.getPrecio()) + "€");
+            precioProducto.setForeground(Color.white);
+            precioProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+            precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Etiqueta stock y su personalizacion
+            JLabel stock = new JLabel("Stock " + String.valueOf(llenar.getStock()));
+            stock.setForeground(Color.white);
+            stock.setAlignmentX(Component.CENTER_ALIGNMENT);
+            precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Boton verMas, lo que hace y su personalizacion
+            JButton verMas = new JButton();
+            verMas.addActionListener(e -> {
+                Producto productoEspecifico = new Producto();
+                this.setVisible(false);
+                productoEspecifico.setVisible(true);
+            });
+            verMas.setText("   Ver mas   ");
+            verMas.setAlignmentX(Component.CENTER_ALIGNMENT);
+            verMas.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Boton carrito y lo que hace
+            JButton carrito = new JButton();
+            carrito.addActionListener(e -> {
+                Producto carritoCompra = new Producto();
+                this.setVisible(false);
+                carritoCompra.setVisible(true);
+            });
+            carrito.setText("Añadir al carrito");
+            carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
+            carrito.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Añadir los productos al jpanel
+            producto.add(nombreProducto);
+            producto.add(precioProducto);
+            producto.add(stock);
+            producto.add(verMas);
+            producto.add(carrito);
+            panel.add(producto);
+
+        }
+        panel.revalidate();
+        panel.repaint();
     }
 
     /**
@@ -113,6 +114,11 @@ protected Login login;
 
         jTextField1.setBackground(new java.awt.Color(216, 233, 250));
         jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(153, 204, 255));
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -168,14 +174,87 @@ protected Login login;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        System.out.println("se ha pulsado el boton de buscar");
+        String buscar = jTextField1.getText();
+        if (buscar.isEmpty()) {
+            cargarProducto();
+        } else {
+            panel.removeAll();
+            List<Productos> catalogo = DAOProducto.buscarProducto(buscar);
+
+            for (Productos llenar : catalogo) {
+
+                /*JPanel con su personalizacion donde se introduciran los siguientes 
+           botones y etiquetas*/
+                JPanel producto = new JPanel();
+                producto.setBackground(Color.gray);
+                producto.setLayout(new BoxLayout(producto, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
+                producto.setPreferredSize(new Dimension(80, 130)); //Tamanio del panel
+
+                //Etiqueta nombreProducto y su personalizacion
+                JLabel nombreProducto = new JLabel(llenar.getNombre());
+                nombreProducto.setForeground(Color.WHITE);
+                nombreProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+                nombreProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Etiqueta precioProducto y su personalizacion
+                JLabel precioProducto = new JLabel(String.valueOf(llenar.getPrecio()) + "€");
+                precioProducto.setForeground(Color.white);
+                precioProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+                precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Etiqueta stock y su personalizacion
+                System.out.println("Producto cargado: " + llenar.getNombre() + " | Stock: " + llenar.getStock());
+                JLabel stock = new JLabel("Stock " + String.valueOf(llenar.getStock()));
+                stock.setForeground(Color.white);
+                stock.setAlignmentX(Component.CENTER_ALIGNMENT);
+                precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Boton verMas, lo que hace y su personalizacion
+                JButton verMas = new JButton();
+                verMas.addActionListener(e -> {
+                    Producto productoEspecifico = new Producto();
+                    this.setVisible(false);
+                    productoEspecifico.setVisible(true);
+                });
+                verMas.setText("   Ver mas   ");
+                verMas.setAlignmentX(Component.CENTER_ALIGNMENT);
+                verMas.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Boton carrito y lo que hace
+                JButton carrito = new JButton();
+                carrito.addActionListener(e -> {
+                    Producto carritoCompra = new Producto();
+                    this.setVisible(false);
+                    carritoCompra.setVisible(true);
+                });
+                carrito.setText("Añadir al carrito");
+                carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
+                carrito.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Añadir los productos al jpanel
+                producto.add(nombreProducto);
+                producto.add(precioProducto);
+                producto.add(stock);
+                producto.add(verMas);
+                producto.add(carrito);
+                panel.add(producto);
+
+            }
+            panel.revalidate();
+            panel.repaint();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

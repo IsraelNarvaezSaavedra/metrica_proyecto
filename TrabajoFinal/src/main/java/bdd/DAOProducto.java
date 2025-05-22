@@ -18,18 +18,17 @@ public class DAOProducto {
         List<Productos> buscados = new ArrayList();
         try {
             conn = ConexionBD.conectarBD();
-            System.out.println("Conectado a: " + conn.getMetaData().getURL());
-            PreparedStatement pst = conn.prepareStatement("SELECT p.id, p.nombre, p.categoria_nombre, p.precio, s.cantidad\n" +
-"FROM producto p\n" +
-"JOIN stock s ON s.producto_id = p.id\n" +
-"\n" +
-"UNION\n" +
-"\n" +
-"SELECT p.id, p.nombre, p.categoria_nombre, p.precio, NULL AS cantidad\n" +
-"FROM producto p\n" +
-"WHERE NOT EXISTS (\n" +
-"    SELECT 1 FROM stock s WHERE s.producto_id = p.id\n" +
-")");
+            PreparedStatement pst = conn.prepareStatement("SELECT p.id, p.nombre, p.categoria_nombre, p.precio, s.cantidad\n"
+                    + "FROM producto p\n"
+                    + "JOIN stock s ON s.producto_id = p.id\n"
+                    + "\n"
+                    + "UNION\n"
+                    + "\n"
+                    + "SELECT p.id, p.nombre, p.categoria_nombre, p.precio, NULL AS cantidad\n"
+                    + "FROM producto p\n"
+                    + "WHERE NOT EXISTS (\n"
+                    + "    SELECT 1 FROM stock s WHERE s.producto_id = p.id\n"
+                    + ")");
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
 
@@ -41,10 +40,9 @@ public class DAOProducto {
                         rs.getInt(5)
                 );
                 buscados.add(producto);
-                System.out.println("Producto: " + rs.getString("nombre") + " | Stock: " + rs.getInt("cantidad"));
+                
 
             }
-            System.out.println("Tamaño del catálogo: " + buscados.size());
         } catch (SQLException e) {
             System.err.println("No se ha podido llenar el catalogo " + e.getMessage());
             e.printStackTrace();
@@ -55,24 +53,29 @@ public class DAOProducto {
     }
 
     public static List buscarProducto(String elegido) {
+        System.out.println("se ha entrado al metodo buscar producto");
         Productos producto = null;
         Connection conn = null;
         List<Productos> buscados = new <Productos>ArrayList();
         try {
             conn = ConexionBD.conectarBD();
-            PreparedStatement pst = conn.prepareStatement("SELECT * FROM producto WHERE UPPER(nombre) LIKE ?");
-            pst.setString(1, "'%" + elegido.toUpperCase() + "%'");
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM producto left join stock\n"
+                    + "on producto.id=stock.producto_id\n"
+                    + "WHERE UPPER(nombre) LIKE ?");
+            pst.setString(1, "%" + elegido.toUpperCase() + "%");
             ResultSet rs = pst.executeQuery();
-
+            System.out.println("se ha hecho la consulta");
             while (rs.next()) {
+                System.out.println("se ha metido en el bucle y se va a aniadir a la lista: "+ rs.getString("nombre"));
                 producto = new Productos(
                         rs.getInt("id"),
                         rs.getString("nombre"),
-                        (Categoria) rs.getObject("categoria"),
+                        Categoria.valueOf(rs.getString("categoria_nombre")),
                         rs.getDouble("precio"),
-                        rs.getInt("stock")
+                        rs.getInt("cantidad")
                 );
                 buscados.add(producto);
+                System.out.println("Producto: " + rs.getString("nombre") + " | Stock: " + rs.getInt("cantidad"));
             }
 
         } catch (SQLException e) {
