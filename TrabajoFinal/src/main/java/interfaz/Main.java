@@ -22,10 +22,12 @@ import javax.swing.*;
  * @author usuarioDAW
  */
 public class Main extends javax.swing.JFrame {
+
     protected Login login;
     protected Cliente cliente;
     protected Factura miFactura;
     protected Productos productoCarrito;
+
     /**
      * Creates new form Main
      */
@@ -237,11 +239,10 @@ public class Main extends javax.swing.JFrame {
                 verMas.setText("   Ver mas   ");
                 verMas.setAlignmentX(Component.CENTER_ALIGNMENT);
                 verMas.setAlignmentY(Component.CENTER_ALIGNMENT);
-                
-                 
+
                 //Boton carrito y lo que hace
                 JButton carrito = new JButton();
-                carrito.addActionListener(e -> { 
+                carrito.addActionListener(e -> {
                     productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
                     miFactura.llenarFactura(productoCarrito);
                     System.out.println("se ha llenado factura");
@@ -305,7 +306,7 @@ public class Main extends javax.swing.JFrame {
 
         /* Create and display the form */
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCarrito;
     private javax.swing.JButton jButton1;
