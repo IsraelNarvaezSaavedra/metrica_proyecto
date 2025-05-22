@@ -63,4 +63,24 @@ public class DAOPersona {
 
         return existe;
     }
+    
+    public static boolean existeCuentaPersona(String contraseña, String usuario) {
+        boolean existe = false;
+        Connection conn = null;
+        try {
+            conn = ConexionBD.conectarBD();
+            String sql = "SELECT 1 FROM persona WHERE (usuario = ? AND passwd = ?) AND ROWNUM = 1";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, usuario);
+            pst.setString(2, contraseña);
+            ResultSet rs = pst.executeQuery();
+            existe = rs.next();
+        } catch (SQLException e) {
+            System.err.println("Error al verificar existencia de persona: " + e.getMessage());
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+
+        return existe;
+    }
 }
