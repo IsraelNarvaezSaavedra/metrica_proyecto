@@ -6,6 +6,7 @@ package interfaz;
 
 import entidades.Cliente;
 import entidades.Productos;
+import entidades.Valoracion;
 import java.awt.Component;
 import javax.swing.*;
 
@@ -14,50 +15,52 @@ import javax.swing.*;
  * @author isran
  */
 public class Producto extends javax.swing.JFrame {
+
     protected Productos producto;
-    Cliente cliente;
+    protected Cliente cliente;
+    protected Valoracion rate;
+
     /**
      * Creates new form Producto
      */
-    public Producto(Productos producto) {
-        this.producto = producto;
-        initComponents();
-        expositor.setLayout(new BoxLayout(expositor, BoxLayout.Y_AXIS));
-        generarProducto();
-    }
-    
+    public Producto(Productos producto, Cliente cliente) {
+    this.producto = producto;
+    this.cliente = cliente;
+    initComponents();
+    expositor.setLayout(new BoxLayout(expositor, BoxLayout.Y_AXIS));
+    generarProducto();
+}
+
     private void generarProducto() {
         expositor.removeAll();
-        
+
         //JLabel con el nombre del producto y su personalizacion
         JLabel nombre = new JLabel(producto.getNombre());
         nombre.setAlignmentX(Component.RIGHT_ALIGNMENT);
         nombre.setAlignmentY(Component.CENTER_ALIGNMENT);
-        nombre.setFont(nombre.getFont().deriveFont(40f)); 
+        nombre.setFont(nombre.getFont().deriveFont(40f));
         expositor.add(nombre);
-        
+
         //JLabel con el categoria del producto y su personalizacion
         JLabel categoria = new JLabel(producto.getCategoria().toString());
         categoria.setAlignmentX(Component.RIGHT_ALIGNMENT);
         categoria.setAlignmentY(Component.CENTER_ALIGNMENT);
         nombre.setFont(nombre.getFont().deriveFont(20f));
         expositor.add(categoria);
-        
+
         //JLabel con el precio del producto y su personalizacion
-        JLabel precio = new JLabel(String.valueOf(producto.getPrecio())+ "€");
+        JLabel precio = new JLabel(String.valueOf(producto.getPrecio()) + "€");
         precio.setAlignmentX(Component.RIGHT_ALIGNMENT);
         precio.setAlignmentY(Component.CENTER_ALIGNMENT);
         nombre.setFont(nombre.getFont().deriveFont(35f));
         expositor.add(precio);
-        
-        JLabel valoracion = new JLabel(String.valueOf(producto.getPrecio())+ "€");
-        precio.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        precio.setAlignmentY(Component.CENTER_ALIGNMENT);
-        nombre.setFont(nombre.getFont().deriveFont(35f));
-        expositor.add(precio);
-        
-        
-        
+
+        double media = producto.getMediaValoraciones(); // obtenida correctamente
+        JLabel valoracion = new JLabel("Valoración media: " + String.format("%.1f", media));
+        valoracion.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        valoracion.setFont(valoracion.getFont().deriveFont(30f));
+        expositor.add(valoracion);
+
         expositor.revalidate();
         expositor.repaint();
     }
@@ -141,8 +144,8 @@ public class Producto extends javax.swing.JFrame {
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         Main ventanaMain = new Main(cliente, null);
-           this.setVisible(false);
-           ventanaMain.setVisible(true);
+        this.setVisible(false);
+        ventanaMain.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
 
     private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
@@ -154,7 +157,6 @@ public class Producto extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCarrito;
