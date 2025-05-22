@@ -29,6 +29,10 @@ public class Factura {
         return factura;
     }
 
+    public void vaciarFactura() {
+        factura.clear();
+    }
+
     public void descargarFactura(Cliente cliente) {
         try {
             BufferedWriter imprFactura = new BufferedWriter(new FileWriter("factura.txt"));

@@ -31,8 +31,9 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    public Main(Cliente cliente) {
+    public Main(Cliente cliente, Factura miFactura) {
         this.cliente = cliente;
+        this.miFactura = miFactura;
         initComponents();
         panel.setLayout(new GridLayout(0, 5, 15, 15));
         miFactura = new Factura(new ArrayList<>(), LocalDate.now());
