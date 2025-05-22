@@ -68,7 +68,7 @@ public class Main extends javax.swing.JFrame {
             //Boton verMas, lo que hace y su personalizacion
             JButton verMas = new JButton();
             verMas.addActionListener(e -> {
-                Producto productoEspecifico = new Producto();
+                Producto productoEspecifico = new Producto(llenar);
                 this.setVisible(false);
                 productoEspecifico.setVisible(true);
             });
@@ -81,7 +81,6 @@ public class Main extends javax.swing.JFrame {
             carrito.addActionListener(e -> {
                 productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
                 miFactura.llenarFactura(productoCarrito);
-                System.out.println("se ha llenado factura");
             });
             carrito.setText("Añadir al carrito");
             carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -228,7 +227,7 @@ public class Main extends javax.swing.JFrame {
                 //Boton verMas, lo que hace y su personalizacion
                 JButton verMas = new JButton();
                 verMas.addActionListener(e -> {
-                    Producto productoEspecifico = new Producto();
+                    Producto productoEspecifico = new Producto(llenar);
                     this.setVisible(false);
                     productoEspecifico.setVisible(true);
                 });
