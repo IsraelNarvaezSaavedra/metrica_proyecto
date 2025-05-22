@@ -7,8 +7,8 @@ package interfaz;
 import entidades.Cliente;
 import entidades.Factura;
 import entidades.Productos;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.awt.Component;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
@@ -17,12 +17,15 @@ import javax.swing.JLabel;
  * @author Minino
  */
 public class Carrito extends javax.swing.JFrame {
+
     protected Factura factura;
     protected Cliente cliente;
+
     /**
      * Creates new form Carrito
      */
     public Carrito(Cliente cliente, Factura factura) {
+        this.cliente = cliente;
         this.factura = factura;
         initComponents();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -32,7 +35,9 @@ public class Carrito extends javax.swing.JFrame {
     private void cargarDatosCarrito() {
         panel.removeAll(); // Limpia el panel por si ya hay datos
         for (Productos p : factura.getFactura()) {
-            JLabel productoLabel = new JLabel(p.getNombre() + " - " + p.getPrecio() + "€ - Cantidad: " + p.getStock());
+            JLabel productoLabel = new JLabel(p.getNombre() + " - " + p.getPrecio() + "€");
+            productoLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+            productoLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
             productoLabel.setFont(new java.awt.Font("Segoe UI", 0, 18));
             panel.add(productoLabel);
         }
@@ -126,6 +131,14 @@ public class Carrito extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprarActionPerformed
+        if (factura == null || factura.getFactura().isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No hay productos en la factura para comprar.");
+            return;
+        }
+        if (cliente == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No hay cliente definido.");
+            return;
+        }
         factura.descargarFactura(cliente);
         factura.vaciarFactura();
         javax.swing.JOptionPane.showMessageDialog(this, "Compra realizada");
@@ -133,7 +146,7 @@ public class Carrito extends javax.swing.JFrame {
     }//GEN-LAST:event_botonComprarActionPerformed
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
-        Main ventanaMain = new Main(cliente, null);
+        Main ventanaMain = new Main(cliente, factura);
         this.setVisible(false);
         ventanaMain.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
@@ -141,7 +154,6 @@ public class Carrito extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-        
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -167,7 +179,6 @@ public class Carrito extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
