@@ -47,12 +47,13 @@ public class Factura {
             contenido += "Productos"+"\n";
             double total=0.0;
             for(Productos p : factura){
-                contenido += "Nombre: "+p.getNombre()+"\n";
-                contenido += "Precio: "+p.getPrecio()+"\n";
+                contenido += "Nombre: "+p.getNombre()+"\t";
+                contenido += p.getPrecio()+"\n";
                 total+=p.getPrecio();
             }
             contenido += "Precio Total: "+total;
             imprFactura.write(contenido);
+            imprFactura.close();
         } catch (IOException e) {
             System.out.println("error al escribir el archivo: " + e.getMessage());
         }

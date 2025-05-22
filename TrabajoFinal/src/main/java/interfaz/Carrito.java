@@ -4,6 +4,7 @@
  */
 package interfaz;
 
+import bdd.DAOProducto;
 import entidades.Cliente;
 import entidades.Factura;
 import entidades.Productos;
@@ -140,12 +141,16 @@ public class Carrito extends javax.swing.JFrame {
             return;
         }
         factura.descargarFactura(cliente);
+        for (Productos p : factura.getFactura()) {
+            DAOProducto.reducirStock(p.getId());
+        }
         factura.vaciarFactura();
         javax.swing.JOptionPane.showMessageDialog(this, "Compra realizada");
         cargarDatosCarrito();
     }//GEN-LAST:event_botonComprarActionPerformed
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+        factura.vaciarFactura();
         Main ventanaMain = new Main(cliente, factura);
         this.setVisible(false);
         ventanaMain.setVisible(true);

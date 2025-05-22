@@ -9,6 +9,8 @@ import entidades.Factura;
 import entidades.Productos;
 import entidades.Valoracion;
 import java.awt.Component;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -165,13 +167,19 @@ public class Producto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
-        Main ventanaMain = new Main(cliente, factura);
+
+        Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
+        Main ventanaMain = new Main(cliente, nuevaFactura);
+
         this.setVisible(false);
         ventanaMain.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
 
     private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
-        Carrito jCarrito = new Carrito(cliente, factura);
+
+        Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
+        Carrito jCarrito = new Carrito(cliente, nuevaFactura);
+
         this.setVisible(false);
         jCarrito.setVisible(true);
     }//GEN-LAST:event_botonCarritoActionPerformed
