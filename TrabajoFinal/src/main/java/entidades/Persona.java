@@ -1,4 +1,3 @@
-
 package entidades;
 
 import javax.swing.JOptionPane;
@@ -8,6 +7,7 @@ import javax.swing.JOptionPane;
  * @author usuarioDAW
  */
 public class Persona {
+
     protected int id;
     protected String nombre;
     protected String apellidos;
@@ -17,7 +17,6 @@ public class Persona {
     protected String ciudad;
     protected String nombreUsuario;
     protected String contraseñaUsuario;
-    
 
     public Persona(int id, String nombre, String apellidos, String tlf, String email, String localidad, String ciudad, String nombreUsuario, String contraseñaUsuario) {
         this.id = id;
@@ -86,15 +85,22 @@ public class Persona {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
-    
+
     public static void UsuarioVacio(String mensaje, String titulo) {
         JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.DEFAULT_OPTION);
+    }
+
+    public static boolean esTelefonoValido(String tlf) {
+        return tlf.matches("\\d{9}");
+    }
+
+    public static boolean esEmailValido(String email) {
+        return email != null && email.contains("@") && email.contains(".");
     }
 
     @Override
     public String toString() {
         return "Nombre del cliente: " + nombre + " " + apellidos + ", teléfono: " + tlf + ", email: " + email + "vive en: " + localidad + " " + ciudad;
     }
-    
-    
+
 }

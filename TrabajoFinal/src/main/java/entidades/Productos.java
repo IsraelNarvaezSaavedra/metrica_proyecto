@@ -5,18 +5,30 @@ package entidades;
  * @author usuarioDAW
  */
 public class Productos {
-    int id;
-    String nombre;
-    double precio;
+    protected int id;
+    protected String nombre;
+    protected double precio;
+    protected Categoria categoria;
+    protected int stock;
 
-    public Productos(int id, String nombre, double precio) {
+    public Productos(int id, String nombre, Categoria categoria, double precio, int stock) {
         this.id = id;
         this.nombre = nombre;
-        if (this.precio > 0){
+        this.categoria = categoria;
+        if (precio > 0.00){
             this.precio = precio;
         } else {
             throw new IllegalArgumentException("El precio no puede ser negativo");
         }
+        this.stock = stock;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public int getId() {

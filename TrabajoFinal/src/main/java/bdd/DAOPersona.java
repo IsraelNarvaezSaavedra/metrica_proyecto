@@ -5,9 +5,17 @@
 package bdd;
 
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -36,4 +44,25 @@ public class DAOPersona {
             System.out.println("Error al insertar usuario.");
         }
     }
+
+    public static boolean existePersona(String correo, String usuario) {
+        boolean existe = false;
+        Connection conn = null;
+        try {
+            conn = ConexionBD.conectarBD();
+            String sql = "SELECT 1 FROM persona WHERE (usuario = ? OR correo = ?) AND ROWNUM = 1";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, usuario);
+            pst.setString(2, correo);
+            ResultSet rs = pst.executeQuery();
+            existe = rs.next();
+        } catch (SQLException e) {
+            System.err.println("Error al verificar existencia de persona: " + e.getMessage());
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+
+        return existe;
+    }
+
 }
