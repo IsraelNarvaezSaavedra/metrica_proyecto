@@ -4,6 +4,7 @@
  */
 package interfaz;
 
+import bdd.DAOProducto;
 import entidades.Cliente;
 import entidades.Factura;
 import entidades.Productos;
@@ -140,6 +141,9 @@ public class Carrito extends javax.swing.JFrame {
             return;
         }
         factura.descargarFactura(cliente);
+        for (Productos p : factura.getFactura()) {
+            DAOProducto.reducirStock(p.getId());
+        }
         factura.vaciarFactura();
         javax.swing.JOptionPane.showMessageDialog(this, "Compra realizada");
         cargarDatosCarrito();

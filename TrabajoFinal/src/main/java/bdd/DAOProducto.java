@@ -40,7 +40,6 @@ public class DAOProducto {
                         rs.getInt(5)
                 );
                 buscados.add(producto);
-                
 
             }
         } catch (SQLException e) {
@@ -66,7 +65,7 @@ public class DAOProducto {
             ResultSet rs = pst.executeQuery();
             System.out.println("se ha hecho la consulta");
             while (rs.next()) {
-                System.out.println("se ha metido en el bucle y se va a aniadir a la lista: "+ rs.getString("nombre"));
+                System.out.println("se ha metido en el bucle y se va a aniadir a la lista: " + rs.getString("nombre"));
                 producto = new Productos(
                         rs.getInt("id"),
                         rs.getString("nombre"),
@@ -167,6 +166,25 @@ public class DAOProducto {
             }
         } catch (Exception e) {
             System.out.println("Error al modificar el stock.");
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+    }
+
+    public static void reducirStock(int id) {
+        Connection conn = null;
+        try {
+            String sql2 = "UPDATE stock\n"
+                    + "SET cantidad = cantidad - 1\n"
+                    + "WHERE producto_id = ? AND cantidad > 0";
+            conn = ConexionBD.conectarBD();
+            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+
+                pstmt.setInt(1, id);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error al reducir el stock.");
         } finally {
             ConexionBD.desconectarBD(conn);
         }
