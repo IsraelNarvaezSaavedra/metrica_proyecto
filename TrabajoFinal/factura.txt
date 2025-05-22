@@ -1,0 +1,20 @@
+##########   FACTURA GAME    ##########
+Fecha: 2025-05-23
+Cliente:  
+Usuario: caca
+########################################
+
+Productos
+Nombre: Elden Ring
+Precio: 57.7
+Nombre: God of War: Ragnarok
+Precio: 47.31
+Nombre: PlayStation 3
+Precio: 392.41
+Nombre: Nintendo Switch Lite
+Precio: 205.39
+Nombre: Xbox Series X
+Precio: 488.63
+Nombre: Nintendo Switch OLED
+Precio: 340.2
+Precio Total: 1531.64
