@@ -4,27 +4,52 @@
  */
 package interfaz;
 
-import bdd.DAOProducto;
 import entidades.Productos;
-import java.util.List;
+import java.awt.Component;
+import javax.swing.*;
 
 /**
  *
  * @author isran
  */
 public class Producto extends javax.swing.JFrame {
-    private Productos producto;
+    protected Productos producto;
     /**
      * Creates new form Producto
      */
     public Producto(Productos producto) {
         this.producto = producto;
         initComponents();
+        expositor.setLayout(new BoxLayout(expositor, BoxLayout.Y_AXIS));
         generarProducto();
     }
     
     private void generarProducto() {
-        List<Productos> expositorProducto = DAOProducto.catalogoProducto();
+        expositor.removeAll();
+        
+        //JLabel con el nombre del producto y su personalizacion
+        JLabel nombre = new JLabel(producto.getNombre());
+        nombre.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        nombre.setAlignmentY(Component.CENTER_ALIGNMENT);
+        nombre.setFont(nombre.getFont().deriveFont(30f)); 
+        expositor.add(nombre);
+        
+        //JLabel con el categoria del producto y su personalizacion
+        JLabel categoria = new JLabel(producto.getCategoria().toString());
+        categoria.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        categoria.setAlignmentY(Component.CENTER_ALIGNMENT);
+        expositor.add(categoria);
+        
+        //JLabel con el precio del producto y su personalizacion
+        JLabel precio = new JLabel(String.valueOf(producto.getPrecio())+ "€");
+        precio.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        precio.setAlignmentY(Component.CENTER_ALIGNMENT);
+        expositor.add(precio);
+        
+        
+        
+        expositor.revalidate();
+        expositor.repaint();
     }
 
     /**
