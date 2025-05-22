@@ -36,7 +36,6 @@ public class Main extends javax.swing.JFrame {
         this.miFactura = miFactura;
         initComponents();
         panel.setLayout(new GridLayout(0, 5, 15, 15));
-        miFactura = new Factura(new ArrayList<>(), LocalDate.now());
         cargarProducto();
     }
 
@@ -271,7 +270,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
-        Carrito jCarrito = new Carrito(cliente);
+        Carrito jCarrito = new Carrito(cliente, miFactura);
         this.setVisible(false);
         jCarrito.setVisible(true);
     }//GEN-LAST:event_botonCarritoActionPerformed
@@ -281,31 +280,12 @@ public class Main extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
 
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+        Cliente cliente = new Cliente(0, null, null, null, null, null, null, null, null, null, null); // Si tienes datos, pásalos
+        Factura miFactura = new Factura(new ArrayList<>(), LocalDate.now());
 
-        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            new Main(cliente, miFactura).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

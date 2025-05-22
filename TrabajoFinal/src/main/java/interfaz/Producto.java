@@ -146,7 +146,7 @@ public class Producto extends javax.swing.JFrame {
     }//GEN-LAST:event_volverActionPerformed
 
     private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
-        Carrito jCarrito = new Carrito(cliente);
+        Carrito jCarrito = new Carrito(cliente, null);
         this.setVisible(false);
         jCarrito.setVisible(true);
     }//GEN-LAST:event_botonCarritoActionPerformed
