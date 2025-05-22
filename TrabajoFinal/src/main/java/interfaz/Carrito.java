@@ -30,7 +30,6 @@ public class Carrito extends javax.swing.JFrame {
 
     private void cargarDatosCarrito() {
         panel.removeAll(); // Limpia el panel por si ya hay datos
-
         for (Productos p : factura.getFactura()) {
             JLabel productoLabel = new JLabel(p.getNombre() + " - " + p.getPrecio() + "€ - Cantidad: " + p.getStock());
             productoLabel.setFont(new java.awt.Font("Segoe UI", 0, 18));
@@ -111,7 +110,10 @@ public class Carrito extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprarActionPerformed
-        // Vacía el panel
+        factura.descargarFactura(cliente);
+        factura.vaciarFactura();
+        javax.swing.JOptionPane.showMessageDialog(this, "Compra realizada");
+        cargarDatosCarrito();
     }//GEN-LAST:event_botonComprarActionPerformed
 
     /**

@@ -166,7 +166,7 @@ public class Login extends javax.swing.JFrame {
             if (main == null || !main.isDisplayable()) {
                 this.dispose();
                 cliente.setNombreUsuario(nombreUs.getText());
-                main = new Main(cliente);
+                main = new Main(cliente, null);
                 main.setVisible(true);
             } else {
                 main.toFront();
