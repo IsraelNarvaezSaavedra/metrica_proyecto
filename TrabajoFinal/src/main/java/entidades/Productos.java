@@ -1,9 +1,8 @@
 package entidades;
 
-/**
- *
- * @author usuarioDAW
- */
+import bdd.DAOValoracion;
+import java.util.List;
+
 public class Productos {
     protected int id;
     protected String nombre;
@@ -21,7 +20,6 @@ public class Productos {
             throw new IllegalArgumentException("El precio no puede ser negativo");
         }
         this.stock = stock;
-
     }
 
     public Categoria getCategoria() {
@@ -62,12 +60,25 @@ public class Productos {
 
     public void setPrecio(double precio) {
         this.precio = precio;
-    } 
+    }
+
+    public List<Valoracion> getValoraciones() {
+        return DAOValoracion.valoracionProducto(this.id);
+    }
+
+    public double getMediaValoraciones() {
+        List<Valoracion> valoraciones = getValoraciones();
+        if (valoraciones.isEmpty()) return 0.0;
+
+        double suma = 0;
+        for (Valoracion v : valoraciones) {
+            suma += v.getValoracion();
+        }
+        return suma / valoraciones.size();
+    }
 
     @Override
     public String toString() {
         return "Nombre: " + nombre + ", precio: " + precio;
     }
-    
-    
 }

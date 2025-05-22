@@ -1,12 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bdd;
 
-import static bdd.DAOProducto.catalogoProducto;
-import entidades.Categoria;
-import entidades.Productos;
 import entidades.Valoracion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,63 +8,54 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author isran
- */
 public class DAOValoracion {
 
     public static void ponerValoracion(int producto_id, int cliente_id, String comentario, Double valoracion) {
         Connection conn = null;
-
         try {
-            String sql2 = "INSERT INTO valoracion (producto_id, cliente_id, comentario, valoracion) "
-                    + "VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO valoracion (producto_id, cliente_id, comentario, valoracion) VALUES (?, ?, ?, ?)";
             conn = ConexionBD.conectarBD();
-            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setInt(1, producto_id);
                 pstmt.setInt(2, cliente_id);
                 pstmt.setString(3, comentario);
                 pstmt.setDouble(4, valoracion);
-
+                pstmt.executeUpdate();
             }
         } catch (Exception e) {
-            System.out.println("Error al insertar el producto.");
+            System.out.println("Error al insertar la valoración: " + e.getMessage());
         } finally {
             ConexionBD.desconectarBD(conn);
         }
     }
 
-    public static List<Valoracion> valoracionProducto() {
-        Valoracion resenia=null;
+    public static List<Valoracion> valoracionProducto(int id) {
+        List<Valoracion> valoraciones = new ArrayList<>();
         Connection conn = null;
-        List<Valoracion> buscados = new ArrayList();
         try {
             conn = ConexionBD.conectarBD();
-            PreparedStatement pst = conn.prepareStatement("select valoracion.cliente_id, persona.nombre, producto.nombre , valoracion.comentario, valoracion.valoracion from persona left join cliente\n"
-                    + "on persona.id=cliente.id left join valoracion\n"
-                    + "on cliente.id=valoracion.cliente_id left join producto\n"
-                    + "on valoracion.producto_id=producto.id\n"
-                    + "where producto.id=?");
+            String sql = "SELECT valoracion.producto_id, valoracion.cliente_id, valoracion.comentario, valoracion.valoracion " +
+                         "FROM valoracion " +
+                         "JOIN cliente ON valoracion.cliente_id = cliente.id " +
+                         "JOIN producto ON valoracion.producto_id = producto.id " +
+                         "WHERE producto.id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-
-                resenia = new Valoracion(
-                        rs.getInt("producto_id"),
-                        rs.getInt("cliente_id"),
-                        rs.getString("comentario"),
-                        rs.getDouble("valoracion")
+                Valoracion v = new Valoracion(
+                    rs.getInt("producto_id"),
+                    rs.getInt("cliente_id"),
+                    rs.getString("comentario"),
+                    rs.getDouble("valoracion")
                 );
-                buscados.add(resenia);
-
+                valoraciones.add(v);
             }
         } catch (SQLException e) {
-            System.err.println("No se ha podido llenar el catalogo " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Error al obtener valoraciones: " + e.getMessage());
         } finally {
             ConexionBD.desconectarBD(conn);
         }
-        return buscados;
+        return valoraciones;
     }
 }
