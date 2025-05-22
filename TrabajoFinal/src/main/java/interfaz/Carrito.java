@@ -142,6 +142,7 @@ public class Carrito extends javax.swing.JFrame {
         }
         factura.descargarFactura(cliente);
         for (Productos p : factura.getFactura()) {
+            System.out.println("Reduciendo stock producto ID: " + p.getId());
             DAOProducto.reducirStock(p.getId());
         }
         factura.vaciarFactura();
