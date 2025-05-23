@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import bdd.DAOProducto;
@@ -9,14 +5,9 @@ import entidades.Cliente;
 import entidades.Factura;
 import entidades.Productos;
 import java.awt.Component;
-import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
-/**
- *
- * @author Minino
- */
 public class Carrito extends javax.swing.JFrame {
 
     protected Factura factura;
@@ -33,14 +24,19 @@ public class Carrito extends javax.swing.JFrame {
         cargarDatosCarrito();
     }
 
+    //Coje los productos que ha escogido el usuario y los muestra
     private void cargarDatosCarrito() {
+
         panel.removeAll(); // Limpia el panel por si ya hay datos
+
         for (Productos p : factura.getFactura()) {
+
             JLabel productoLabel = new JLabel(p.getNombre() + " - " + p.getPrecio() + "€");
             productoLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
             productoLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
             productoLabel.setFont(new java.awt.Font("Segoe UI", 0, 18));
             panel.add(productoLabel);
+
         }
 
         panel.revalidate(); // Refresca el panel
@@ -131,7 +127,10 @@ public class Carrito extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*Este es el boton de realizar la compra, comprueba que no haya nada en null y en caso de que este
+    bien, se descarga y muestra un mensaje en pantalla de que se ha realizado*/
     private void botonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprarActionPerformed
+        //Comprueba que no sea null
         if (factura == null || factura.getFactura().isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "No hay productos en la factura para comprar.");
             return;
@@ -140,15 +139,20 @@ public class Carrito extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "No hay cliente definido.");
             return;
         }
+
+        //Llena la lista
         factura.descargarFactura(cliente);
         for (Productos p : factura.getFactura()) {
             DAOProducto.reducirStock(p.getId());
         }
+
+        //Vacia la factura y muestra un mensaje en pantalla
         factura.vaciarFactura();
         javax.swing.JOptionPane.showMessageDialog(this, "Compra realizada");
         cargarDatosCarrito();
     }//GEN-LAST:event_botonComprarActionPerformed
 
+    //Vuelve a main
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
         factura.vaciarFactura();
         Main ventanaMain = new Main(cliente, factura);

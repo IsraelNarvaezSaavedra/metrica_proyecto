@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import entidades.Productos;
@@ -17,10 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-/**
- *
- * @author usuarioDAW
- */
 public class Main extends javax.swing.JFrame {
 
     protected Login login;
@@ -39,6 +31,7 @@ public class Main extends javax.swing.JFrame {
         cargarProducto();
     }
 
+    //Carga todas las "tarjetas" de los productos
     protected void cargarProducto() {
         panel.removeAll();
         List<Productos> catalogo = DAOProducto.catalogoProducto();
@@ -86,10 +79,10 @@ public class Main extends javax.swing.JFrame {
             carrito.addActionListener(e -> {
 
                 if (Main.miFactura != null) {
-                    
+
                     productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
                     Main.miFactura.llenarFactura(productoCarrito);
-                    
+
                 } else {
                     System.err.println("Error: miFactura es null.");
                     JOptionPane.showMessageDialog(null, "No se puede añadir al carrito porque la factura no está inicializada.");
@@ -202,6 +195,7 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Este es el boton buscar, coge los valores del textField y busca los objetos que esten relacionados
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         String buscar = jTextField1.getText();
@@ -252,13 +246,12 @@ public class Main extends javax.swing.JFrame {
                 //Boton carrito y lo que hace
                 JButton carrito = new JButton();
                 carrito.addActionListener(e -> {
-                    
+
                     if (Main.miFactura != null) {
-                        
+
                         productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
                         Main.miFactura.llenarFactura(productoCarrito);
-                        
-                        
+
                     } else {
                         System.err.println("Error: miFactura es null.");
                         JOptionPane.showMessageDialog(null, "No se puede añadir al carrito porque la factura no está inicializada.");
@@ -287,6 +280,7 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    //El boton del carrito, envia a la pestania de carrito
     private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
         Carrito jCarrito = new Carrito(cliente, miFactura);
         this.setVisible(false);

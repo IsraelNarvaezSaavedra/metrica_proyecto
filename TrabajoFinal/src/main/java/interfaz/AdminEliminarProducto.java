@@ -3,13 +3,10 @@ package interfaz;
 import bdd.DAOProducto;
 import entidades.Persona;
 
-/**
- *
- * @author Minino
- */
 public class AdminEliminarProducto extends javax.swing.JFrame {
 
     protected DAOProducto daoProducto = new DAOProducto();
+
     /**
      * Creates new form AdminEliminarProducto
      */
@@ -110,14 +107,16 @@ public class AdminEliminarProducto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Comprueba que el campo a rellenar no este vacio y en caso de que no lo este lo elimina
     private void botonEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarProductoActionPerformed
-        if (producto.getText().isEmpty()){
+        if (producto.getText().isEmpty()) {
             Persona.UsuarioVacio("debes de escribir el nombre de usuario", "Error");
         } else {
             daoProducto.borrarProductoPorId(Integer.parseInt(producto.getText().trim()));
         }
     }//GEN-LAST:event_botonEliminarProductoActionPerformed
 
+    //Vuelve a admin main
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
 
         AdminMain ventanaMain = new AdminMain();
