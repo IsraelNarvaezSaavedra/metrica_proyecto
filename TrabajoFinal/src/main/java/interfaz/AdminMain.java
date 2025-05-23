@@ -59,6 +59,11 @@ public class AdminMain extends javax.swing.JFrame {
 
         botonModificarProducto.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         botonModificarProducto.setText("Modificar Producto");
+        botonModificarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarProductoActionPerformed(evt);
+            }
+        });
 
         botonEliminarProducto.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         botonEliminarProducto.setText("Eliminar Producto");
@@ -132,6 +137,16 @@ public class AdminMain extends javax.swing.JFrame {
                 modPer.toFront();
             }
     }//GEN-LAST:event_botonModificarPersonaActionPerformed
+
+    private void botonModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProductoActionPerformed
+        if (modPro == null || !modPro.isDisplayable()) {
+                this.dispose();
+                modPro = new AdminModificarProducto();
+                modPro.setVisible(true);
+            } else {
+                modPro.toFront();
+            }
+    }//GEN-LAST:event_botonModificarProductoActionPerformed
 
     /**
      * @param args the command line arguments

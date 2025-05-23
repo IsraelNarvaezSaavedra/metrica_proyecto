@@ -126,21 +126,22 @@ public class DAOProducto {
         }
     }
 
-    public static void modificarProducto(String nombre, Categoria categoria, double precio) {
+    public static void modificarProducto(String nombre, Categoria categoria, double precio, int id) {
         Connection conn = null;
         try {
             String sql2 = "UPDATE producto\n"
                     + "SET \n"
                     + "nombre = ?,\n"
                     + "categoria_nombre = ?,\n"
-                    + "precio = ?";
+                    + "precio = ?"
+                    + "WHERE id = ?";
             conn = ConexionBD.conectarBD();
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-
                 pstmt.setString(1, nombre);
                 pstmt.setObject(2, categoria);
                 pstmt.setDouble(3, precio);
-
+                pstmt.setInt(4, id);
+                pstmt.executeUpdate();
             }
         } catch (Exception e) {
             System.out.println("Error al modificar el producto.");
