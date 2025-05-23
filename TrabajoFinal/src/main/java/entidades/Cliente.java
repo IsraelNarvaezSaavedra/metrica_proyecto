@@ -1,5 +1,7 @@
 package entidades;
 
+
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -13,22 +15,30 @@ public class Cliente extends Persona {
         super(id, nombre, apellidos, tlf, email, localidad, ciudad, nombreUsuario, contraseñaUsuario);
         this.calle = calle;
         this.nCasa = nCasa;
+
+        this.historial = new ArrayList();
+    }
+
+    
+     public List<Factura> getHistorial() {
+        return historial;
+    }
+     
+    public String getCalle() {
+        return calle;
+    }
+
+    public String getnCasa() {
+        return nCasa;
+
     }
 
     public void setCalle(String calle) {
         this.calle = calle;
     }
 
-    public String getnCasa() {
-        return nCasa;
-    }
-
     public void setnCasa(String nCasa) {
         this.nCasa = nCasa;
-    }
-
-    public List<Factura> getHistorial() {
-        return historial;
     }
 
     public void setHistorial(List<Factura> historial) {

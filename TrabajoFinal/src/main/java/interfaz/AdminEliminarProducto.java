@@ -113,6 +113,7 @@ public class AdminEliminarProducto extends javax.swing.JFrame {
             Persona.UsuarioVacio("debes de escribir el nombre de usuario", "Error");
         } else {
             daoProducto.borrarProductoPorId(Integer.parseInt(producto.getText().trim()));
+            javax.swing.JOptionPane.showMessageDialog(this, "CProducto eliminado");
         }
     }//GEN-LAST:event_botonEliminarProductoActionPerformed
 

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DAOPersona {
-
+    
     //Se aniade una persona a la tabla cliente
     public void aniadirCliente(String nombreUsuario) {
         try {
@@ -30,7 +30,7 @@ public class DAOPersona {
 
     //Para saber si el usuario que ha hecho el login es admin (trabajador) o no
     public static boolean esAdmin(String nombreUsuario) {
-        boolean esAdmin = false;
+        boolean esAdmin = true;
         Connection conn = null;
 
         try {
@@ -82,6 +82,7 @@ public class DAOPersona {
             }
         } catch (SQLException e) {
             System.err.println("No se ha podido registrar a persona " + e.getMessage());
+
         }
     }
 
@@ -107,6 +108,7 @@ public class DAOPersona {
 
         return existe;
     }
+
 
     //Para comprobar si ya existia esa persona de antes
     public static boolean existeCuentaPersona(String contraseña, String usuario) {
@@ -181,4 +183,5 @@ public class DAOPersona {
             ConexionBD.desconectarBD(conn);
         }
     }
+
 }

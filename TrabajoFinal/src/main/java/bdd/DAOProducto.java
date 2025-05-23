@@ -152,7 +152,7 @@ public class DAOProducto {
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
                 pstmt.setString(1, nombre);
-                pstmt.setObject(2, categoria);
+                pstmt.setString(2, categoria.toString());
                 pstmt.setDouble(3, precio);
                 pstmt.setInt(4, id);
                 pstmt.executeUpdate();
