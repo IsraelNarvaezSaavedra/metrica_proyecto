@@ -38,71 +38,28 @@ public class DAOPersona {
         }
     }
 
-//    public static boolean esAdmin(String nombreUsuario) {
-//        boolean esAdmin = false;
-//        Connection conn = null;
-//        try {
-//            conn = ConexionBD.conectarBD();
-//            String sql = "SELECT t.id FROM trabajador t \n"
-//                    + "JOIN persona p ON t.id = p.id \n"
-//                    + "WHERE p.usuario = ?";
-//            PreparedStatement pst = conn.prepareStatement(sql);
-//            pst.setString(1, nombreUsuario);
-//            ResultSet rs = pst.executeQuery();
-//            esAdmin = rs.next();
-//            System.out.println("¿Es admin? " + esAdmin);
-//        } catch (SQLException e) {
-//            System.err.println("Error al verificar existencia de persona: " + e.getMessage());
-//        } finally {
-//            ConexionBD.desconectarBD(conn);
-//        }
-//
-//        return esAdmin;
-//    }
-    
     public static boolean esAdmin(String nombreUsuario) {
-    boolean esAdmin = false;
-    Connection conn = null;
-
-    try {
-        conn = ConexionBD.conectarBD();
-
-        // Primero traemos el ID desde persona
-        String sqlId = "SELECT id FROM persona WHERE usuario = ?";
-        PreparedStatement pst1 = conn.prepareStatement(sqlId);
-        pst1.setString(1, nombreUsuario);
-        ResultSet rs1 = pst1.executeQuery();
-
-        if (rs1.next()) {
-            int personaId = rs1.getInt("id");
-            System.out.println("ID de persona: " + personaId);
-
-            // Ahora comprobamos si está en trabajador
-            String sqlTrabajador = "SELECT 1 FROM trabajador WHERE id = ?";
-            PreparedStatement pst2 = conn.prepareStatement(sqlTrabajador);
-            pst2.setInt(1, personaId);
-            ResultSet rs2 = pst2.executeQuery();
-
-            if (rs2.next()) {
-                System.out.println("¡Usuario es trabajador!");
-                esAdmin = true;
-            } else {
-                System.out.println("Usuario NO es trabajador.");
-            }
-
-        } else {
-            System.out.println("No se encontró persona con usuario: " + nombreUsuario);
+        boolean esAdmin = true;
+        Connection conn = null;
+        try {
+            conn = ConexionBD.conectarBD();
+            String sql = "SELECT t.id FROM trabajador t \n"
+                    + "JOIN persona p ON t.id = p.id \n"
+                    + "WHERE p.usuario = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, nombreUsuario);
+            ResultSet rs = pst.executeQuery();
+            esAdmin = rs.next();
+            System.out.println("¿Es admin? " + esAdmin);
+        } catch (SQLException e) {
+            System.err.println("Error al verificar existencia de persona: " + e.getMessage());
+        } finally {
+            ConexionBD.desconectarBD(conn);
         }
 
-    } catch (SQLException e) {
-        System.err.println("Error al verificar si es admin: " + e.getMessage());
-        e.printStackTrace();
-    } finally {
-        ConexionBD.desconectarBD(conn);
+        return esAdmin;
     }
-
-    return esAdmin;
-}
+    
 
 
     public void registrarPersona(String nombre, String apellidos, String tlf, String email, String localidad, String ciudad, String calle, String nCasa, String nombreUsuario, String contraseñaUsuario) {
