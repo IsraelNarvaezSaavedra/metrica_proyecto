@@ -11,7 +11,6 @@ import entidades.Valoracion;
 import java.awt.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 
 /**
@@ -60,11 +59,19 @@ public class Producto extends javax.swing.JFrame {
         precio.setFont(precio.getFont().deriveFont(35f));
         expositor.add(precio);
 
-        double media = producto.getMediaValoraciones(); // obtenida correctamente
+        double media = producto.getMediaValoraciones();
         JLabel valoracion = new JLabel("Valoración media: " + String.format("%.1f", media));
         valoracion.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        valoracion.setFont(valoracion.getFont().deriveFont(30f));
+        valoracion.setFont(valoracion.getFont().deriveFont(20f));
         expositor.add(valoracion);
+
+        
+        //-----------------------------------
+//        JPanel comentarios = new JPanel();
+//        JLabel comentario = new JLabel(producto.);
+        
+        expositor.revalidate();
+        expositor.repaint();
 
         JLabel reseñasTitulo = new JLabel("Opiniones:");
         reseñasTitulo.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -88,6 +95,7 @@ public class Producto extends javax.swing.JFrame {
             expositor.revalidate();
             expositor.repaint();
         }
+
     }
 
     /**

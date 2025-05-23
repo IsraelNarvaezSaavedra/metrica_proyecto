@@ -17,6 +17,27 @@ import java.util.List;
  */
 public class DAOPersona {
 
+    public void aniadirCliente(String nombreUsuario) {
+        try {
+            Connection conn = ConexionBD.conectarBD();
+            PreparedStatement checkStmt = null;
+            ResultSet rs = null;
+            String nuevaPersona = "INSERT INTO cliente (id)\n"
+                    + "SELECT id FROM persona WHERE usuario LIKE ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(nuevaPersona)) {
+
+                pstmt.setString(1, nombreUsuario);
+                pstmt.executeUpdate();
+
+            } finally {
+                ConexionBD.desconectarBD(conn);
+
+            }
+        } catch (SQLException e) {
+            System.err.println("buscarProducto: " + e.getMessage());
+        }
+    }
+
     public void registrarPersona(String nombre, String apellidos, String tlf, String email, String localidad, String ciudad, String calle, String nCasa, String nombreUsuario, String contraseñaUsuario) {
         try {
             Connection conn = ConexionBD.conectarBD();
@@ -38,9 +59,10 @@ public class DAOPersona {
                 pstmt.executeUpdate();
             } finally {
                 ConexionBD.desconectarBD(conn);
+                aniadirCliente(nombreUsuario);
             }
         } catch (SQLException e) {
-            System.err.println("buscarProducto: " + e.getMessage());
+            System.err.println("No se ha podido registrar a persona " + e.getMessage());
         }
     }
 
@@ -63,7 +85,7 @@ public class DAOPersona {
 
         return existe;
     }
-    
+
     public static boolean existeCuentaPersona(String contraseña, String usuario) {
         boolean existe = false;
         Connection conn = null;
@@ -83,7 +105,7 @@ public class DAOPersona {
 
         return existe;
     }
-    
+
     public static void borrarPersonaPorId(int id) {
         Connection conn = null;
         try {
@@ -104,28 +126,28 @@ public class DAOPersona {
 
     public static void modificarPersona(int id, String nombre, String apellidos, String tlf, String email, String localidad, String ciudad, String calle, String nCasa, String nombreUsuario, String contraseñaUsuario) {
         Connection conn = null;
-    try {
-        String sql = "UPDATE persona SET nombre = ?, apellido = ?, tlf = ?, correo = ?, localidad = ?, ciudad_nombre = ?, calle = ?, ncasa = ?, usuario = ?, passwd = ? WHERE id = ?";
-        conn = ConexionBD.conectarBD();
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, nombre);
-            pstmt.setString(2, apellidos);
-            pstmt.setString(3, tlf);
-            pstmt.setString(4, email);
-            pstmt.setString(5, localidad);
-            pstmt.setString(6, ciudad);
-            pstmt.setString(7, calle);
-            pstmt.setString(8, nCasa);
-            pstmt.setString(9, nombreUsuario);
-            pstmt.setString(10, contraseñaUsuario);
-            pstmt.setInt(11, id); // ID de la persona a modificar
-            pstmt.executeUpdate();
+        try {
+            String sql = "UPDATE persona SET nombre = ?, apellido = ?, tlf = ?, correo = ?, localidad = ?, ciudad_nombre = ?, calle = ?, ncasa = ?, usuario = ?, passwd = ? WHERE id = ?";
+            conn = ConexionBD.conectarBD();
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, nombre);
+                pstmt.setString(2, apellidos);
+                pstmt.setString(3, tlf);
+                pstmt.setString(4, email);
+                pstmt.setString(5, localidad);
+                pstmt.setString(6, ciudad);
+                pstmt.setString(7, calle);
+                pstmt.setString(8, nCasa);
+                pstmt.setString(9, nombreUsuario);
+                pstmt.setString(10, contraseñaUsuario);
+                pstmt.setInt(11, id); // ID de la persona a modificar
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al modificar la persona: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            ConexionBD.desconectarBD(conn);
         }
-    } catch (SQLException e) {
-        System.out.println("Error al modificar la persona: " + e.getMessage());
-        e.printStackTrace();
-    } finally {
-        ConexionBD.desconectarBD(conn);
-    }
     }
 }

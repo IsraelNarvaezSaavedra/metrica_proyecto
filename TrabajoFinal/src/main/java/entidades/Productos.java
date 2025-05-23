@@ -65,7 +65,7 @@ public class Productos {
     public List<Valoracion> getValoraciones() {
         return DAOValoracion.valoracionProducto(this.id);
     }
-
+    
     public double getMediaValoraciones() {
         List<Valoracion> valoraciones = getValoraciones();
         if (valoraciones.isEmpty()) return 0.0;
