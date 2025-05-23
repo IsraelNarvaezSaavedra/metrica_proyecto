@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
+
+import bdd.DAOProducto;
+import entidades.Persona;
 
 /**
  *
@@ -10,6 +9,7 @@ package interfaz;
  */
 public class AdminEliminarProducto extends javax.swing.JFrame {
 
+    protected DAOProducto daoProducto = new DAOProducto();
     /**
      * Creates new form AdminEliminarProducto
      */
@@ -26,21 +26,81 @@ public class AdminEliminarProducto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        producto = new javax.swing.JTextField();
+        botonEliminarProducto = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+
+        jLabel2.setText("jLabel2");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setText("Eliminar Producto");
+
+        botonEliminarProducto.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        botonEliminarProducto.setText("Eliminar");
+        botonEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarProductoActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel3.setText("Introduce el ID del Producto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(151, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(183, 183, 183))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(135, 135, 135))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(218, 218, 218)
+                            .addComponent(botonEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(268, 268, 268)
+                            .addComponent(producto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(202, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addGap(84, 84, 84)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(238, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(214, 214, 214)
+                    .addComponent(producto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(43, 43, 43)
+                    .addComponent(botonEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(54, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarProductoActionPerformed
+        if (producto.getText().isEmpty()){
+            Persona.UsuarioVacio("debes de escribir el nombre de usuario", "Error");
+        } else {
+            daoProducto.borrarProductoPorId(Integer.parseInt(producto.getText().trim()));
+        }
+    }//GEN-LAST:event_botonEliminarProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +138,10 @@ public class AdminEliminarProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonEliminarProducto;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField producto;
     // End of variables declaration//GEN-END:variables
 }
