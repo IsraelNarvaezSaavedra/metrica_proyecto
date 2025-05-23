@@ -12,7 +12,9 @@ import entidades.Persona;
  * @author Minino
  */
 public class AdminEliminarPersona extends javax.swing.JFrame {
+
     protected DAOPersona daoPersona = new DAOPersona();
+
     /**
      * Creates new form AdminEliminarPersona
      */
@@ -108,7 +110,7 @@ public class AdminEliminarPersona extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarUsuarioActionPerformed
-        if (usuario.getText().isEmpty()){
+        if (usuario.getText().isEmpty()) {
             Persona.UsuarioVacio("debes de escribir el nombre de usuario", "Error");
         } else {
             daoPersona.borrarPersonaPorUsuario(usuario.getText().trim());

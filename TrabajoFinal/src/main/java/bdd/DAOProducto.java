@@ -5,18 +5,20 @@ import entidades.Productos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DAOProducto {
 
+    //Para mostrar todo el catalogo de la tienda
     public static List<Productos> catalogoProducto() {
         Productos producto = null;
         Connection conn = null;
         List<Productos> buscados = new ArrayList();
+
         try {
+
             conn = ConexionBD.conectarBD();
             PreparedStatement pst = conn.prepareStatement("SELECT p.id, p.nombre, p.categoria_nombre, p.precio, s.cantidad\n"
                     + "FROM producto p\n"
@@ -30,6 +32,7 @@ public class DAOProducto {
                     + "    SELECT 1 FROM stock s WHERE s.producto_id = p.id\n"
                     + ")");
             ResultSet rs = pst.executeQuery();
+
             while (rs.next()) {
 
                 producto = new Productos(
@@ -51,21 +54,24 @@ public class DAOProducto {
         return buscados;
     }
 
+    //Para buscar productos concretos
     public static List buscarProducto(String elegido) {
-        System.out.println("se ha entrado al metodo buscar producto");
+
         Productos producto = null;
         Connection conn = null;
         List<Productos> buscados = new <Productos>ArrayList();
+
         try {
+
             conn = ConexionBD.conectarBD();
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM producto left join stock\n"
                     + "on producto.id=stock.producto_id\n"
                     + "WHERE UPPER(nombre) LIKE ?");
             pst.setString(1, "%" + elegido.toUpperCase() + "%");
             ResultSet rs = pst.executeQuery();
-            System.out.println("se ha hecho la consulta");
+
             while (rs.next()) {
-                System.out.println("se ha metido en el bucle y se va a aniadir a la lista: " + rs.getString("nombre"));
+
                 producto = new Productos(
                         rs.getInt("id"),
                         rs.getString("nombre"),
@@ -74,25 +80,29 @@ public class DAOProducto {
                         rs.getInt("cantidad")
                 );
                 buscados.add(producto);
-                System.out.println("Producto: " + rs.getString("nombre") + " | Stock: " + rs.getInt("cantidad"));
+
             }
 
         } catch (SQLException e) {
-            System.err.println("buscarProducto: " + e.getMessage());
+            System.err.println("No se ha encontrado el producto " + e.getMessage());
         } finally {
             ConexionBD.desconectarBD(conn);
         }
         return buscados;
     }
 
+    //Para insertar productos en la base de datos
     public static void insertarProducto(String nombre, Categoria categoria, double precio) {
         Connection conn = null;
 
         if (!catalogoProducto().contains(nombre)) {
+
             try {
+
                 String sql2 = "INSERT INTO producto (nombre, categoria_nombre, precio)"
                         + "VALUES (?, ?, ?)";
                 conn = ConexionBD.conectarBD();
+
                 try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
                     pstmt.setString(1, nombre);
@@ -108,12 +118,16 @@ public class DAOProducto {
         }
     }
 
+    //Para borrar productos a traves de su id
     public static void borrarProductoPorId(int id) {
         Connection conn = null;
+
         try {
+
             String sql2 = "DELETE FROM producto "
                     + "WHERE id=?";
             conn = ConexionBD.conectarBD();
+
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
                 pstmt.setInt(1, id);
@@ -126,9 +140,12 @@ public class DAOProducto {
         }
     }
 
+    //Para modificar los datos de un producto
     public static void modificarProducto(String nombre, Categoria categoria, double precio, int id) {
         Connection conn = null;
+
         try {
+
             String sql2 = "UPDATE producto\n"
                     + "SET \n"
                     + "nombre = ?,\n"
@@ -136,12 +153,15 @@ public class DAOProducto {
                     + "precio = ?"
                     + "WHERE id = ?";
             conn = ConexionBD.conectarBD();
+
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+
                 pstmt.setString(1, nombre);
                 pstmt.setObject(2, categoria);
                 pstmt.setDouble(3, precio);
                 pstmt.setInt(4, id);
                 pstmt.executeUpdate();
+
             }
         } catch (Exception e) {
             System.out.println("Error al modificar el producto.");
@@ -150,13 +170,14 @@ public class DAOProducto {
         }
     }
 
+    //Para que cuando la gente compre se reduzca el stock
     public static void reducirStock(int productoId) {
         Connection conn = null;
+
         try {
+
             String sql = "UPDATE stock SET cantidad = cantidad - 1 WHERE producto_id = ? AND cantidad > 0";
             conn = ConexionBD.conectarBD();
-
-            System.out.println("Reduciendo stock para producto ID: " + productoId);
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setInt(1, productoId);

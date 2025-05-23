@@ -4,6 +4,7 @@ import bdd.DAOValoracion;
 import java.util.List;
 
 public class Productos {
+
     protected int id;
     protected String nombre;
     protected double precio;
@@ -14,7 +15,7 @@ public class Productos {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
-        if (precio > 0.00){
+        if (precio > 0.00) {
             this.precio = precio;
         } else {
             throw new IllegalArgumentException("El precio no puede ser negativo");
@@ -62,18 +63,24 @@ public class Productos {
         this.precio = precio;
     }
 
+    //Obtiene las valoraciones de la lista a traves del id
     public List<Valoracion> getValoraciones() {
         return DAOValoracion.valoracionProducto(this.id);
     }
-    
-    public double getMediaValoraciones() {
-        List<Valoracion> valoraciones = getValoraciones();
-        if (valoraciones.isEmpty()) return 0.0;
 
+    //Obtiene la media de las valoraciones a traves de getValoraciones()
+    public double getMediaValoraciones() {
+
+        List<Valoracion> valoraciones = getValoraciones();
+        if (valoraciones.isEmpty()) {
+            return 0.0;
+        }
         double suma = 0;
+
         for (Valoracion v : valoraciones) {
             suma += v.getValoracion();
         }
+
         return suma / valoraciones.size();
     }
 
