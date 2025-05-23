@@ -21,12 +21,13 @@ public class Login extends javax.swing.JFrame {
     protected Registrarse registrarse;
     protected DAOPersona daoPersona = new DAOPersona();
     protected Cliente cliente;
+
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
-        cliente = new Cliente(0, "", "",  "", "",  "",  "", "", "", "", "");
+        cliente = new Cliente(0, "", "", "", "", "", "", "", "", "", "");
     }
 
     /**
@@ -166,12 +167,14 @@ public class Login extends javax.swing.JFrame {
 
     private void botonInicarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInicarSesionActionPerformed
         if (daoPersona.existeCuentaPersona(contraseñaUs.getText(), nombreUs.getText())) {
+            System.out.println("Usuario: " + nombreUs.getText());
+            System.out.println("¿Es admin según base de datos? " + DAOPersona.esAdmin(nombreUs.getText()));
+
             if (DAOPersona.esAdmin(nombreUs.getText())) {
                 AdminMain adminMain = new AdminMain();
-                this.dispose();
+                this.setVisible(false);
                 adminMain.setVisible(true);
-            }
-            if (main == null || !main.isDisplayable()) {
+            } else if (main == null || !main.isDisplayable()) {
                 this.dispose();
                 cliente.setNombreUsuario(nombreUs.getText());
                 Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
