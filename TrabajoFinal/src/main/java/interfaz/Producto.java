@@ -11,7 +11,6 @@ import entidades.Valoracion;
 import java.awt.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 
 /**
@@ -23,17 +22,18 @@ public class Producto extends javax.swing.JFrame {
     protected Productos producto;
     protected Cliente cliente;
     protected Valoracion rate;
+    protected Factura factura;
 
     /**
      * Creates new form Producto
      */
     public Producto(Productos producto, Cliente cliente) {
-    this.producto = producto;
-    this.cliente = cliente;
-    initComponents();
-    expositor.setLayout(new BoxLayout(expositor, BoxLayout.Y_AXIS));
-    generarProducto();
-}
+        this.producto = producto;
+        this.cliente = cliente;
+        initComponents();
+        expositor.setLayout(new BoxLayout(expositor, BoxLayout.Y_AXIS));
+        generarProducto();
+    }
 
     private void generarProducto() {
         expositor.removeAll();
@@ -64,6 +64,7 @@ public class Producto extends javax.swing.JFrame {
         valoracion.setAlignmentX(Component.RIGHT_ALIGNMENT);
         valoracion.setFont(valoracion.getFont().deriveFont(20f));
         expositor.add(valoracion);
+
         
         //-----------------------------------
 //        JPanel comentarios = new JPanel();
@@ -71,6 +72,30 @@ public class Producto extends javax.swing.JFrame {
         
         expositor.revalidate();
         expositor.repaint();
+
+        JLabel reseñasTitulo = new JLabel("Opiniones:");
+        reseñasTitulo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        reseñasTitulo.setFont(reseñasTitulo.getFont().deriveFont(24f));
+        expositor.add(reseñasTitulo);
+
+        // Listado de valoraciones individuales
+        java.util.List<Valoracion> valoraciones = bdd.DAOValoracion.valoracionProducto(producto.getId());
+        if (valoraciones.isEmpty()) {
+            JLabel sinResenas = new JLabel("Este producto aún no tiene valoraciones.");
+            sinResenas.setAlignmentX(Component.LEFT_ALIGNMENT);
+            expositor.add(sinResenas);
+        } else {
+            for (Valoracion v : valoraciones) {
+                JLabel comentario = new JLabel("- " + v.getComentario() + " (" + v.getValoracion() + " ★)");
+                comentario.setAlignmentX(Component.LEFT_ALIGNMENT);
+                comentario.setFont(comentario.getFont().deriveFont(18f));
+                expositor.add(comentario);
+            }
+
+            expositor.revalidate();
+            expositor.repaint();
+        }
+
     }
 
     /**
@@ -151,15 +176,19 @@ public class Producto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+
         Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
         Main ventanaMain = new Main(cliente, nuevaFactura);
+
         this.setVisible(false);
         ventanaMain.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
 
     private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
+
         Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
         Carrito jCarrito = new Carrito(cliente, nuevaFactura);
+
         this.setVisible(false);
         jCarrito.setVisible(true);
     }//GEN-LAST:event_botonCarritoActionPerformed

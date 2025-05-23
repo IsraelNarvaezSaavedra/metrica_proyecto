@@ -149,42 +149,24 @@ public class DAOProducto {
         }
     }
 
-    public static void modificarStock(String nombre, int cantidad) {
+    public static void reducirStock(int productoId) {
         Connection conn = null;
         try {
-            String sql2 = "UPDATE stock\n"
-                    + "SET \n"
-                    + "producto_id = (select * from producto\n"
-                    + "where upper(nombre) like '%?%'),\n"
-                    + "cantidad = ?";
+            String sql = "UPDATE stock SET cantidad = cantidad - 1 WHERE producto_id = ? AND cantidad > 0";
             conn = ConexionBD.conectarBD();
-            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
-                pstmt.setString(1, nombre);
-                pstmt.setInt(2, cantidad);
+            System.out.println("Reduciendo stock para producto ID: " + productoId);
 
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, productoId);
+                pstmt.executeUpdate();
             }
+
         } catch (Exception e) {
-            System.out.println("Error al modificar el stock.");
+            System.out.println("Error al reducir el stock: " + e.getMessage());
         } finally {
             ConexionBD.desconectarBD(conn);
         }
     }
-    
-    public static void reducirStock(int id) {
-        try {
-            Connection conn = ConexionBD.conectarBD();
-            String nuevaPersona = "UPDATE stock\n"
-                    + "SET cantidad = cantidad - 1\n"
-                    + "WHERE producto_id = ?";
-            try (PreparedStatement pstmt = conn.prepareStatement(nuevaPersona)) {
-                pstmt.setInt(1, id);
-                pstmt.executeUpdate();
-            } finally {
-                ConexionBD.desconectarBD(conn);
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al reducir el stock." + e.getMessage());
-        }
-    }
+
 }
