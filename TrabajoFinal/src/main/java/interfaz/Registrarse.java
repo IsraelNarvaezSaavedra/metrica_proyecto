@@ -21,7 +21,7 @@ public class Registrarse extends javax.swing.JFrame {
     }
 
     //Metodo para cargar las ciudades en una lista y mostrarla en el combo box
-
+    
     private void cargarCiudadesEnComboBox() {
 
         DAOCiudad dao = new DAOCiudad();
