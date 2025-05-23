@@ -1,5 +1,6 @@
 package interfaz;
 
+
 import bdd.DAOCiudad;
 import bdd.DAOPersona;
 import entidades.Persona;
@@ -7,7 +8,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class Registrarse extends javax.swing.JFrame {
-
     protected Login login;
     protected DAOPersona daoPersona = new DAOPersona();
     protected Persona persona;
@@ -21,6 +21,7 @@ public class Registrarse extends javax.swing.JFrame {
     }
 
     //Metodo para cargar las ciudades en una lista y mostrarla en el combo box
+
     private void cargarCiudadesEnComboBox() {
 
         DAOCiudad dao = new DAOCiudad();
@@ -30,6 +31,7 @@ public class Registrarse extends javax.swing.JFrame {
             nuevaCiudadUs.addItem(ciudad);
         }
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -257,7 +259,11 @@ public class Registrarse extends javax.swing.JFrame {
 
     private void botonRegistarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistarseActionPerformed
 
+        daoPersona = new DAOPersona();
+
+
         //Para controlar que los valores introducidos sean validos
+
         if (nuevoNombreUs.getText().isEmpty() || nuevoApellidosUs.getText().isEmpty() || nuevoEmailUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaLocalidadUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaCasaUs.getText().isEmpty() || nuevoUs.getText().isEmpty() || nuevaContraseñaUs.getText().isEmpty()) {
             Persona.UsuarioVacio("No se puede dejar algún campo vacio", "Error");
         } else if (!persona.esTelefonoValido(nuevoTlfUs.getText())) {
@@ -282,6 +288,7 @@ public class Registrarse extends javax.swing.JFrame {
             }
 
         }
+
     }//GEN-LAST:event_botonRegistarseActionPerformed
 
     private void nuevoTlfUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoTlfUsActionPerformed
