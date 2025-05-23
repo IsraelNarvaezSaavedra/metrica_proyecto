@@ -129,15 +129,15 @@ public class DAOPersona {
         return existe;
     }
 
-    public static void borrarPersonaPorId(int id) {
+    public static void borrarPersonaPorUsuario(String usuario) {
         Connection conn = null;
         try {
             String sql2 = "DELETE FROM persona "
-                    + "WHERE id=?";
+                    + "WHERE usuario=?";
             conn = ConexionBD.conectarBD();
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
-                pstmt.setInt(1, id);
+                pstmt.setString(1, usuario);
 
             }
         } catch (Exception e) {

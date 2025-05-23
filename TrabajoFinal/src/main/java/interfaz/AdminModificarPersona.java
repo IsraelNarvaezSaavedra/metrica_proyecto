@@ -271,10 +271,6 @@ public class AdminModificarPersona extends javax.swing.JFrame {
         } else if (!persona.esEmailValido(emailUs.getText())) {
             Persona.UsuarioVacio("el correo debe ser valido", "Error");
             emailUs.setText("");
-        } else if (daoPersona.existePersona(emailUs.getText().trim(), us.getText().trim())) {
-            Persona.UsuarioVacio("El correo o el nombre de usuario ya existen", "Error");
-            emailUs.setText("");
-            us.setText("");
         } else {
             daoPersona.modificarPersona(Integer.parseInt(IDus.getText()),nombreUs.getText(), apellidosUs.getText(), tlfUs.getText(), emailUs.getText(), localidadUs.getText(), (String) ciudadUs.getSelectedItem(), calleUs.getText(), casaUs.getText(), us.getText(), contraseñaUs.getText());
             if (main == null || !main.isDisplayable()) {
