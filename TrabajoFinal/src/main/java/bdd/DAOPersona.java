@@ -30,7 +30,7 @@ public class DAOPersona {
 
     //Para saber si el usuario que ha hecho el login es admin (trabajador) o no
     public static boolean esAdmin(String nombreUsuario) {
-        boolean esAdmin = false;
+        boolean esAdmin = true;
         Connection conn = null;
 
         try {

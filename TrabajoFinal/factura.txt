@@ -1,9 +1,11 @@
 ##########   FACTURA GAME    ##########
 Fecha: 2025-05-23
 Cliente:  
-Usuario: caca
+Usuario: usuario
 ########################################
 
 Productos
 Nombre: PlayStation 5	191.69
-Precio Total: 191.69
+Nombre: Nintendo Switch OLED	340.2
+Nombre: PlayStation 4	138.2
+Precio Total: 670.0899999999999
