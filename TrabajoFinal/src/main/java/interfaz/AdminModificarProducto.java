@@ -177,7 +177,6 @@ public class AdminModificarProducto extends javax.swing.JFrame {
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
 
         AdminMain ventanaMain = new AdminMain();
-
         this.setVisible(false);
         ventanaMain.setVisible(true);
     }//GEN-LAST:event_volverActionPerformed
