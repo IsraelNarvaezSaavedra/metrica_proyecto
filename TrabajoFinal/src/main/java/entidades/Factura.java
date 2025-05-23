@@ -18,8 +18,8 @@ public class Factura {
     protected LocalDate fecha;
 
     public Factura(List<Productos> factura, LocalDate fecha) {
-        this.factura = new ArrayList();
-        this.fecha = LocalDate.now();
+        this.factura = factura;
+        this.fecha = fecha;
     }
 
     public void llenarFactura(Productos producto) {
