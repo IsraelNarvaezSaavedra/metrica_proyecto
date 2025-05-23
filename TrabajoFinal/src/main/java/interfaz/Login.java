@@ -169,7 +169,7 @@ public class Login extends javax.swing.JFrame {
             if (DAOPersona.esAdmin(nombreUs.getText())) {
                 AdminMain adminMain = new AdminMain();
                 this.dispose();
-                adminMain.etVisible(true);
+                adminMain.setVisible(true);
             }
             if (main == null || !main.isDisplayable()) {
                 this.dispose();
