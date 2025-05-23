@@ -11,6 +11,7 @@ import entidades.Valoracion;
 import java.awt.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
 /**
@@ -48,14 +49,14 @@ public class Producto extends javax.swing.JFrame {
         JLabel categoria = new JLabel(producto.getCategoria().toString());
         categoria.setAlignmentX(Component.RIGHT_ALIGNMENT);
         categoria.setAlignmentY(Component.CENTER_ALIGNMENT);
-        nombre.setFont(nombre.getFont().deriveFont(20f));
+        categoria.setFont(categoria.getFont().deriveFont(20f));
         expositor.add(categoria);
 
         //JLabel con el precio del producto y su personalizacion
         JLabel precio = new JLabel(String.valueOf(producto.getPrecio()) + "€");
         precio.setAlignmentX(Component.RIGHT_ALIGNMENT);
         precio.setAlignmentY(Component.CENTER_ALIGNMENT);
-        nombre.setFont(nombre.getFont().deriveFont(35f));
+        precio.setFont(precio.getFont().deriveFont(35f));
         expositor.add(precio);
 
         double media = producto.getMediaValoraciones(); // obtenida correctamente
@@ -106,11 +107,11 @@ public class Producto extends javax.swing.JFrame {
         expositor.setLayout(expositorLayout);
         expositorLayout.setHorizontalGroup(
             expositorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 833, Short.MAX_VALUE)
+            .addGap(0, 896, Short.MAX_VALUE)
         );
         expositorLayout.setVerticalGroup(
             expositorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGap(0, 564, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(expositor);
@@ -119,16 +120,16 @@ public class Producto extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(volver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 687, Short.MAX_VALUE)
                 .addComponent(botonCarrito)
                 .addGap(26, 26, 26))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,9 +138,9 @@ public class Producto extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(volver, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         pack();
