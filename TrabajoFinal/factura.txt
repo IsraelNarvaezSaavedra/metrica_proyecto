@@ -5,7 +5,7 @@ Usuario: usuario
 ########################################
 
 Productos
-Nombre: PlayStation 5	191.69
-Nombre: Nintendo Switch OLED	340.2
-Nombre: PlayStation 4	138.2
-Precio Total: 670.0899999999999
+Nombre: Xbox 360	391.57
+Nombre: Xbox 360	391.57
+Nombre: PlayStation Vita	357.55
+Precio Total: 1140.69

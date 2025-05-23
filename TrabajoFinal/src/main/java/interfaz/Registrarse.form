@@ -54,11 +54,8 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-<<<<<<< HEAD
+
                           <Component id="nuevoApellidosUs" pref="202" max="32767" attributes="0"/>
-=======
-                          <Component id="nuevoApellidosUs" pref="200" max="32767" attributes="0"/>
->>>>>>> af3e2d1064f26d3fb327fbd12b5ec5571d873899
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -87,11 +84,7 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-<<<<<<< HEAD
-                  <EmptySpace min="156" pref="156" max="-2" attributes="0"/>
-=======
                   <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
->>>>>>> af3e2d1064f26d3fb327fbd12b5ec5571d873899
               </Group>
           </Group>
         </DimensionLayout>
