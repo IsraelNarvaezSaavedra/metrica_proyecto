@@ -108,6 +108,7 @@ public class DAOProducto {
                     pstmt.setString(1, nombre);
                     pstmt.setObject(2, categoria);
                     pstmt.setDouble(3, precio);
+                    pstmt.executeUpdate();
 
                 }
             } catch (Exception e) {
@@ -129,9 +130,8 @@ public class DAOProducto {
             conn = ConexionBD.conectarBD();
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-
                 pstmt.setInt(1, id);
-
+                pstmt.executeUpdate();
             }
         } catch (Exception e) {
             System.out.println("Error al borrar el producto.");
@@ -146,12 +146,7 @@ public class DAOProducto {
 
         try {
 
-            String sql2 = "UPDATE producto\n"
-                    + "SET \n"
-                    + "nombre = ?,\n"
-                    + "categoria_nombre = ?,\n"
-                    + "precio = ?"
-                    + "WHERE id = ?";
+            String sql2 = "UPDATE producto SET nombre = ?, categoria_nombre = ?, precio = ? WHERE id = ?";
             conn = ConexionBD.conectarBD();
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
@@ -164,7 +159,7 @@ public class DAOProducto {
 
             }
         } catch (Exception e) {
-            System.out.println("Error al modificar el producto.");
+            System.out.println("Error al modificar el producto." + e.getMessage());
         } finally {
             ConexionBD.desconectarBD(conn);
         }

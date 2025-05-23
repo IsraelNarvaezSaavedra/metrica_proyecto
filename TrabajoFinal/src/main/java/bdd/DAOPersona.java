@@ -140,9 +140,8 @@ public class DAOPersona {
                     + "WHERE usuario=?";
             conn = ConexionBD.conectarBD();
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-
                 pstmt.setString(1, usuario);
-
+                pstmt.executeUpdate();
             }
         } catch (Exception e) {
             System.out.println("Error al borrar la persona.");

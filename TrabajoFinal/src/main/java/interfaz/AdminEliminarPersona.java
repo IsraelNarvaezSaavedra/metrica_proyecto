@@ -57,6 +57,11 @@ public class AdminEliminarPersona extends javax.swing.JFrame {
         volver1.setBackground(new java.awt.Color(153, 204, 255));
         volver1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         volver1.setText("<-- Volver");
+        volver1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volver1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,6 +121,13 @@ public class AdminEliminarPersona extends javax.swing.JFrame {
             daoPersona.borrarPersonaPorUsuario(usuario.getText().trim());
         }
     }//GEN-LAST:event_botonEliminarUsuarioActionPerformed
+
+    private void volver1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volver1ActionPerformed
+        AdminMain ventanaMain = new AdminMain();
+
+        this.setVisible(false);
+        ventanaMain.setVisible(true);
+    }//GEN-LAST:event_volver1ActionPerformed
 
     /**
      * @param args the command line arguments
