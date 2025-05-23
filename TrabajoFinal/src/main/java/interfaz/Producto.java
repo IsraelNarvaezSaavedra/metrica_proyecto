@@ -1,20 +1,85 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
-/**
- *
- * @author isran
- */
+import entidades.Cliente;
+import entidades.Factura;
+import entidades.Productos;
+import entidades.Valoracion;
+import java.awt.Component;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import javax.swing.*;
+
 public class Producto extends javax.swing.JFrame {
+
+    protected Productos producto;
+    protected Cliente cliente;
+    protected Valoracion rate;
+    protected Factura factura;
 
     /**
      * Creates new form Producto
      */
-    public Producto() {
+    public Producto(Productos producto, Cliente cliente) {
+        this.producto = producto;
+        this.cliente = cliente;
         initComponents();
+        expositor.setLayout(new BoxLayout(expositor, BoxLayout.Y_AXIS));
+        generarProducto();
+    }
+
+    //Genera "tarjetas" con la informacion de los productos
+    private void generarProducto() {
+        expositor.removeAll();
+
+        //JLabel con el nombre del producto y su personalizacion
+        JLabel nombre = new JLabel(producto.getNombre());
+        nombre.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        nombre.setAlignmentY(Component.CENTER_ALIGNMENT);
+        nombre.setFont(nombre.getFont().deriveFont(40f));
+        expositor.add(nombre);
+
+        //JLabel con el categoria del producto y su personalizacion
+        JLabel categoria = new JLabel(producto.getCategoria().toString());
+        categoria.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        categoria.setAlignmentY(Component.CENTER_ALIGNMENT);
+        categoria.setFont(categoria.getFont().deriveFont(20f));
+        expositor.add(categoria);
+
+        //JLabel con el precio del producto y su personalizacion
+        JLabel precio = new JLabel(String.valueOf(producto.getPrecio()) + "€");
+        precio.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        precio.setAlignmentY(Component.CENTER_ALIGNMENT);
+        precio.setFont(precio.getFont().deriveFont(35f));
+        expositor.add(precio);
+
+        //JLabel con la media de las valoraciones y su personalizacion
+        double media = producto.getMediaValoraciones();
+        JLabel valoracion = new JLabel("Valoración media: " + String.format("%.1f", media));
+        valoracion.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        valoracion.setFont(valoracion.getFont().deriveFont(20f));
+        expositor.add(valoracion);
+
+        // Listado de valoraciones individuales
+        java.util.List<Valoracion> valoraciones = bdd.DAOValoracion.valoracionProducto(producto.getId());
+        if (valoraciones.isEmpty()) {
+
+            JLabel sinResenas = new JLabel("Este producto aún no tiene valoraciones.");
+            sinResenas.setAlignmentX(Component.LEFT_ALIGNMENT);
+            expositor.add(sinResenas);
+
+        } else {
+            //Muestra un JLabel con los comentarios y con la valoracion
+            for (Valoracion v : valoraciones) {
+                JLabel comentario = new JLabel("- " + v.getComentario() + " (" + v.getValoracion() + " )");
+                comentario.setAlignmentX(Component.LEFT_ALIGNMENT);
+                comentario.setFont(comentario.getFont().deriveFont(18f));
+                expositor.add(comentario);
+            }
+
+            expositor.revalidate();
+            expositor.repaint();
+        }
+
     }
 
     /**
@@ -26,57 +91,100 @@ public class Producto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        volver = new javax.swing.JButton();
+        botonCarrito = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        expositor = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        volver.setBackground(new java.awt.Color(153, 204, 255));
+        volver.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        volver.setText("<-- Volver");
+        volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverActionPerformed(evt);
+            }
+        });
+
+        botonCarrito.setBackground(new java.awt.Color(153, 204, 255));
+        botonCarrito.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        botonCarrito.setText("Carrito");
+        botonCarrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCarritoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout expositorLayout = new javax.swing.GroupLayout(expositor);
+        expositor.setLayout(expositorLayout);
+        expositorLayout.setHorizontalGroup(
+            expositorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 896, Short.MAX_VALUE)
+        );
+        expositorLayout.setVerticalGroup(
+            expositorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 564, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(expositor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(volver)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 687, Short.MAX_VALUE)
+                .addComponent(botonCarrito)
+                .addGap(26, 26, 26))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(volver, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonCarrito, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+
+        Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
+        Main ventanaMain = new Main(cliente, nuevaFactura);
+
+        this.setVisible(false);
+        ventanaMain.setVisible(true);
+    }//GEN-LAST:event_volverActionPerformed
+
+    private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
+
+        Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
+        Carrito jCarrito = new Carrito(cliente, nuevaFactura);
+
+        this.setVisible(false);
+        jCarrito.setVisible(true);
+    }//GEN-LAST:event_botonCarritoActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Producto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Producto().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonCarrito;
+    private javax.swing.JPanel expositor;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }

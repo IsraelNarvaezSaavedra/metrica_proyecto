@@ -8,6 +8,7 @@ import java.util.List;
 
 public class DAOCiudad {
 
+    //Obtener todas las ciudades ordenadas por el nombre
     public List<String> obtenerCiudades() {
         List<String> ciudades = new ArrayList<>();
         Connection conn = null;
@@ -23,6 +24,7 @@ public class DAOCiudad {
             while (rs.next()) {
                 ciudades.add(rs.getString("nombre"));
             }
+
         } catch (Exception e) {
             System.out.println("Error al obtener ciudades: " + e.getMessage());
         } finally {

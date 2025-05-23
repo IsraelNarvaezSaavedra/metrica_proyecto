@@ -1,4 +1,3 @@
-
 package interfaz;
 
 
@@ -8,15 +7,11 @@ import entidades.Persona;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author usuarioDAW
- */
-
 public class Registrarse extends javax.swing.JFrame {
+    protected Login login;
+    protected DAOPersona daoPersona = new DAOPersona();
+    protected Persona persona;
 
-    DAOPersona daoPersona;
-    Persona persona;
     /**
      * Creates new form Registrarse
      */
@@ -25,10 +20,10 @@ public class Registrarse extends javax.swing.JFrame {
         cargarCiudadesEnComboBox();
     }
 
-    
-
+    //Metodo para cargar las ciudades en una lista y mostrarla en el combo box
 
     private void cargarCiudadesEnComboBox() {
+
         DAOCiudad dao = new DAOCiudad();
         List<String> listaCiudades = dao.obtenerCiudades();
 
@@ -37,7 +32,6 @@ public class Registrarse extends javax.swing.JFrame {
         }
     }
 
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -264,23 +258,35 @@ public class Registrarse extends javax.swing.JFrame {
     }//GEN-LAST:event_nuevoUsActionPerformed
 
     private void botonRegistarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistarseActionPerformed
+
         daoPersona = new DAOPersona();
+
+
+        //Para controlar que los valores introducidos sean validos
+
         if (nuevoNombreUs.getText().isEmpty() || nuevoApellidosUs.getText().isEmpty() || nuevoEmailUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaLocalidadUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaCasaUs.getText().isEmpty() || nuevoUs.getText().isEmpty() || nuevaContraseñaUs.getText().isEmpty()) {
             Persona.UsuarioVacio("No se puede dejar algún campo vacio", "Error");
-        }
-
-        if (!persona.esTelefonoValido(nuevoTlfUs.getText())) {
+        } else if (!persona.esTelefonoValido(nuevoTlfUs.getText())) {
             Persona.UsuarioVacio("Debes introducir un telefono valido (9 digitos numericos)", "Error");
-        }
-
-        if (!persona.esEmailValido(nuevoEmailUs.getText())) {
+            nuevoTlfUs.setText("");
+        } else if (!persona.esEmailValido(nuevoEmailUs.getText())) {
             Persona.UsuarioVacio("el correo debe ser valido", "Error");
-        }
-
-        if (daoPersona.existePersona(nuevoEmailUs.getText().trim(), nuevoUs.getText().trim())) {
+            nuevoEmailUs.setText("");
+        } else if (daoPersona.existePersona(nuevoEmailUs.getText().trim(), nuevoUs.getText().trim())) {
             Persona.UsuarioVacio("El correo o el nombre de usuario ya existen", "Error");
+            nuevoEmailUs.setText("");
+            nuevoUs.setText("");
         } else {
             daoPersona.registrarPersona(nuevoNombreUs.getText(), nuevoApellidosUs.getText(), nuevoTlfUs.getText(), nuevoEmailUs.getText(), nuevaLocalidadUs.getText(), (String) nuevaCiudadUs.getSelectedItem(), nuevaCalleUs.getText(), nuevaCasaUs.getText(), nuevoUs.getText(), nuevaContraseñaUs.getText());
+
+            if (login == null || !login.isDisplayable()) {
+                this.dispose();
+                login = new Login();
+                login.setVisible(true);
+            } else {
+                login.toFront();
+            }
+
         }
 
     }//GEN-LAST:event_botonRegistarseActionPerformed
@@ -299,37 +305,37 @@ public class Registrarse extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
-    //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new Registrarse().setVisible(true);
-        }
-    });
-}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Registrarse().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonRegistarse;

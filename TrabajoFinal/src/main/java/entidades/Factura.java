@@ -4,37 +4,60 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-/**
- *
- * @author usuarioDAW
- */
+
 public class Factura {
+
     protected List<Productos> factura;
     protected LocalDate fecha;
 
     public Factura(List<Productos> factura, LocalDate fecha) {
-        this.factura = new ArrayList();
-        this.fecha = LocalDate.now();
+        this.factura = factura;
+        this.fecha = fecha;
     }
-    
-    public void llenarFactura(Productos producto){
+
+    public void llenarFactura(Productos producto) {
         factura.add(producto);
     }
-    
-    public void descargarFactura(Cliente cliente){
-        try{
+
+    public List<Productos> getFactura() {
+        return factura;
+    }
+
+    public void vaciarFactura() {
+        factura.clear();
+    }
+
+    //Para descargar un .txt con los productos comprados
+    public void descargarFactura(Cliente cliente) {
+        try {
+
             BufferedWriter imprFactura = new BufferedWriter(new FileWriter("factura.txt"));
-            String contenido="";
-            contenido="##########   FACTURA GAME    ##########\n";
-            contenido=factura.toString();
+            String contenido = "";
+            contenido = "##########   FACTURA GAME    ##########\n";
+            contenido += "Fecha: " + fecha + "\n";
+            contenido += "Cliente: " + cliente.getNombre() + " " + cliente.getApellidos() + "\n";
+            contenido += "Usuario: " + cliente.getNombreUsuario() + "\n";
+            contenido += "########################################" + "\n";
+            contenido += "" + "\n";
+            contenido += "Productos" + "\n";
+            double total = 0.0;
+
+            for (Productos p : factura) {
+
+                contenido += "Nombre: " + p.getNombre() + "\t";
+                contenido += p.getPrecio() + "\n";
+                total += p.getPrecio();
+
+            }
+
+            contenido += "Precio Total: " + total;
             imprFactura.write(contenido);
-        }catch(IOException e){
-            
+            imprFactura.close();
+
+        } catch (IOException e) {
+            System.out.println("error al escribir el archivo: " + e.getMessage());
         }
     }
-    
+
 }
-
-

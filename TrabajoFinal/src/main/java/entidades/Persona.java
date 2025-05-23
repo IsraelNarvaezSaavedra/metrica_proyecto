@@ -86,14 +86,17 @@ public class Persona {
         this.ciudad = ciudad;
     }
 
+    //Un usuario vacio
     public static void UsuarioVacio(String mensaje, String titulo) {
         JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.DEFAULT_OPTION);
     }
 
+    //Restricciones de telefono
     public static boolean esTelefonoValido(String tlf) {
         return tlf.matches("\\d{9}");
     }
 
+    //Restricciones de email
     public static boolean esEmailValido(String email) {
         return email != null && email.contains("@") && email.contains(".");
     }

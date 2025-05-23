@@ -17,7 +17,37 @@
             <version>3.7.2</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.10.0</version>
+        <scope>test</scope>
+    </dependency>
     </dependencies>
+    <build>
+    <plugins>
+        <!-- Plugin de JaCoCo para cobertura -->
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.10</version> <!-- Usa la versión más reciente -->
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>prepare-agent</goal> <!-- Inicializa JaCoCo -->
+                    </goals>
+                </execution>
+                <execution>
+                    <id>report</id> <!-- Genera el informe -->
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>23</maven.compiler.release>

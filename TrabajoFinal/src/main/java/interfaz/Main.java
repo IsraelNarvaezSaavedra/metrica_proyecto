@@ -1,93 +1,109 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import entidades.Productos;
 import bdd.DAOProducto;
+import entidades.Cliente;
+import entidades.Factura;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-/**
- *
- * @author usuarioDAW
- */
 public class Main extends javax.swing.JFrame {
-protected Login login;
+
+    protected Login login;
+    protected Cliente cliente;
+    protected static Factura miFactura;
+    protected Productos productoCarrito;
+
     /**
      * Creates new form Main
      */
-    public Main() {
+    public Main(Cliente cliente, Factura factura) {
+        this.cliente = cliente;
+        Main.miFactura = factura;
         initComponents();
         panel.setLayout(new GridLayout(0, 5, 15, 15));
         cargarProducto();
     }
-    
-    protected void cargarProducto(){
+
+    //Carga todas las "tarjetas" de los productos
+    protected void cargarProducto() {
         panel.removeAll();
         List<Productos> catalogo = DAOProducto.catalogoProducto();
-        
-       for(Productos llenar : catalogo){
-           
-           /*JPanel con su personalizacion donde se introduciran los siguientes 
+
+        for (Productos llenar : catalogo) {
+
+            /*JPanel con su personalizacion donde se introduciran los siguientes 
            botones y etiquetas*/
-           JPanel producto = new JPanel();
-           producto.setBackground(Color.gray);
-           producto.setLayout(new BoxLayout(producto, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
-           producto.setPreferredSize(new Dimension(80, 130)); //Tamanio del panel
-           
-           //Etiqueta nombreProducto y su personalizacion
-           JLabel nombreProducto = new JLabel(llenar.getNombre());
-           nombreProducto.setForeground(Color.WHITE);
-           nombreProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
-           nombreProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
-           
-           //Etiqueta precioProducto y su personalizacion
-           JLabel precioProducto = new JLabel(String.valueOf(llenar.getPrecio())+"€");
-           precioProducto.setForeground(Color.white);
-           precioProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
-           precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
-           
-           //Etiqueta stock y su personalizacion
-           JLabel stock = new JLabel("Stock "+String.valueOf(llenar.getStock()));
-           stock.setForeground(Color.white);
-           stock.setAlignmentX(Component.CENTER_ALIGNMENT);
-           precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
-           
-           //Boton verMas y lo que hace
-           JButton verMas = new JButton();
-           verMas.setText("   Ver mas   ");
-           verMas.addActionListener(e -> {
-           Producto productoEspecifico = new Producto();
-           this.setVisible(false);
-           productoEspecifico.setVisible(true);
-           });
-           
-           //Boton carrito y lo que hace
-           JButton carrito = new JButton();
-           carrito.setText("Añadir al carrito");
-           carrito.addActionListener(e -> {
-           Producto carritoCompra = new Producto();
-           this.setVisible(false);
-           carrito.setVisible(true);
-           });
-           
-           //Añadir los productos al jpanel
-           producto.add(nombreProducto);
-           producto.add(precioProducto);
-           producto.add(stock);
-           producto.add(verMas);
-           producto.add(carrito);
-           panel.add(producto);
-           
-       }
-       panel.revalidate();
-       panel.repaint();
+            JPanel producto = new JPanel();
+            producto.setBackground(Color.gray);
+            producto.setLayout(new BoxLayout(producto, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
+            producto.setPreferredSize(new Dimension(80, 130)); //Tamanio del panel
+
+            //Etiqueta nombreProducto y su personalizacion
+            JLabel nombreProducto = new JLabel(llenar.getNombre());
+            nombreProducto.setForeground(Color.WHITE);
+            nombreProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+            nombreProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Etiqueta precioProducto y su personalizacion
+            JLabel precioProducto = new JLabel(String.valueOf(llenar.getPrecio()) + "€");
+            precioProducto.setForeground(Color.white);
+            precioProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+            precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Etiqueta stock y su personalizacion
+            JLabel stock = new JLabel("Stock " + String.valueOf(llenar.getStock()));
+            stock.setForeground(Color.white);
+            stock.setAlignmentX(Component.CENTER_ALIGNMENT);
+            precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Boton verMas, lo que hace y su personalizacion
+            JButton verMas = new JButton();
+            verMas.addActionListener(e -> {
+                Producto productoEspecifico = new Producto(llenar, cliente);
+                this.setVisible(false);
+                productoEspecifico.setVisible(true);
+            });
+            verMas.setText("   Ver mas   ");
+            verMas.setAlignmentX(Component.CENTER_ALIGNMENT);
+            verMas.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Boton carrito y lo que hace
+            JButton carrito = new JButton();
+            carrito.addActionListener(e -> {
+
+                if (Main.miFactura != null) {
+
+                    productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
+                    Main.miFactura.llenarFactura(productoCarrito);
+
+                } else {
+                    System.err.println("Error: miFactura es null.");
+                    JOptionPane.showMessageDialog(null, "No se puede añadir al carrito porque la factura no está inicializada.");
+                }
+
+            });
+            carrito.setText("Añadir al carrito");
+            carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
+            carrito.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Añadir los productos al jpanel
+            producto.add(nombreProducto);
+            producto.add(precioProducto);
+            producto.add(stock);
+            producto.add(verMas);
+            producto.add(carrito);
+            panel.add(producto);
+
+        }
+        panel.revalidate();
+        panel.repaint();
     }
 
     /**
@@ -103,11 +119,17 @@ protected Login login;
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         panel = new javax.swing.JPanel();
+        botonCarrito = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTextField1.setBackground(new java.awt.Color(216, 233, 250));
         jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(153, 204, 255));
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -131,29 +153,40 @@ protected Login login;
 
         jScrollPane1.setViewportView(panel);
 
+        botonCarrito.setBackground(new java.awt.Color(153, 204, 255));
+        botonCarrito.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        botonCarrito.setText("Carrito");
+        botonCarrito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCarritoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(243, 243, 243)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(144, 144, 144)
+                        .addComponent(botonCarrito))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonCarrito, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(36, Short.MAX_VALUE))
@@ -162,48 +195,116 @@ protected Login login;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Este es el boton buscar, coge los valores del textField y busca los objetos que esten relacionados
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+
+        String buscar = jTextField1.getText();
+        if (buscar.isEmpty()) {
+            cargarProducto();
+        } else {
+            panel.removeAll();
+            List<Productos> catalogo = DAOProducto.buscarProducto(buscar);
+
+            for (Productos llenar : catalogo) {
+
+                /*JPanel con su personalizacion donde se introduciran los siguientes 
+           botones y etiquetas*/
+                JPanel producto = new JPanel();
+                producto.setBackground(Color.gray);
+                producto.setLayout(new BoxLayout(producto, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
+                producto.setPreferredSize(new Dimension(80, 130)); //Tamanio del panel
+
+                //Etiqueta nombreProducto y su personalizacion
+                JLabel nombreProducto = new JLabel(llenar.getNombre());
+                nombreProducto.setForeground(Color.WHITE);
+                nombreProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+                nombreProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Etiqueta precioProducto y su personalizacion
+                JLabel precioProducto = new JLabel(String.valueOf(llenar.getPrecio()) + "€");
+                precioProducto.setForeground(Color.white);
+                precioProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+                precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Etiqueta stock y su personalizacion
+                JLabel stock = new JLabel("Stock " + String.valueOf(llenar.getStock()));
+                stock.setForeground(Color.white);
+                stock.setAlignmentX(Component.CENTER_ALIGNMENT);
+                precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Boton verMas, lo que hace y su personalizacion
+                JButton verMas = new JButton();
+                verMas.addActionListener(e -> {
+                    Producto productoEspecifico = new Producto(llenar, cliente);
+                    this.setVisible(false);
+                    productoEspecifico.setVisible(true);
+                });
+                verMas.setText("   Ver mas   ");
+                verMas.setAlignmentX(Component.CENTER_ALIGNMENT);
+                verMas.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Boton carrito y lo que hace
+                JButton carrito = new JButton();
+                carrito.addActionListener(e -> {
+
+                    if (Main.miFactura != null) {
+
+                        productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
+                        Main.miFactura.llenarFactura(productoCarrito);
+
+                    } else {
+                        System.err.println("Error: miFactura es null.");
+                        JOptionPane.showMessageDialog(null, "No se puede añadir al carrito porque la factura no está inicializada.");
+                    }
+
+                });
+                carrito.setText("Añadir al carrito");
+                carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
+                carrito.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+                //Añadir los productos al jpanel
+                producto.add(nombreProducto);
+                producto.add(precioProducto);
+                producto.add(stock);
+                producto.add(verMas);
+                producto.add(carrito);
+                panel.add(producto);
+
+            }
+            panel.revalidate();
+            panel.repaint();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    //El boton del carrito, envia a la pestania de carrito
+    private void botonCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCarritoActionPerformed
+        Carrito jCarrito = new Carrito(cliente, miFactura);
+        this.setVisible(false);
+        jCarrito.setVisible(true);
+    }//GEN-LAST:event_botonCarritoActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+        Cliente cliente = new Cliente(0, null, null, null, null, null, null, null, null, null, null);
+        Factura facturaInicial = new Factura(new ArrayList<>(), LocalDate.now());
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
+        Main.miFactura = facturaInicial;
+
+        java.awt.EventQueue.invokeLater(() -> {
+            Main ventana = new Main(cliente, facturaInicial);
+            ventana.setVisible(true);
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonCarrito;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
