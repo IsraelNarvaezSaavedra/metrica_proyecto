@@ -1,10 +1,9 @@
 ##########   FACTURA GAME    ##########
 Fecha: 2025-05-23
 Cliente:  
-Usuario: minino
+Usuario: caca
 ########################################
 
 Productos
 Nombre: PlayStation 5	191.69
-Nombre: PlayStation 5	191.69
-Precio Total: 383.38
+Precio Total: 191.69
