@@ -39,7 +39,7 @@ public class DAOPersona {
     }
 
     public static boolean esAdmin(String nombreUsuario) {
-        boolean esAdmin = true;
+        boolean esAdmin = false;
         Connection conn = null;
         try {
             conn = ConexionBD.conectarBD();

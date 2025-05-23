@@ -12,7 +12,7 @@ public class AdminMain extends javax.swing.JFrame {
     private AdminModificarPersona modPer;
     private AdminEliminarPersona eliPer;
     private AdminModificarProducto modPro;
-    //private AdminEliminarProducto eliPro;
+    private AdminEliminarProducto eliPro;
     /**
      * Creates new form AdminMain
      */
@@ -157,7 +157,7 @@ public class AdminMain extends javax.swing.JFrame {
         if (eliPro == null || !eliPro.isDisplayable()) {
                 this.dispose();
                 eliPro = new AdminEliminarProducto();
-                modPro.setVisible(true);
+                eliPro.setVisible(true);
             } else {
                 eliPro.toFront();
             }

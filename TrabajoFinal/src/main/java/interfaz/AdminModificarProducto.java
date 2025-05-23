@@ -48,6 +48,7 @@ public class AdminModificarProducto extends javax.swing.JFrame {
         precioPro = new javax.swing.JTextField();
         categoriaPro = new javax.swing.JComboBox<>();
         botonModificarProducto = new javax.swing.JButton();
+        volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,6 +81,15 @@ public class AdminModificarProducto extends javax.swing.JFrame {
             }
         });
 
+        volver.setBackground(new java.awt.Color(153, 204, 255));
+        volver.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        volver.setText("<-- Volver");
+        volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -100,7 +110,9 @@ public class AdminModificarProducto extends javax.swing.JFrame {
                             .addComponent(idPro, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(categoriaPro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(217, 217, 217)
+                        .addGap(23, 23, 23)
+                        .addComponent(volver)
+                        .addGap(95, 95, 95)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(botonModificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -111,7 +123,9 @@ public class AdminModificarProducto extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(volver, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -160,6 +174,14 @@ public class AdminModificarProducto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonModificarProductoActionPerformed
 
+    private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
+
+        AdminMain ventanaMain = new AdminMain();
+
+        this.setVisible(false);
+        ventanaMain.setVisible(true);
+    }//GEN-LAST:event_volverActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,5 +229,6 @@ public class AdminModificarProducto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nombrePro;
     private javax.swing.JTextField precioPro;
+    private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables
 }
