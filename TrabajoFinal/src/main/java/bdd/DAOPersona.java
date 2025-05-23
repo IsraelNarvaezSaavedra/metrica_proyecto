@@ -38,6 +38,27 @@ public class DAOPersona {
         }
     }
 
+    public static boolean esAdmin(String nombreUsuario) {
+        boolean existe = false;
+        Connection conn = null;
+        try {
+            conn = ConexionBD.conectarBD();
+            String sql = "SELECT * FROM trabajador\n"
+                    + "where trabajador.id=(SELECT id FROM persona "
+                    + "WHERE usuario LIKE ?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, nombreUsuario);
+            ResultSet rs = pst.executeQuery();
+            existe = rs.next();
+        } catch (SQLException e) {
+            System.err.println("Error al verificar existencia de persona: " + e.getMessage());
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+
+        return existe;
+    }
+
     public void registrarPersona(String nombre, String apellidos, String tlf, String email, String localidad, String ciudad, String calle, String nCasa, String nombreUsuario, String contraseñaUsuario) {
         try {
             Connection conn = ConexionBD.conectarBD();

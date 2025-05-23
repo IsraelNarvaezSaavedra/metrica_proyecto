@@ -166,6 +166,11 @@ public class Login extends javax.swing.JFrame {
 
     private void botonInicarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInicarSesionActionPerformed
         if (daoPersona.existeCuentaPersona(contraseñaUs.getText(), nombreUs.getText())) {
+            if (DAOPersona.esAdmin(nombreUs.getText())) {
+                AdminMain adminMain = new AdminMain();
+                this.dispose();
+                adminMain.setVisible(true);
+            }
             if (main == null || !main.isDisplayable()) {
                 this.dispose();
                 cliente.setNombreUsuario(nombreUs.getText());
