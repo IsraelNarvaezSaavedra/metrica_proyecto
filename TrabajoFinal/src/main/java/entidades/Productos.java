@@ -2,6 +2,7 @@ package entidades;
 
 import bdd.DAOValoracion;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class Productos {
 
@@ -22,7 +23,7 @@ public class Productos {
         }
         this.stock = stock;
     }
-
+    
     public Categoria getCategoria() {
         return categoria;
     }
