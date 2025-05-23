@@ -1,18 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
-/**
- *
- * @author Minino
- */
 public class AdminMain extends javax.swing.JFrame {
+
     private AdminModificarPersona modPer;
     private AdminEliminarPersona eliPer;
     private AdminModificarProducto modPro;
     private AdminEliminarProducto eliPro;
+
     /**
      * Creates new form AdminMain
      */
@@ -123,44 +117,48 @@ public class AdminMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Te redirige a eliminar persona
     private void botonEliminarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarPersonaActionPerformed
         if (eliPer == null || !eliPer.isDisplayable()) {
-                this.dispose();
-                eliPer = new AdminEliminarPersona();
-                eliPer.setVisible(true);
-            } else {
-                eliPer.toFront();
-            }
+            this.dispose();
+            eliPer = new AdminEliminarPersona();
+            eliPer.setVisible(true);
+        } else {
+            eliPer.toFront();
+        }
     }//GEN-LAST:event_botonEliminarPersonaActionPerformed
 
+    //Te redirige a modificar persona
     private void botonModificarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarPersonaActionPerformed
         if (modPer == null || !modPer.isDisplayable()) {
-                this.dispose();
-                modPer = new AdminModificarPersona();
-                modPer.setVisible(true);
-            } else {
-                modPer.toFront();
-            }
+            this.dispose();
+            modPer = new AdminModificarPersona();
+            modPer.setVisible(true);
+        } else {
+            modPer.toFront();
+        }
     }//GEN-LAST:event_botonModificarPersonaActionPerformed
 
+    //Te redirige a modificar producto
     private void botonModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProductoActionPerformed
         if (modPro == null || !modPro.isDisplayable()) {
-                this.dispose();
-                modPro = new AdminModificarProducto();
-                modPro.setVisible(true);
-            } else {
-                modPro.toFront();
-            }
+            this.dispose();
+            modPro = new AdminModificarProducto();
+            modPro.setVisible(true);
+        } else {
+            modPro.toFront();
+        }
     }//GEN-LAST:event_botonModificarProductoActionPerformed
 
+    //Te redirige a eliminar producto
     private void botonEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarProductoActionPerformed
         if (eliPro == null || !eliPro.isDisplayable()) {
-                this.dispose();
-                eliPro = new AdminEliminarProducto();
-                eliPro.setVisible(true);
-            } else {
-                eliPro.toFront();
-            }
+            this.dispose();
+            eliPro = new AdminEliminarProducto();
+            eliPro.setVisible(true);
+        } else {
+            eliPro.toFront();
+        }
     }//GEN-LAST:event_botonEliminarProductoActionPerformed
 
     /**

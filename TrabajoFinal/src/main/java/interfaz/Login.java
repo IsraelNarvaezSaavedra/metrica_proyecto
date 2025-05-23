@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import bdd.DAOPersona;
@@ -11,10 +7,6 @@ import entidades.Persona;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-/**
- *
- * @author usuarioDAW
- */
 public class Login extends javax.swing.JFrame {
 
     protected Main main;
@@ -165,29 +157,36 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_contraseñaUsActionPerformed
 
+    //Es el boton de iniciar sesion
     private void botonInicarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInicarSesionActionPerformed
+        //Comprueba si existe la cuenta
         if (daoPersona.existeCuentaPersona(contraseñaUs.getText(), nombreUs.getText())) {
-            System.out.println("Usuario: " + nombreUs.getText());
-            System.out.println("¿Es admin según base de datos? " + DAOPersona.esAdmin(nombreUs.getText()));
-
+            //Si existe comprueba si es admin
             if (DAOPersona.esAdmin(nombreUs.getText())) {
+
                 AdminMain adminMain = new AdminMain();
                 this.setVisible(false);
                 adminMain.setVisible(true);
+
+                //sino, abre main
             } else if (main == null || !main.isDisplayable()) {
+
                 this.dispose();
                 cliente.setNombreUsuario(nombreUs.getText());
                 Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
                 main = new Main(cliente, nuevaFactura);
                 main.setVisible(true);
+
             } else {
                 main.toFront();
             }
+            //Sino existe la persona
         } else {
             Persona.UsuarioVacio("El usuario y la contraseña no coinciden", "Error");
         }
     }//GEN-LAST:event_botonInicarSesionActionPerformed
 
+    //Este boton te redirige a el JPanel Registrarse
     private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarseActionPerformed
         if (registrarse == null || !registrarse.isDisplayable()) {
             this.dispose();

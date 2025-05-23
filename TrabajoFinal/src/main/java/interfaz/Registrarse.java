@@ -6,10 +6,6 @@ import entidades.Persona;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author usuarioDAW
- */
 public class Registrarse extends javax.swing.JFrame {
 
     protected Login login;
@@ -24,9 +20,12 @@ public class Registrarse extends javax.swing.JFrame {
         cargarCiudadesEnComboBox();
     }
 
+    //Metodo para cargar las ciudades en una lista y mostrarla en el combo box
     private void cargarCiudadesEnComboBox() {
+
         DAOCiudad dao = new DAOCiudad();
         List<String> listaCiudades = dao.obtenerCiudades();
+
         for (String ciudad : listaCiudades) {
             nuevaCiudadUs.addItem(ciudad);
         }
@@ -258,6 +257,7 @@ public class Registrarse extends javax.swing.JFrame {
 
     private void botonRegistarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistarseActionPerformed
 
+        //Para controlar que los valores introducidos sean validos
         if (nuevoNombreUs.getText().isEmpty() || nuevoApellidosUs.getText().isEmpty() || nuevoEmailUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaLocalidadUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaCasaUs.getText().isEmpty() || nuevoUs.getText().isEmpty() || nuevaContraseñaUs.getText().isEmpty()) {
             Persona.UsuarioVacio("No se puede dejar algún campo vacio", "Error");
         } else if (!persona.esTelefonoValido(nuevoTlfUs.getText())) {
@@ -272,6 +272,7 @@ public class Registrarse extends javax.swing.JFrame {
             nuevoUs.setText("");
         } else {
             daoPersona.registrarPersona(nuevoNombreUs.getText(), nuevoApellidosUs.getText(), nuevoTlfUs.getText(), nuevoEmailUs.getText(), nuevaLocalidadUs.getText(), (String) nuevaCiudadUs.getSelectedItem(), nuevaCalleUs.getText(), nuevaCasaUs.getText(), nuevoUs.getText(), nuevaContraseñaUs.getText());
+
             if (login == null || !login.isDisplayable()) {
                 this.dispose();
                 login = new Login();
@@ -279,6 +280,7 @@ public class Registrarse extends javax.swing.JFrame {
             } else {
                 login.toFront();
             }
+
         }
     }//GEN-LAST:event_botonRegistarseActionPerformed
 
