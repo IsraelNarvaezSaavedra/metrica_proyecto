@@ -97,6 +97,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Modificar Persona"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonModificarPersonaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="botonEliminarPersona">
           <Properties>
@@ -105,6 +108,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Eliminar Persona"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonEliminarPersonaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="botonModificarProducto">
           <Properties>

@@ -9,7 +9,10 @@ package interfaz;
  * @author Minino
  */
 public class AdminMain extends javax.swing.JFrame {
-
+    private AdminModificarPersona modPer;
+    private AdminEliminarPersona eliPer;
+    private AdminModificarProducto modPro;
+    private AdminEliminarProducto eliPro;
     /**
      * Creates new form AdminMain
      */
@@ -40,9 +43,19 @@ public class AdminMain extends javax.swing.JFrame {
 
         botonModificarPersona.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         botonModificarPersona.setText("Modificar Persona");
+        botonModificarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarPersonaActionPerformed(evt);
+            }
+        });
 
         botonEliminarPersona.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         botonEliminarPersona.setText("Eliminar Persona");
+        botonEliminarPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarPersonaActionPerformed(evt);
+            }
+        });
 
         botonModificarProducto.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         botonModificarProducto.setText("Modificar Producto");
@@ -99,6 +112,26 @@ public class AdminMain extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonEliminarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarPersonaActionPerformed
+        if (eliPer == null || !eliPer.isDisplayable()) {
+                this.dispose();
+                eliPer = new AdminEliminarPersona();
+                eliPer.setVisible(true);
+            } else {
+                eliPer.toFront();
+            }
+    }//GEN-LAST:event_botonEliminarPersonaActionPerformed
+
+    private void botonModificarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarPersonaActionPerformed
+        if (modPer == null || !modPer.isDisplayable()) {
+                this.dispose();
+                modPer = new AdminModificarPersona();
+                modPer.setVisible(true);
+            } else {
+                modPer.toFront();
+            }
+    }//GEN-LAST:event_botonModificarPersonaActionPerformed
 
     /**
      * @param args the command line arguments
