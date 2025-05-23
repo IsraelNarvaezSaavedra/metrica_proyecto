@@ -92,10 +92,10 @@ public class DAOProducto {
     }
 
     //Para insertar productos en la base de datos
-    public static void insertarProducto(String nombre, Categoria categoria, double precio) {
+    public static void insertarProducto(Productos producto) {
         Connection conn = null;
-
-        if (!catalogoProducto().contains(nombre)) {
+        int id = 0;
+        if (!catalogoProducto().contains(producto.getNombre())) {
 
             try {
 
@@ -105,9 +105,44 @@ public class DAOProducto {
 
                 try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
-                    pstmt.setString(1, nombre);
-                    pstmt.setObject(2, categoria);
-                    pstmt.setDouble(3, precio);
+                    pstmt.setString(1, producto.getNombre());
+                    pstmt.setObject(2, producto.getCategoria());
+                    pstmt.setDouble(3, producto.getPrecio());
+                    pstmt.executeUpdate();
+
+                }
+            } catch (Exception e) {
+                System.out.println("Error al insertar el producto.");
+            }
+
+            try {
+
+                String sql1 = "select id from producto where ?";
+                conn = ConexionBD.conectarBD();
+
+                try (PreparedStatement pstmt = conn.prepareStatement(sql1)) {
+
+                    pstmt.setString(1, producto.getNombre());
+                    ResultSet rs = pstmt.executeQuery();
+
+                    while (rs.next()) {
+                        id = rs.getInt("id");
+                    }
+
+                }
+            } catch (Exception e) {
+                System.out.println("Error al insertar el producto.");
+            }
+            try {
+
+                String sql2 = "INSERT INTO stock (producto_id, cantidad)"
+                        + "VALUES (?, ?)";
+                conn = ConexionBD.conectarBD();
+
+                try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
+
+                    pstmt.setInt(1, id);
+                    pstmt.setInt(2, producto.getStock());
                     pstmt.executeUpdate();
 
                 }
@@ -141,7 +176,7 @@ public class DAOProducto {
     }
 
     //Para modificar los datos de un producto
-    public static void modificarProducto(String nombre, Categoria categoria, double precio, int id) {
+    public static void modificarProducto(Productos productos) {
         Connection conn = null;
 
         try {
@@ -151,10 +186,10 @@ public class DAOProducto {
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
 
-                pstmt.setString(1, nombre);
-                pstmt.setString(2, categoria.toString());
-                pstmt.setDouble(3, precio);
-                pstmt.setInt(4, id);
+                pstmt.setString(1, productos.getNombre());
+                pstmt.setString(2, productos.getCategoria().toString());
+                pstmt.setDouble(3, productos.getPrecio());
+                pstmt.setInt(4, productos.getId());
                 pstmt.executeUpdate();
 
             }
@@ -184,6 +219,27 @@ public class DAOProducto {
         } finally {
             ConexionBD.desconectarBD(conn);
         }
+    }
+
+    public static boolean hayStock(int producto_id) {
+        boolean hayStock = true;
+        Connection conn = null;
+
+        try {
+            conn = ConexionBD.conectarBD();
+            String sql = "select * from stock where producto_id = ? and cantidad > 0";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, producto_id);
+            ResultSet rs = pst.executeQuery();
+            hayStock = rs.next();
+
+        } catch (SQLException e) {
+            System.err.println("Error, no se ha podido comprobar hay stock: " + e.getMessage());
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+
+        return hayStock;
     }
 
 }

@@ -2,9 +2,8 @@ package entidades;
 
 import bdd.DAOValoracion;
 import java.util.List;
-import javax.swing.JOptionPane;
 
-public class Productos {
+public class Productos implements Comparable<Productos> {
 
     protected int id;
     protected String nombre;
@@ -23,7 +22,7 @@ public class Productos {
         }
         this.stock = stock;
     }
-    
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -88,5 +87,10 @@ public class Productos {
     @Override
     public String toString() {
         return "Nombre: " + nombre + ", precio: " + precio;
+    }
+
+    @Override
+    public int compareTo(Productos otro) {
+        return otro.getStock() - getStock();
     }
 }

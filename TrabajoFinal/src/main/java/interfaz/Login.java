@@ -173,11 +173,14 @@ public class Login extends javax.swing.JFrame {
 
                 this.dispose();
                 cliente.setNombreUsuario(nombreUs.getText());
+                cliente.setId(daoPersona.buscarUsuario(nombreUs.getText()));
                 Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
                 main = new Main(cliente, nuevaFactura);
                 main.setVisible(true);
-
+                
             } else {
+                cliente.setId(daoPersona.buscarUsuario(nombreUs.getText()));
+                System.out.println(cliente);
                 main.toFront();
             }
             //Sino existe la persona

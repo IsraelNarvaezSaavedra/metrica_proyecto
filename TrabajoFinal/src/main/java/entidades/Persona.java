@@ -58,6 +58,16 @@ public class Persona {
         return ciudad;
     }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public String getContraseñaUsuario() {
+        return contraseñaUsuario;
+    }
+    
+    
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -101,9 +111,8 @@ public class Persona {
         return email != null && email.contains("@") && email.contains(".");
     }
 
-    @Override
-    public String toString() {
-        return "Nombre del cliente: " + nombre + " " + apellidos + ", teléfono: " + tlf + ", email: " + email + "vive en: " + localidad + " " + ciudad;
-    }
+    
+
+    
 
 }

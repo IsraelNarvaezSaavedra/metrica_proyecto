@@ -45,4 +45,12 @@ public class Valoracion {
     public void setValoracion(double valoracion) {
         this.valoracion = valoracion;
     }
+
+    @Override
+    public String toString() {
+        return "Valoracion{" + "producto_id=" + producto_id + ", cliente_id=" + cliente_id + ", comentario=" + comentario + ", valoracion=" + valoracion + '}';
+    }
+    
+    
+    
 }

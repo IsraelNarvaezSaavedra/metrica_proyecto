@@ -1,7 +1,16 @@
 package interfaz;
 
 import bdd.DAOPersona;
+import entidades.Cliente;
 import entidades.Persona;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class AdminEliminarPersona extends javax.swing.JFrame {
 
@@ -12,6 +21,43 @@ public class AdminEliminarPersona extends javax.swing.JFrame {
      */
     public AdminEliminarPersona() {
         initComponents();
+        listaPersonas.setLayout(new GridLayout(0, 5, 15, 15));
+        cargarPersonas();
+    }
+
+    public void cargarPersonas() {
+        listaPersonas.removeAll();
+        List<Cliente> sociedad = daoPersona.listaDePersonas();
+
+        for (Cliente llenar : sociedad) {
+            /*JPanel con su personalizacion donde se introduciran los siguientes 
+           botones y etiquetas*/
+            JPanel personas = new JPanel();
+            personas.setBackground(Color.gray);
+            personas.setLayout(new BoxLayout(personas, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
+            personas.setPreferredSize(new Dimension(100, 20)); //Tamanio del panel
+
+            //Etiqueta IDProducto y su personalizacion
+            JLabel idPersona = new JLabel(String.valueOf(llenar.getId()));
+            idPersona.setForeground(Color.WHITE);
+            idPersona.setAlignmentX(Component.CENTER_ALIGNMENT);
+            idPersona.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Etiqueta NombreUsuario y su personalizacion
+            JLabel nombreUsuario = new JLabel(llenar.getNombreUsuario());
+            nombreUsuario.setForeground(Color.white);
+            nombreUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
+            nombreUsuario.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Añadir los productos al jpanel
+            personas.add(idPersona);
+            personas.add(nombreUsuario);
+            listaPersonas.add(personas);
+            
+            
+        }
+        listaPersonas.revalidate();
+        listaPersonas.repaint();
     }
 
     /**
@@ -29,6 +75,8 @@ public class AdminEliminarPersona extends javax.swing.JFrame {
         usuario = new javax.swing.JTextField();
         botonEliminarUsuario = new javax.swing.JButton();
         volver1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaPersonas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,41 +103,56 @@ public class AdminEliminarPersona extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout listaPersonasLayout = new javax.swing.GroupLayout(listaPersonas);
+        listaPersonas.setLayout(listaPersonasLayout);
+        listaPersonasLayout.setHorizontalGroup(
+            listaPersonasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 286, Short.MAX_VALUE)
+        );
+        listaPersonasLayout.setVerticalGroup(
+            listaPersonasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(listaPersonas);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(volver1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(185, 185, 185))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(103, 103, 103)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addContainerGap(112, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonEliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(191, 191, 191))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(botonEliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(volver1)
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(volver1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(volver1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(34, 34, 34)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(botonEliminarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonEliminarUsuario)
+                .addGap(40, 40, 40))
+            .addComponent(jScrollPane1)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,7 +168,7 @@ public class AdminEliminarPersona extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     //Comprueba si usuario esta vacio y en caso de que no lo borra
     private void botonEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarUsuarioActionPerformed
         if (usuario.getText().isEmpty()) {
@@ -164,6 +227,8 @@ public class AdminEliminarPersona extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel listaPersonas;
     private javax.swing.JTextField usuario;
     private javax.swing.JButton volver1;
     // End of variables declaration//GEN-END:variables

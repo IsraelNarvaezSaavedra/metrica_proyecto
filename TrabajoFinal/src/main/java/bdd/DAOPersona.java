@@ -1,18 +1,60 @@
 package bdd;
 
+import entidades.Cliente;
+import entidades.Persona;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DAOPersona {
+    
+    
+    public static List<Cliente> listaDePersonas() {
+        Cliente cliente = null;
+        Connection conn = null;
+        List<Cliente> buscados = new ArrayList();
+
+        try {
+
+            conn = ConexionBD.conectarBD();
+            PreparedStatement pst = conn.prepareStatement("select * from persona");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+
+                cliente = new Cliente(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("tlf"),
+                        rs.getString("correo"),
+                        rs.getString("ciudad_nombre"),
+                        rs.getString("localidad"),
+                        rs.getString("calle"),
+                        rs.getString("ncasa"),
+                        rs.getString("usuario"),
+                        rs.getString("passwd")
+                        
+                );
+                buscados.add(cliente);
+
+            }
+        } catch (SQLException e) {
+            System.err.println("No se ha podido llenar el catalogo " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+        return buscados;
+    }
     
     //Se aniade una persona a la tabla cliente
     public void aniadirCliente(String nombreUsuario) {
         try {
             Connection conn = ConexionBD.conectarBD();
-            PreparedStatement checkStmt = null;
-            ResultSet rs = null;
             String nuevaPersona = "INSERT INTO cliente (id)\n"
                     + "SELECT id FROM persona WHERE usuario LIKE ?";
             try (PreparedStatement pstmt = conn.prepareStatement(nuevaPersona)) {
@@ -52,33 +94,50 @@ public class DAOPersona {
         return esAdmin;
     }
 
+    public static int buscarUsuario(String usuario) {
+        Connection conn = null;
+        int id = 0;
+        try {
+            conn = ConexionBD.conectarBD();
+            PreparedStatement pst = conn.prepareStatement("SELECT id FROM persona WHERE usuario LIKE ?");
+            pst.setString(1, usuario);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.err.println("No se ha encontrado el producto " + e.getMessage());
+        } finally {
+            ConexionBD.desconectarBD(conn);
+        }
+        return id;
+    }
+
     //Para registrar personas en la base de datos
-    public void registrarPersona(String nombre, String apellidos, String tlf, String email, String localidad, String ciudad, String calle, String nCasa, String nombreUsuario, String contraseñaUsuario) {
+    public void registrarPersona(Cliente cliente) {
         try {
 
             Connection conn = ConexionBD.conectarBD();
-            PreparedStatement checkStmt = null;
-            ResultSet rs = null;
             String nuevaPersona = "INSERT INTO persona (nombre, apellido, tlf, correo, ciudad_nombre, localidad, calle, ncasa, usuario, passwd) "
                     + "VALUES(?,?,?,?,?,?,?,?,?,?)";
 
             try (PreparedStatement pstmt = conn.prepareStatement(nuevaPersona)) {
 
-                pstmt.setString(1, nombre);
-                pstmt.setString(2, apellidos);
-                pstmt.setString(3, tlf);
-                pstmt.setString(4, email);
-                pstmt.setString(5, ciudad);
-                pstmt.setString(6, localidad);
-                pstmt.setString(7, calle);
-                pstmt.setString(8, nCasa);
-                pstmt.setString(9, nombreUsuario);
-                pstmt.setString(10, contraseñaUsuario);
+                pstmt.setString(1, cliente.getNombre());
+                pstmt.setString(2, cliente.getApellidos());
+                pstmt.setString(3, cliente.getTlf());
+                pstmt.setString(4, cliente.getEmail());
+                pstmt.setString(5, cliente.getLocalidad());
+                pstmt.setString(6, cliente.getCiudad());
+                pstmt.setString(7, cliente.getCalle());
+                pstmt.setString(8, cliente.getnCasa());
+                pstmt.setString(9, cliente.getNombreUsuario());
+                pstmt.setString(10, cliente.getContraseñaUsuario());
                 pstmt.executeUpdate();
 
             } finally {
                 ConexionBD.desconectarBD(conn);
-                aniadirCliente(nombreUsuario);
+                aniadirCliente(cliente.getNombreUsuario());
             }
         } catch (SQLException e) {
             System.err.println("No se ha podido registrar a persona " + e.getMessage());
@@ -108,7 +167,6 @@ public class DAOPersona {
 
         return existe;
     }
-
 
     //Para comprobar si ya existia esa persona de antes
     public static boolean existeCuentaPersona(String contraseña, String usuario) {
@@ -153,7 +211,7 @@ public class DAOPersona {
     }
 
     //Para modificar los datos de la personas
-    public static void modificarPersona(int id, String nombre, String apellidos, String tlf, String email, String localidad, String ciudad, String calle, String nCasa, String nombreUsuario, String contraseñaUsuario) {
+    public static void modificarPersona(Cliente cliente) {
         Connection conn = null;
 
         try {
@@ -161,20 +219,18 @@ public class DAOPersona {
             conn = ConexionBD.conectarBD();
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-                pstmt.setString(1, nombre);
-                pstmt.setString(2, apellidos);
-                pstmt.setString(3, tlf);
-                pstmt.setString(4, email);
-                pstmt.setString(5, localidad);
-                pstmt.setString(6, ciudad);
-                pstmt.setString(7, calle);
-                pstmt.setString(8, nCasa);
-                pstmt.setString(9, nombreUsuario);
-                pstmt.setString(10, contraseñaUsuario);
-                pstmt.setInt(11, id);
+                pstmt.setString(1, cliente.getNombre());
+                pstmt.setString(2, cliente.getApellidos());
+                pstmt.setString(3, cliente.getTlf());
+                pstmt.setString(4, cliente.getEmail());
+                pstmt.setString(5, cliente.getLocalidad());
+                pstmt.setString(6, cliente.getCiudad());
+                pstmt.setString(7, cliente.getCalle());
+                pstmt.setString(8, cliente.getnCasa());
+                pstmt.setString(9, cliente.getNombreUsuario());
+                pstmt.setString(10, cliente.getContraseñaUsuario());
+                pstmt.setInt(11, cliente.getId());
                 pstmt.executeUpdate();
-
             }
         } catch (SQLException e) {
             System.out.println("Error al modificar la persona: " + e.getMessage());

@@ -76,10 +76,21 @@ public class Producto extends javax.swing.JFrame {
                 expositor.add(comentario);
             }
 
-            expositor.revalidate();
-            expositor.repaint();
         }
+        JButton botonPonerValoracion = new JButton();
+        botonPonerValoracion.addActionListener(e -> {
+            Valorar valorar = new Valorar(cliente, producto);
+            this.setVisible(false);
+            valorar.setVisible(true);
+        });
+        botonPonerValoracion.setText("Añadir Valoracion");
+        botonPonerValoracion.setAlignmentX(Component.CENTER_ALIGNMENT);
+        botonPonerValoracion.setAlignmentY(Component.CENTER_ALIGNMENT);
+        botonPonerValoracion.setFont(precio.getFont().deriveFont(35f));
+        expositor.add(botonPonerValoracion);
 
+        expositor.revalidate();
+        expositor.repaint();
     }
 
     /**
@@ -120,7 +131,7 @@ public class Producto extends javax.swing.JFrame {
         expositor.setLayout(expositorLayout);
         expositorLayout.setHorizontalGroup(
             expositorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 896, Short.MAX_VALUE)
+            .addGap(0, 922, Short.MAX_VALUE)
         );
         expositorLayout.setVerticalGroup(
             expositorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,16 +144,18 @@ public class Producto extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(volver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 687, Short.MAX_VALUE)
-                .addComponent(botonCarrito)
-                .addGap(26, 26, 26))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(volver)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 879, Short.MAX_VALUE)
+                        .addComponent(botonCarrito)
+                        .addGap(26, 26, 26))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

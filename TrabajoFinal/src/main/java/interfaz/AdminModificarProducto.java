@@ -3,24 +3,74 @@ package interfaz;
 import bdd.DAOProducto;
 import entidades.Categoria;
 import entidades.Persona;
+import entidades.Productos;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Minino
  */
 public class AdminModificarProducto extends javax.swing.JFrame {
-    
+
     protected DAOProducto daoProducto = new DAOProducto();
-    
+    protected Productos productos;
+
     /**
      * Creates new form AdminModificarProducto
      */
     public AdminModificarProducto() {
         initComponents();
+        panel.setLayout(new GridLayout(0, 5, 15, 15));
+        cargarProducto();
         categoriaPro.setModel(new javax.swing.DefaultComboBoxModel<>(Categoria.values()));
     }
-    
-    
+
+    protected void cargarProducto() {
+        panel.removeAll();
+        List<Productos> catalogo = DAOProducto.catalogoProducto();
+
+        for (Productos llenar : catalogo) {
+
+            /*JPanel con su personalizacion donde se introduciran los siguientes 
+           botones y etiquetas*/
+            JPanel producto = new JPanel();
+            producto.setBackground(Color.gray);
+            producto.setLayout(new BoxLayout(producto, BoxLayout.Y_AXIS)); //Para que vayan saliendo de manera vertical
+            producto.setPreferredSize(new Dimension(80, 130)); //Tamanio del panel
+
+            //Etiqueta nombreProducto y su personalizacion
+            JLabel nombreProducto = new JLabel(llenar.getNombre());
+            nombreProducto.setForeground(Color.WHITE);
+            nombreProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+            nombreProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Etiqueta categoria y su personalizacion
+            JLabel categoria = new JLabel(String.valueOf(llenar.getCategoria()));
+            categoria.setForeground(Color.white);
+            categoria.setAlignmentX(Component.CENTER_ALIGNMENT);
+            categoria.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            //Etiqueta precioProducto y su personalizacion
+            JLabel precioProducto = new JLabel(String.valueOf(llenar.getPrecio()) + "€");
+            precioProducto.setForeground(Color.white);
+            precioProducto.setAlignmentX(Component.CENTER_ALIGNMENT);
+            precioProducto.setAlignmentY(Component.CENTER_ALIGNMENT);
+            
+            producto.add(nombreProducto);
+            producto.add(categoria);
+            producto.add(precioProducto);
+            panel.add(producto);
+        }
+        panel.revalidate();
+        panel.repaint();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,6 +93,8 @@ public class AdminModificarProducto extends javax.swing.JFrame {
         categoriaPro = new javax.swing.JComboBox<>();
         botonModificarProducto = new javax.swing.JButton();
         volver = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,6 +136,19 @@ public class AdminModificarProducto extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 556, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(panel);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -97,21 +162,21 @@ public class AdminModificarProducto extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(89, 89, 89)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nombrePro, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(precioPro, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(idPro, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(categoriaPro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(categoriaPro, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(volver)
                         .addGap(95, 95, 95)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(botonModificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(163, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(41, 41, 41)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +185,7 @@ public class AdminModificarProducto extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(volver, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
+                .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nombrePro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -129,24 +194,26 @@ public class AdminModificarProducto extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(categoriaPro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(precioPro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)
-                        .addComponent(jLabel5))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(precioPro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
                     .addComponent(idPro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(botonModificarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63))
+            .addComponent(jScrollPane1)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,13 +226,17 @@ public class AdminModificarProducto extends javax.swing.JFrame {
     private void categoriaProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaProActionPerformed
 
     }//GEN-LAST:event_categoriaProActionPerformed
-    
+
     //En caso de que los valores introducidos sean correctos, modifica el producto
     private void botonModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProductoActionPerformed
-        if (idPro.getText().isEmpty()){
+        if (idPro.getText().isEmpty()) {
             Persona.UsuarioVacio("No se puede dejar el ID vacio", "Error");
         } else {
-            daoProducto.modificarProducto(nombrePro.getText(), (Categoria) categoriaPro.getSelectedItem(), Double.parseDouble(precioPro.getText()), Integer.parseInt(idPro.getText()));
+            productos.setNombre(nombrePro.getText());
+            productos.setCategoria((Categoria) categoriaPro.getSelectedItem());
+            productos.setPrecio(Double.parseDouble(precioPro.getText()));
+            productos.setId(Integer.parseInt(idPro.getText()));
+            daoProducto.modificarProducto(productos);
             javax.swing.JOptionPane.showMessageDialog(this, "Producto modificado");
         }
     }//GEN-LAST:event_botonModificarProductoActionPerformed
@@ -223,7 +294,9 @@ public class AdminModificarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nombrePro;
+    private javax.swing.JPanel panel;
     private javax.swing.JTextField precioPro;
     private javax.swing.JButton volver;
     // End of variables declaration//GEN-END:variables

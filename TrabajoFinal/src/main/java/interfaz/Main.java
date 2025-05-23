@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.*;
 
@@ -31,11 +32,13 @@ public class Main extends javax.swing.JFrame {
         cargarProducto();
     }
 
+    
+    
     //Carga todas las "tarjetas" de los productos
     protected void cargarProducto() {
         panel.removeAll();
         List<Productos> catalogo = DAOProducto.catalogoProducto();
-
+        Collections.sort(catalogo);
         for (Productos llenar : catalogo) {
 
             /*JPanel con su personalizacion donde se introduciran los siguientes 
@@ -74,31 +77,33 @@ public class Main extends javax.swing.JFrame {
             verMas.setAlignmentX(Component.CENTER_ALIGNMENT);
             verMas.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-            //Boton carrito y lo que hace
-            JButton carrito = new JButton();
-            carrito.addActionListener(e -> {
-
-                if (Main.miFactura != null) {
-
-                    productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
-                    Main.miFactura.llenarFactura(productoCarrito);
-
-                } else {
-                    System.err.println("Error: miFactura es null.");
-                    JOptionPane.showMessageDialog(null, "No se puede añadir al carrito porque la factura no está inicializada.");
-                }
-
-            });
-            carrito.setText("Añadir al carrito");
-            carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
-            carrito.setAlignmentY(Component.CENTER_ALIGNMENT);
-
             //Añadir los productos al jpanel
             producto.add(nombreProducto);
             producto.add(precioProducto);
             producto.add(stock);
             producto.add(verMas);
-            producto.add(carrito);
+            
+            //Comprobamos si hay stock para poner o no el boton disponible
+            if (DAOProducto.hayStock(llenar.getId())) {
+                //Boton carrito y lo que hace
+                JButton carrito = new JButton();
+                carrito.addActionListener(e -> {
+
+                    if (Main.miFactura != null) {
+                        productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
+                        Main.miFactura.llenarFactura(productoCarrito);
+
+                    } else {
+                        System.err.println("Error: miFactura es null.");
+                        JOptionPane.showMessageDialog(null, "No se puede añadir al carrito porque la factura no está inicializada.");
+                    }
+
+                });
+                carrito.setText("Añadir al carrito");
+                carrito.setAlignmentX(Component.CENTER_ALIGNMENT);
+                carrito.setAlignmentY(Component.CENTER_ALIGNMENT);
+                producto.add(carrito);
+            }
             panel.add(producto);
 
         }
@@ -204,7 +209,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             panel.removeAll();
             List<Productos> catalogo = DAOProducto.buscarProducto(buscar);
-
+            Collections.sort(catalogo);
             for (Productos llenar : catalogo) {
 
                 /*JPanel con su personalizacion donde se introduciran los siguientes 

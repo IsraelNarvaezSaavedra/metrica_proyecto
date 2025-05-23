@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package interfaz;
 
 import bdd.DAOCiudad;
@@ -5,24 +9,25 @@ import bdd.DAOPersona;
 import entidades.Cliente;
 import entidades.Persona;
 import java.util.List;
-import javax.swing.JOptionPane;
 
-public class Registrarse extends javax.swing.JFrame {
+/**
+ *
+ * @author Minino
+ */
+public class AdminInsertarPersona extends javax.swing.JFrame {
 
-    protected Login login;
-    protected DAOPersona daoPersona = new DAOPersona();
-    protected Persona persona;
-    protected Cliente cliente;
+    Persona persona;
+    DAOPersona daoPersona;
+    Cliente cliente;
 
     /**
-     * Creates new form Registrarse
+     * Creates new form AdminInsertarPersona
      */
-    public Registrarse() {
+    public AdminInsertarPersona() {
         initComponents();
         cargarCiudadesEnComboBox();
     }
 
-    //Metodo para cargar las ciudades en una lista y mostrarla en el combo box
     private void cargarCiudadesEnComboBox() {
 
         DAOCiudad dao = new DAOCiudad();
@@ -32,7 +37,6 @@ public class Registrarse extends javax.swing.JFrame {
             nuevaCiudadUs.addItem(ciudad);
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,61 +47,82 @@ public class Registrarse extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        nuevaCalleUs = new javax.swing.JTextField();
-        nuevaCasaUs = new javax.swing.JTextField();
-        nuevoUs = new javax.swing.JTextField();
-        nuevoTlfUs = new javax.swing.JTextField();
-        nuevoEmailUs = new javax.swing.JTextField();
         nuevaLocalidadUs = new javax.swing.JTextField();
-        botonRegistarse = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        botonInsertar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         nuevoNombreUs = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         nuevoApellidosUs = new javax.swing.JTextField();
+        nuevaCalleUs = new javax.swing.JTextField();
         nuevaContraseñaUs = new javax.swing.JPasswordField();
+        nuevaCasaUs = new javax.swing.JTextField();
         nuevaCiudadUs = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        nuevoUs = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        nuevoTlfUs = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        nuevoEmailUs = new javax.swing.JTextField();
+        volver1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Registrar usuario");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("E-mail:");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Usuario:");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Contraseña:");
 
+        nuevaLocalidadUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("teléfono:");
+
+        botonInsertar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        botonInsertar.setText("Insertar");
+        botonInsertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonInsertarActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Nº Casa:");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setText("Nombre: ");
+
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Localidad:");
+
+        nuevoNombreUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Ciudad:");
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel11.setText("Apellidos: ");
+
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setText("Calle:");
+
+        nuevoApellidosUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         nuevaCalleUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         nuevaCasaUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        nuevaCiudadUs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevaCiudadUsActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setText("Inertar usuario");
 
         nuevoUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         nuevoUs.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +130,9 @@ public class Registrarse extends javax.swing.JFrame {
                 nuevoUsActionPerformed(evt);
             }
         });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("E-mail:");
 
         nuevoTlfUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         nuevoTlfUs.setMaximumSize(new java.awt.Dimension(9, 2147483647));
@@ -114,31 +142,17 @@ public class Registrarse extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Usuario:");
+
         nuevoEmailUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        nuevaLocalidadUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        botonRegistarse.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        botonRegistarse.setText("Registrarme");
-        botonRegistarse.addActionListener(new java.awt.event.ActionListener() {
+        volver1.setBackground(new java.awt.Color(153, 204, 255));
+        volver1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        volver1.setText("<-- Volver");
+        volver1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRegistarseActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel10.setText("Nombre: ");
-
-        nuevoNombreUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel11.setText("Apellidos: ");
-
-        nuevoApellidosUs.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        nuevaCiudadUs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nuevaCiudadUsActionPerformed(evt);
+                volver1ActionPerformed(evt);
             }
         });
 
@@ -146,21 +160,15 @@ public class Registrarse extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(196, 196, 196))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(223, 223, 223)
-                .addComponent(botonRegistarse)
+                .addComponent(botonInsertar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(119, 119, 119)
+                .addContainerGap()
+                .addComponent(volver1)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(nuevoApellidosUs, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -172,7 +180,7 @@ public class Registrarse extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(nuevoUs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(nuevoTlfUs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -182,20 +190,34 @@ public class Registrarse extends javax.swing.JFrame {
                             .addComponent(nuevaCasaUs, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                             .addComponent(nuevoNombreUs)
                             .addComponent(nuevaContraseñaUs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nuevaCiudadUs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(158, 158, 158))
+                            .addComponent(nuevaCiudadUs, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(76, 76, 76)
+                                .addComponent(nuevoApellidosUs)))))
+                .addGap(233, 233, 233))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(volver1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(nuevoUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -215,7 +237,7 @@ public class Registrarse extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(nuevaLocalidadUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(9, 9, 9)
+                        .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(nuevaCiudadUs, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -230,12 +252,15 @@ public class Registrarse extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(nuevoNombreUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(nuevoApellidosUs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addComponent(botonRegistarse)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel11))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(nuevoApellidosUs, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(botonInsertar)
                 .addContainerGap())
         );
 
@@ -253,11 +278,7 @@ public class Registrarse extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nuevoUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoUsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nuevoUsActionPerformed
-
-    private void botonRegistarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistarseActionPerformed
+    private void botonInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInsertarActionPerformed
 
         daoPersona = new DAOPersona();
 
@@ -275,27 +296,28 @@ public class Registrarse extends javax.swing.JFrame {
                     nuevoTlfUs.getText(), nuevoEmailUs.getText(), nuevaLocalidadUs.getText(), (String) nuevaCiudadUs.getSelectedItem(), nuevaCalleUs.getText(),
                     nuevaCasaUs.getText(), nuevoUs.getText(), nuevaContraseñaUs.getText());
             daoPersona.registrarPersona(cliente);
-            if (login == null || !login.isDisplayable()) {
-                this.dispose();
-                login = new Login();
-                login.setVisible(true);
-            } else {
-                login.toFront();
-            }
-
         }
-
-    }//GEN-LAST:event_botonRegistarseActionPerformed
-
-    private void nuevoTlfUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoTlfUsActionPerformed
-
-        JOptionPane.showMessageDialog(null, "Debe escribir exactamente 9 caracteres");
-
-    }//GEN-LAST:event_nuevoTlfUsActionPerformed
+    }//GEN-LAST:event_botonInsertarActionPerformed
 
     private void nuevaCiudadUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevaCiudadUsActionPerformed
 
     }//GEN-LAST:event_nuevaCiudadUsActionPerformed
+
+    private void nuevoUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoUsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nuevoUsActionPerformed
+
+    private void nuevoTlfUsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoTlfUsActionPerformed
+
+     
+    }//GEN-LAST:event_nuevoTlfUsActionPerformed
+
+    private void volver1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volver1ActionPerformed
+        AdminMain ventanaMain = new AdminMain();
+
+        this.setVisible(false);
+        ventanaMain.setVisible(true);
+    }//GEN-LAST:event_volver1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,27 +336,26 @@ public class Registrarse extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminInsertarPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminInsertarPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminInsertarPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminInsertarPersona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Registrarse().setVisible(true);
+                new AdminInsertarPersona().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonRegistarse;
+    private javax.swing.JButton botonInsertar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -357,5 +378,6 @@ public class Registrarse extends javax.swing.JFrame {
     private javax.swing.JTextField nuevoNombreUs;
     private javax.swing.JTextField nuevoTlfUs;
     private javax.swing.JTextField nuevoUs;
+    private javax.swing.JButton volver1;
     // End of variables declaration//GEN-END:variables
 }

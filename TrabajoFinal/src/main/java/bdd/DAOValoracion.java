@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOValoracion {
-
     //Para darle una valooracion a un producto
-    public static void ponerValoracion(int producto_id, int cliente_id, String comentario, Double valoracion) {
+    public static void ponerValoracion(Valoracion valoracion) {
         Connection conn = null;
 
         try {
@@ -21,10 +20,10 @@ public class DAOValoracion {
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-                pstmt.setInt(1, producto_id);
-                pstmt.setInt(2, cliente_id);
-                pstmt.setString(3, comentario);
-                pstmt.setDouble(4, valoracion);
+                pstmt.setInt(1, valoracion.getProducto_id());
+                pstmt.setInt(2, valoracion.getCliente_id());
+                pstmt.setString(3, valoracion.getComentario());
+                pstmt.setDouble(4, valoracion.getValoracion());
                 pstmt.executeUpdate();
 
             }
