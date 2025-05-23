@@ -43,9 +43,11 @@ public class DAOPersona {
         Connection conn = null;
         try {
             conn = ConexionBD.conectarBD();
-            String sql = "SELECT * FROM trabajador\n"
-                    + "where trabajador.id=(SELECT id FROM persona "
-                    + "WHERE usuario LIKE ?)";
+            String sql = "SELECT 1 FROM trabajador \n"
+                    + "WHERE id = (\n"
+                    + "SELECT id FROM persona \n"
+                    + "WHERE usuario = ?\n"
+                    + ")";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, nombreUsuario);
             ResultSet rs = pst.executeQuery();
