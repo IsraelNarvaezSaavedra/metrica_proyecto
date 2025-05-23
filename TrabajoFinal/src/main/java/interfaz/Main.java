@@ -87,12 +87,8 @@ public class Main extends javax.swing.JFrame {
 
                 if (Main.miFactura != null) {
                     
-                    System.out.println("Factura en botón con hash: " + Main.miFactura.hashCode());
-                    
                     productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
                     Main.miFactura.llenarFactura(productoCarrito);
-                    
-                    System.out.println("Producto añadido al carrito");
                     
                 } else {
                     System.err.println("Error: miFactura es null.");
@@ -259,12 +255,9 @@ public class Main extends javax.swing.JFrame {
                     
                     if (Main.miFactura != null) {
                         
-                        System.out.println("Factura en botón con hash: " + Main.miFactura.hashCode());
-                        
                         productoCarrito = new Productos(llenar.getId(), llenar.getNombre(), llenar.getCategoria(), llenar.getPrecio(), llenar.getStock());
                         Main.miFactura.llenarFactura(productoCarrito);
                         
-                        System.out.println("Producto añadido al carrito");
                         
                     } else {
                         System.err.println("Error: miFactura es null.");
@@ -308,8 +301,6 @@ public class Main extends javax.swing.JFrame {
         Factura facturaInicial = new Factura(new ArrayList<>(), LocalDate.now());
 
         Main.miFactura = facturaInicial;
-
-        System.out.println("Factura creada en main con hash: " + Main.miFactura.hashCode());
 
         java.awt.EventQueue.invokeLater(() -> {
             Main ventana = new Main(cliente, facturaInicial);
