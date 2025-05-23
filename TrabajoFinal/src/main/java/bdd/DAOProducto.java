@@ -149,28 +149,6 @@ public class DAOProducto {
         }
     }
 
-    public static void modificarStock(String nombre, int cantidad) {
-        Connection conn = null;
-        try {
-            String sql2 = "UPDATE stock\n"
-                    + "SET \n"
-                    + "producto_id = (select * from producto\n"
-                    + "where upper(nombre) like '%?%'),\n"
-                    + "cantidad = ?";
-            conn = ConexionBD.conectarBD();
-            try (PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-
-                pstmt.setString(1, nombre);
-                pstmt.setInt(2, cantidad);
-
-            }
-        } catch (Exception e) {
-            System.out.println("Error al modificar el stock.");
-        } finally {
-            ConexionBD.desconectarBD(conn);
-        }
-    }
-
     public static void reducirStock(int productoId) {
         Connection conn = null;
         try {
@@ -181,12 +159,7 @@ public class DAOProducto {
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setInt(1, productoId);
-                int filasAfectadas = pstmt.executeUpdate();
-                System.out.println("Filas modificadas: " + filasAfectadas);
-
-                if (filasAfectadas == 0) {
-                    System.out.println("️No se redujo el stock: puede que no haya stock o el ID no exista.");
-                }
+                pstmt.executeUpdate();
             }
 
         } catch (Exception e) {
