@@ -2,8 +2,6 @@
 package interfaz;
 
 
-import bdd.DAOPersona;
-import entidades.Persona;
 import bdd.DAOCiudad;
 import bdd.DAOPersona;
 import entidades.Persona;
@@ -17,6 +15,8 @@ import javax.swing.JOptionPane;
 
 public class Registrarse extends javax.swing.JFrame {
 
+    DAOPersona daoPersona;
+    Persona persona;
     /**
      * Creates new form Registrarse
      */
@@ -25,7 +25,7 @@ public class Registrarse extends javax.swing.JFrame {
         cargarCiudadesEnComboBox();
     }
 
-    DAOPersona persona;
+    
 
 
     private void cargarCiudadesEnComboBox() {
@@ -37,8 +37,7 @@ public class Registrarse extends javax.swing.JFrame {
         }
     }
 
-    DAOPersona daoPersona = new DAOPersona();
-    Persona persona;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -265,7 +264,7 @@ public class Registrarse extends javax.swing.JFrame {
     }//GEN-LAST:event_nuevoUsActionPerformed
 
     private void botonRegistarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistarseActionPerformed
-
+        daoPersona = new DAOPersona();
         if (nuevoNombreUs.getText().isEmpty() || nuevoApellidosUs.getText().isEmpty() || nuevoEmailUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaLocalidadUs.getText().isEmpty() || nuevaCalleUs.getText().isEmpty() || nuevaCasaUs.getText().isEmpty() || nuevoUs.getText().isEmpty() || nuevaContraseñaUs.getText().isEmpty()) {
             Persona.UsuarioVacio("No se puede dejar algún campo vacio", "Error");
         }
@@ -277,9 +276,6 @@ public class Registrarse extends javax.swing.JFrame {
         if (!persona.esEmailValido(nuevoEmailUs.getText())) {
             Persona.UsuarioVacio("el correo debe ser valido", "Error");
         }
-
-         persona.registrarPersona(nuevoNombreUs.getText(), nuevoApellidosUs.getText(), nuevoTlfUs.getText(), nuevoEmailUs.getText(), nuevaLocalidadUs.getText(), nuevaCiudadUs.getSelectedItem(), nuevaCalleUs.getText(), nuevaCasaUs.getText(), nuevoUs.getText(), nuevaContraseñaUs.getText());
-
 
         if (daoPersona.existePersona(nuevoEmailUs.getText().trim(), nuevoUs.getText().trim())) {
             Persona.UsuarioVacio("El correo o el nombre de usuario ya existen", "Error");
