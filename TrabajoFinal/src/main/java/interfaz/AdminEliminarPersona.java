@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import bdd.DAOPersona;
 import entidades.Persona;
 
-/**
- *
- * @author Minino
- */
 public class AdminEliminarPersona extends javax.swing.JFrame {
 
     protected DAOPersona daoPersona = new DAOPersona();
@@ -113,15 +105,18 @@ public class AdminEliminarPersona extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Comprueba si usuario esta vacio y en caso de que no lo borra
     private void botonEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarUsuarioActionPerformed
         if (usuario.getText().isEmpty()) {
             Persona.UsuarioVacio("debes de escribir el nombre de usuario", "Error");
         } else {
             daoPersona.borrarPersonaPorUsuario(usuario.getText().trim());
+            javax.swing.JOptionPane.showMessageDialog(this, "Persona elimminada");
         }
     }//GEN-LAST:event_botonEliminarUsuarioActionPerformed
 
+    //Vuelve a Admin Main
     private void volver1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volver1ActionPerformed
         AdminMain ventanaMain = new AdminMain();
 

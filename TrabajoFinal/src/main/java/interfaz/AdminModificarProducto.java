@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
-import bdd.DAOCiudad;
 import bdd.DAOProducto;
 import entidades.Categoria;
 import entidades.Persona;
-import java.util.List;
-import javax.swing.JComboBox;
 
 /**
  *
@@ -18,6 +11,7 @@ import javax.swing.JComboBox;
 public class AdminModificarProducto extends javax.swing.JFrame {
     
     protected DAOProducto daoProducto = new DAOProducto();
+    
     /**
      * Creates new form AdminModificarProducto
      */
@@ -165,15 +159,18 @@ public class AdminModificarProducto extends javax.swing.JFrame {
     private void categoriaProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaProActionPerformed
 
     }//GEN-LAST:event_categoriaProActionPerformed
-
+    
+    //En caso de que los valores introducidos sean correctos, modifica el producto
     private void botonModificarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarProductoActionPerformed
         if (idPro.getText().isEmpty()){
             Persona.UsuarioVacio("No se puede dejar el ID vacio", "Error");
         } else {
             daoProducto.modificarProducto(nombrePro.getText(), (Categoria) categoriaPro.getSelectedItem(), Double.parseDouble(precioPro.getText()), Integer.parseInt(idPro.getText()));
+            javax.swing.JOptionPane.showMessageDialog(this, "Producto modificado");
         }
     }//GEN-LAST:event_botonModificarProductoActionPerformed
 
+    //Vuelve a Admin Main
     private void volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverActionPerformed
 
         AdminMain ventanaMain = new AdminMain();

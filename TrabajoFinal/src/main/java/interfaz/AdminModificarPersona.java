@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
 
 import bdd.DAOCiudad;
@@ -9,15 +5,12 @@ import bdd.DAOPersona;
 import entidades.Persona;
 import java.util.List;
 
-/**
- *
- * @author Minino
- */
 public class AdminModificarPersona extends javax.swing.JFrame {
-    
+
     protected AdminMain main;
     protected DAOPersona daoPersona = new DAOPersona();
     protected Persona persona;
+
     /**
      * Creates new form AdminModificarPersona
      */
@@ -25,6 +18,8 @@ public class AdminModificarPersona extends javax.swing.JFrame {
         initComponents();
         cargarCiudadesEnComboBox();
     }
+
+    //Mete las ciudades en una lista para luego mostrarla en un combo box
     private void cargarCiudadesEnComboBox() {
         DAOCiudad dao = new DAOCiudad();
         List<String> listaCiudades = dao.obtenerCiudades();
@@ -32,6 +27,7 @@ public class AdminModificarPersona extends javax.swing.JFrame {
             ciudadUs.addItem(ciudad);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -274,8 +270,10 @@ public class AdminModificarPersona extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*Comprueba que los campos introducidos son validos y luego cambia los valores antiguos por los
+    valores introducidos ahora*/
     private void botonRegistarse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistarse1ActionPerformed
-        if (IDus.getText().isEmpty()){
+        if (IDus.getText().isEmpty()) {
             Persona.UsuarioVacio("No se puede dejar el ID vacio", "Error");
         } else if (!persona.esTelefonoValido(tlfUs.getText())) {
             Persona.UsuarioVacio("Debes introducir un telefono valido (9 digitos numericos)", "Error");
@@ -284,17 +282,12 @@ public class AdminModificarPersona extends javax.swing.JFrame {
             Persona.UsuarioVacio("el correo debe ser valido", "Error");
             emailUs.setText("");
         } else {
-            daoPersona.modificarPersona(Integer.parseInt(IDus.getText()),nombreUs.getText(), apellidosUs.getText(), tlfUs.getText(), emailUs.getText(), localidadUs.getText(), (String) ciudadUs.getSelectedItem(), calleUs.getText(), casaUs.getText(), us.getText(), contraseñaUs.getText());
-            if (main == null || !main.isDisplayable()) {
-                this.dispose();
-                main = new AdminMain();
-                main.setVisible(true);
-            } else {
-                main.toFront();
-            }
+            daoPersona.modificarPersona(Integer.parseInt(IDus.getText()), nombreUs.getText(), apellidosUs.getText(), tlfUs.getText(), emailUs.getText(), localidadUs.getText(), (String) ciudadUs.getSelectedItem(), calleUs.getText(), casaUs.getText(), us.getText(), contraseñaUs.getText());
+            javax.swing.JOptionPane.showMessageDialog(this, "Modificacion Realizada");
         }
     }//GEN-LAST:event_botonRegistarse1ActionPerformed
 
+    // Vuelve a Admin Main
     private void volver1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volver1ActionPerformed
         AdminMain ventanaMain = new AdminMain();
 
