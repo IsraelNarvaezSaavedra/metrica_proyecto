@@ -12,41 +12,55 @@ import java.util.List;
 public class DAOProducto {
 
     //Para mostrar todo el catalogo de la tienda
+    
     public static List<Productos> catalogoProducto() {
         Productos producto = null;
         Connection conn = null;
-        List<Productos> buscados = new ArrayList();
+        List<Productos> buscados = new ArrayList<>();
 
         try {
-
             conn = ConexionBD.conectarBD();
-            PreparedStatement pst = conn.prepareStatement("SELECT p.id, p.nombre, p.categoria_nombre, p.precio, s.cantidad\n"
+            PreparedStatement pst = conn.prepareStatement(
+                    "SELECT p.id, p.nombre, p.categoria_nombre, p.precio, s.cantidad\n"
                     + "FROM producto p\n"
                     + "JOIN stock s ON s.producto_id = p.id\n"
-                    + "\n"
                     + "UNION\n"
-                    + "\n"
                     + "SELECT p.id, p.nombre, p.categoria_nombre, p.precio, NULL AS cantidad\n"
                     + "FROM producto p\n"
                     + "WHERE NOT EXISTS (\n"
                     + "    SELECT 1 FROM stock s WHERE s.producto_id = p.id\n"
-                    + ")");
+                    + ")"
+            );
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
+                String categoriaStr = rs.getString("categoria_nombre");
+                Categoria categoria = null;
+
+                if (categoriaStr != null) {
+                    try {
+                        categoria = Categoria.valueOf(categoriaStr);
+                    } catch (IllegalArgumentException ex) {
+                        System.err.println("Categoría inválida: " + categoriaStr + " para producto id: " + rs.getInt("id"));
+                        // Aquí puedes asignar una categoría por defecto si quieres, por ejemplo:
+                        // categoria = Categoria.DEFAULT;
+                    }
+                } else {
+                    System.err.println("Categoría nula para producto id: " + rs.getInt("id"));
+                    // Puedes asignar categoría por defecto o dejar null según tu diseño
+                }
 
                 producto = new Productos(
                         rs.getInt("id"),
                         rs.getString("nombre"),
-                        Categoria.valueOf(rs.getString("categoria_nombre")),
+                        categoria,
                         rs.getDouble("precio"),
-                        rs.getInt(5)
+                        rs.getInt(5) // cuidado si es null, puede lanzar excepción
                 );
                 buscados.add(producto);
-
             }
         } catch (SQLException e) {
-            System.err.println("No se ha podido llenar el catalogo " + e.getMessage());
+            System.err.println("No se ha podido llenar el catálogo " + e.getMessage());
             e.printStackTrace();
         } finally {
             ConexionBD.desconectarBD(conn);

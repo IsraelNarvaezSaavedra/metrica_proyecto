@@ -167,17 +167,18 @@ public class Login extends javax.swing.JFrame {
                 AdminMain adminMain = new AdminMain();
                 this.setVisible(false);
                 adminMain.setVisible(true);
-
                 //sino, abre main
             } else if (main == null || !main.isDisplayable()) {
-
                 this.dispose();
                 cliente.setNombreUsuario(nombreUs.getText());
                 cliente.setId(daoPersona.buscarUsuario(nombreUs.getText()));
+
                 Factura nuevaFactura = new Factura(new ArrayList<>(), LocalDate.now());
+
                 main = new Main(cliente, nuevaFactura);
+
                 main.setVisible(true);
-                
+
             } else {
                 cliente.setId(daoPersona.buscarUsuario(nombreUs.getText()));
                 System.out.println(cliente);

@@ -190,9 +190,7 @@ public class Producto extends javax.swing.JFrame {
         jCarrito.setVisible(true);
     }//GEN-LAST:event_botonCarritoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCarrito;

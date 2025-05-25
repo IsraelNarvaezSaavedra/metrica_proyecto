@@ -95,6 +95,14 @@ public class Persona {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
+    
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+    
+    public void setContraseñaUsuario(String contraseñaUsuario) {
+        this.contraseñaUsuario = contraseñaUsuario;
+    }
 
     //Un usuario vacio
     public static void UsuarioVacio(String mensaje, String titulo) {

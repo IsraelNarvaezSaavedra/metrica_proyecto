@@ -2,6 +2,8 @@
 package entidades;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public enum Categoria {
     merch, 
@@ -9,8 +11,12 @@ public enum Categoria {
     videojuegos, 
     periféricos, 
     otros;
+    
+    
+      /*
     public static ArrayList <Categoria> categoriasExistentes = new ArrayList<>();
     
+   
     public static void actualizarCategorias (){
         for (int i = 0; i < categoriasExistentes.size(); i++) {
             Categoria cat[] = Categoria.values();
@@ -44,5 +50,11 @@ public enum Categoria {
 
     public static Categoria getOtros() {
         return otros;
+    }
+*/
+
+    @Override
+    public String toString() {
+        return name();
     }
 }
